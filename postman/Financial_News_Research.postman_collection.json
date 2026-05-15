@@ -1,0 +1,77 @@
+{
+  "info": {
+    "name": "Financial News Research API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "b0f3c2d1-0000-4000-8000-000000000001",
+    "description": "Collection for the modular FastAPI backend (`/api/v1` prefix). Import `postman/Local.postman_environment.json` for variables."
+  },
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "GET /health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/health"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Research",
+      "item": [
+        {
+          "name": "GET /research/{ticker}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/research/{{ticker}}?days={{days}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["research", "{{ticker}}"],
+              "query": [{ "key": "days", "value": "{{days}}" }]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "History",
+      "item": [
+        {
+          "name": "GET /history/{ticker}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/history/{{ticker}}?limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["history", "{{ticker}}"],
+              "query": [{ "key": "limit", "value": "10" }]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Analogs",
+      "item": [
+        {
+          "name": "GET /analogs/{ticker}/{eventType}",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/analogs/{{ticker}}/{{eventType}}"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [{ "key": "baseUrl", "value": "http://localhost:8000/api/v1" }]
+}

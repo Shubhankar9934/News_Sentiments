@@ -1,0 +1,21 @@
+node_modules
+dist
+coverage
+.venv
+__pycache__
+*.pyc
+.git
+frontend/node_modules
+frontend/dist
+
+# Secrets — never copy into image build context
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+credentials.json
+secrets.json
+*.postman_environment.json
+!*.postman_environment.example.json

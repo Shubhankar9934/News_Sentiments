@@ -1,0 +1,12 @@
+{
+  "name": "news-sentiments-monorepo",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter frontend dev",
+    "build": "pnpm --filter frontend build",
+    "lint": "pnpm --filter frontend lint",
+    "test": "pnpm --filter frontend test",
+    "test:e2e": "pnpm --filter frontend test:e2e"
+  },
+  "packageManager": "pnpm@9.15.0"
+}

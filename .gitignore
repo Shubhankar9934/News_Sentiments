@@ -1,0 +1,105 @@
+# --- Secrets & environment (keep *.example templates) ---
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Keys, certs, and credential stores
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+id_rsa
+id_rsa.*
+id_dsa
+id_ed25519
+*.credentials
+credentials.json
+secrets.json
+secrets.yaml
+secrets.yml
+.secrets
+*.secret
+
+# Cloud provider keys
+*-credentials.json
+service-account*.json
+google-credentials.json
+firebase-adminsdk*.json
+.aws/credentials
+.aws/config
+
+# Terraform sensitive values
+*.tfvars
+!*.tfvars.example
+
+# Postman — local environments often hold bearer tokens / API keys
+*.postman_environment.json
+!*.postman_environment.example.json
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.dmypy.json
+.pytype/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+*.egg-info/
+.eggs/
+dist/
+build/
+*.egg
+
+# --- Node / frontend ---
+node_modules/
+dist/
+coverage/
+.vite/
+*.tsbuildinfo
+
+# Vite / frontend env overrides (examples are allowed via rules above)
+.env.local
+.env.*.local
+
+# --- OS / IDE ---
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+*.swp
+*.swo
+*~
+
+# VS Code — ignore user settings that may embed tokens; keep shared team config
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+
+# --- Logs & temp ---
+*.log
+logs/
+tmp/
+temp/
+.cache/
+
+# --- Local runtime / model caches ---
+.huggingface/
+transformers_cache/
+*.db
+*.sqlite
+*.sqlite3
