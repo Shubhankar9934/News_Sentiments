@@ -51,6 +51,7 @@ class Settings(BaseSettings):
 
     embed_model: str = Field(default="all-MiniLM-L6-v2", alias="EMBED_MODEL")
     finbert_model: str = Field(default="ProsusAI/finbert", alias="FINBERT_MODEL")
+    hf_token: str = Field(default="", alias="HF_TOKEN")
 
     dedupe_threshold: float = 0.92
     max_articles_claude: int = 15

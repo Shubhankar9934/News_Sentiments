@@ -14,6 +14,18 @@ from app.core.config import Settings
 log = structlog.get_logger(__name__)
 
 
+def _sanitize_for_json(obj: object) -> object:
+    """Recursively replace straight double-quotes inside string values with
+    typographic curly quotes so Claude never outputs unescaped \" in its JSON."""
+    if isinstance(obj, str):
+        return obj.replace('"', '\u201c').replace('"', '\u201d').replace('"', '\u2019')
+    if isinstance(obj, dict):
+        return {k: _sanitize_for_json(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [_sanitize_for_json(item) for item in obj]
+    return obj
+
+
 def _parse_report_json(blob: str) -> dict:
     """Parse model JSON; repair common LLM mistakes (unescaped quotes in headlines)."""
     try:
@@ -100,11 +112,13 @@ class ClaudeReportService:
         self._settings = settings
 
     async def generate(self, ticker: str, clusters: list[dict], price_ctx: dict) -> dict:
+        safe_clusters = _sanitize_for_json(clusters)
+        safe_price_ctx = _sanitize_for_json(price_ctx)
         user_msg = (
             f"Ticker: {ticker}\n\n"
-            f"Market context:\n{json.dumps(price_ctx, indent=2)}\n\n"
+            f"Market context:\n{json.dumps(safe_price_ctx, indent=2)}\n\n"
             f"News clusters ({len(clusters)} — pre-processed, sorted by impact):\n"
-            f"{json.dumps(clusters, indent=2)}\n\n"
+            f"{json.dumps(safe_clusters, indent=2)}\n\n"
             f"Return the research report JSON matching this schema:\n{self.REPORT_SCHEMA}"
         )
 

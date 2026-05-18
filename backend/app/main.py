@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 from contextlib import asynccontextmanager
 
 import structlog
@@ -32,6 +33,10 @@ log = structlog.get_logger(__name__)
 async def lifespan(app: FastAPI):
     configure_logging(json_logs=not get_settings().debug)
     settings = get_settings()
+
+    if settings.hf_token and not os.environ.get("HF_TOKEN"):
+        os.environ["HF_TOKEN"] = settings.hf_token
+
     app.state.limiter = limiter
     app.state.db_ok = False
     app.state.redis_ok = False

@@ -28,9 +28,10 @@ class SentimentService:
             import torch
             from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
-            self._tokenizer = AutoTokenizer.from_pretrained(self._settings.finbert_model)
+            token = self._settings.hf_token or None
+            self._tokenizer = AutoTokenizer.from_pretrained(self._settings.finbert_model, token=token)
             self._model = AutoModelForSequenceClassification.from_pretrained(
-                self._settings.finbert_model
+                self._settings.finbert_model, token=token
             )
             self._device = "cuda" if torch.cuda.is_available() else "cpu"
             self._model.to(self._device).eval()
