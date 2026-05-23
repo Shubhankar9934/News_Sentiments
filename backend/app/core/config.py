@@ -45,6 +45,42 @@ class Settings(BaseSettings):
     anthropic_model: str = Field(default="claude-sonnet-4-6", alias="ANTHROPIC_MODEL")
     anthropic_base_url: str = Field(default="https://api.anthropic.com", alias="ANTHROPIC_BASE_URL")
 
+    openai_api_key: str = Field(default="", alias="OPENAI_API_KEY")
+    openai_model: str = Field(default="gpt-4o", alias="OPENAI_MODEL")
+    openai_base_url: str = Field(default="https://api.openai.com/v1", alias="OPENAI_BASE_URL")
+
+    gemini_api_key: str = Field(default="", alias="GEMINI_API_KEY")
+    gemini_model: str = Field(default="gemini-2.0-flash", alias="GEMINI_MODEL")
+
+    deepseek_api_key: str = Field(default="", alias="DEEPSEEK_API_KEY")
+    deepseek_model: str = Field(default="deepseek-chat", alias="DEEPSEEK_MODEL")
+    deepseek_base_url: str = Field(
+        default="https://api.deepseek.com", alias="DEEPSEEK_BASE_URL"
+    )
+
+    groq_api_key: str = Field(default="", alias="GROQ_API_KEY")
+    groq_model: str = Field(default="llama-3.3-70b-versatile", alias="GROQ_MODEL")
+    groq_base_url: str = Field(
+        default="https://api.groq.com/openai/v1", alias="GROQ_BASE_URL"
+    )
+
+    dil_enabled: bool = Field(default=True, alias="DIL_ENABLED")
+    # False = run deliberation in the API process (local uvicorn without celery-worker).
+    dil_use_celery: bool = Field(default=False, alias="DIL_USE_CELERY")
+    dil_exclude_models: str = Field(default="", alias="DIL_EXCLUDE_MODELS")
+    dil_min_models: int = Field(default=2, alias="DIL_MIN_MODELS")
+    dil_max_debate_rounds: int = Field(default=2, alias="DIL_MAX_DEBATE_ROUNDS")
+    # DIL feature flags (PR2–PR10). Default ON in dev; flip OFF for safe rollouts.
+    dil_use_challenge_routing: bool = Field(default=True, alias="DIL_USE_CHALLENGE_ROUTING")
+    dil_use_novelty_gate: bool = Field(default=True, alias="DIL_USE_NOVELTY_GATE")
+    dil_novelty_threshold: float = Field(default=0.7, alias="DIL_NOVELTY_THRESHOLD")
+    dil_novelty_reprompt: bool = Field(default=False, alias="DIL_NOVELTY_REPROMPT")
+    dil_use_risk_clustering: bool = Field(default=True, alias="DIL_USE_RISK_CLUSTERING")
+    dil_use_llm_topic_tagging: bool = Field(default=False, alias="DIL_USE_LLM_TOPIC_TAGGING")
+    dil_use_evidence_verification: bool = Field(default=False, alias="DIL_USE_EVIDENCE_VERIFICATION")
+    dil_context_token_budget: int = Field(default=6000, alias="DIL_CONTEXT_TOKEN_BUDGET")
+    dil_client_timeout_s: int = Field(default=60, alias="DIL_CLIENT_TIMEOUT_S")
+
     qdrant_host: str = Field(default="localhost", alias="QDRANT_HOST")
     qdrant_port: int = Field(default=6333, alias="QDRANT_PORT")
     qdrant_collection: str = Field(default="article_embeddings", alias="QDRANT_COLLECTION")
@@ -74,6 +110,10 @@ class Settings(BaseSettings):
     @property
     def cors_origin_list(self) -> list[str]:
         return [o.strip() for o in self.cors_origins.split(",") if o.strip()]
+
+    @property
+    def dil_excluded_model_set(self) -> set[str]:
+        return {m.strip().lower() for m in self.dil_exclude_models.split(",") if m.strip()}
 
 
 @lru_cache

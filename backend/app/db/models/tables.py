@@ -4,6 +4,8 @@ import uuid
 from datetime import datetime
 from typing import Any
 
+from decimal import Decimal
+
 from sqlalchemy import (
     BigInteger,
     Boolean,
@@ -11,6 +13,7 @@ from sqlalchemy import (
     Float,
     ForeignKey,
     Integer,
+    Numeric,
     String,
     Text,
     UniqueConstraint,
@@ -100,3 +103,40 @@ class ResearchReportModel(Base):
     created_at: Mapped[datetime | None] = mapped_column(
         DateTime(timezone=True), server_default=text("NOW()")
     )
+
+
+class DeliberationRunModel(Base):
+    __tablename__ = "deliberation_runs"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), primary_key=True, server_default=text("uuid_generate_v4()")
+    )
+    report_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("research_reports.id"), nullable=False
+    )
+    ticker: Mapped[str] = mapped_column(String(10), nullable=False)
+    run_id: Mapped[str | None] = mapped_column(Text)
+    status: Mapped[str] = mapped_column(Text, nullable=False, default="pending")
+    models_used: Mapped[list[str] | None] = mapped_column(JSONB)
+    layer_json: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
+    created_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), server_default=text("NOW()")
+    )
+    completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    # PR8 additive — calibration lineage columns. Populated from consensus
+    # synthesis on completion; outcome columns stay NULL until a follow-up
+    # job ingests realised returns.
+    consensus_stance: Mapped[str | None] = mapped_column(Text)
+    reconciled_label: Mapped[str | None] = mapped_column(Text)
+    consensus_confidence: Mapped[Decimal | None] = mapped_column(Numeric(4, 3))
+    directional_conviction: Mapped[Decimal | None] = mapped_column(Numeric(4, 3))
+    consensus_strength: Mapped[Decimal | None] = mapped_column(Numeric(4, 3))
+    agreement_score: Mapped[Decimal | None] = mapped_column(Numeric(4, 3))
+    divergence: Mapped[Decimal | None] = mapped_column(Numeric(4, 3))
+    contradiction_density: Mapped[Decimal | None] = mapped_column(Numeric(4, 3))
+    uncertainty: Mapped[str | None] = mapped_column(Text)
+    primary_risks: Mapped[list[Any] | None] = mapped_column(JSONB)
+    outcome_window_end: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    realized_return: Mapped[Decimal | None] = mapped_column(Numeric)
+    outcome_label: Mapped[str | None] = mapped_column(Text)
+    calibration_score: Mapped[Decimal | None] = mapped_column(Numeric)

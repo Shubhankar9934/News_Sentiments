@@ -10,7 +10,7 @@ celery_app = Celery(
     "finresearch",
     broker=settings.celery_broker_url,
     backend=settings.celery_result_backend,
-    include=["app.workers.tasks.research"],
+    include=["app.workers.tasks.research", "app.workers.tasks.deliberation"],
 )
 
 celery_app.conf.task_default_queue = "research"

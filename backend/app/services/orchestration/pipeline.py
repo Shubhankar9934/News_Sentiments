@@ -21,6 +21,7 @@ from app.services.compression.narrative import NarrativeCompressionService
 from app.services.embeddings.cleaner import NewsCleanerService
 from app.services.event_extraction.rules import EventExtractionService
 from app.services.impact_scoring.scorer import EventImpactScoringService
+from app.services.deliberation.llm_clients.registry import ALL_DIL_MODEL_KEYS
 from app.services.llm.claude_report import ClaudeReportService
 from app.services.market.polygon import MarketDataService
 from app.services.qdrant.store import QdrantStoreService
@@ -191,8 +192,23 @@ class ResearchPipelineService:
             "run_at": datetime.now(UTC).isoformat(),
         }
 
+        report["deliberation_layer"] = {
+            "status": "pending",
+            "run_id": run_id,
+            "started_at": datetime.now(UTC).isoformat(),
+            "models_requested": list(ALL_DIL_MODEL_KEYS),
+        }
+
+        report_id_str: str | None = None
         if persist:
-            await self._persist.persist_report(t, f"{days}d", report)
+            report_id = await self._persist.persist_report(t, f"{days}d", report)
+            report_id_str = str(report_id)
+            report["_pipeline_meta"]["report_id"] = report_id_str
+
+            if self._settings.dil_enabled and report_id_str:
+                from app.services.deliberation.runner import schedule_deliberation
+
+                schedule_deliberation(report_id_str, self._settings)
 
         if self._cache:
             await self._cache.set_json(f"research:last:{t}", report, ttl_seconds=120)

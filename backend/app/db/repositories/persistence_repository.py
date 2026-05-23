@@ -1,6 +1,7 @@
 """Write path for pipeline outputs."""
 
 import json
+import uuid
 from typing import Any
 
 from sqlalchemy.dialects.postgresql import insert
@@ -89,7 +90,7 @@ class PersistenceRepository:
             await self._session.execute(stmt)
         await self._session.commit()
 
-    async def persist_report(self, ticker: str, window: str, report: dict[str, Any]) -> None:
+    async def persist_report(self, ticker: str, window: str, report: dict[str, Any]) -> uuid.UUID:
         row = ResearchReportModel(
             ticker=ticker,
             time_window=window,
@@ -98,4 +99,7 @@ class PersistenceRepository:
             articles_ct=report.get("articles_analyzed", 0),
         )
         self._session.add(row)
+        await self._session.flush()
+        report_id = row.id
         await self._session.commit()
+        return report_id

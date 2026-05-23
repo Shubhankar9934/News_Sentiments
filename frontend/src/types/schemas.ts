@@ -72,6 +72,7 @@ export const pipelineMetaSchema = z
     data_mode: z.string().optional(),
     elapsed_s: z.number().optional(),
     run_at: z.string().optional(),
+    report_id: z.string().optional(),
   })
   .passthrough();
 
@@ -137,3 +138,201 @@ export const researchReportSchema = z
   .passthrough();
 
 export type ResearchReport = z.infer<typeof researchReportSchema>;
+
+export const reasoningStepSchema = z.object({
+  step: z.number(),
+  title: z.string(),
+  analysis: z.string(),
+});
+
+export const independentOpinionSchema = z.object({
+  model: z.string(),
+  stance: z.string(),
+  confidence: z.number(),
+  time_horizon: z.string().optional(),
+  reasoning_steps: z.array(reasoningStepSchema).optional(),
+  key_risks: z.array(z.string()).optional(),
+  invalidators: z.array(z.string()).optional(),
+  position_size_suggestion: z.string().optional(),
+  hidden_assumptions: z.array(z.string()).optional(),
+  error: z.string().nullable().optional(),
+});
+
+export const debateCritiqueSchema = z.object({
+  model: z.string(),
+  agrees_with: z.array(z.string()).optional(),
+  disagrees_with: z.array(z.string()).optional(),
+  strongest_counterargument: z.string().optional(),
+  weakest_reasoning_detected: z.string().optional(),
+  new_risks_identified: z.array(z.string()).optional(),
+  confidence_revision: z
+    .object({ old: z.number(), new: z.number() })
+    .nullable()
+    .optional(),
+  error: z.string().nullable().optional(),
+});
+
+export const calibrationOutputSchema = z.object({
+  directional_conviction: z.number(),
+  consensus_strength: z.number(),
+  evidence_quality: z.number(),
+  confidence_aggregate: z.number(),
+  uncertainty: z.enum(["high", "medium", "low"]),
+});
+
+export const structuredRiskSchema = z.object({
+  cluster_id: z.string(),
+  headline: z.string(),
+  members: z.array(z.string()).optional(),
+  support_models: z.array(z.string()).optional(),
+  support_count: z.number().optional(),
+  severity: z.enum(["high", "medium", "low"]).optional(),
+  topic: z.string().optional(),
+});
+
+export const thesisClusterSchema = z.object({
+  stance: z.string(),
+  models: z.array(z.string()).optional(),
+  bullets: z.array(z.string()).optional(),
+  summary: z.string().optional(),
+  support_count: z.number().optional(),
+});
+
+export const consensusOutputSchema = z.object({
+  consensus: z.string(),
+  agreement_score: z.number(),
+  uncertainty: z.enum(["high", "medium", "low"]),
+  main_conflicts: z.array(z.string()).optional(),
+  hidden_risks: z.array(z.string()).optional(),
+  recommended_positioning: z.string().optional(),
+  debate_summary: z.string().optional(),
+  dominant_thesis: z.string().optional(),
+  conflicting_thesis: z.string().optional(),
+  reconciled_label: z.string().nullable().optional(),
+  support_counts: z.record(z.string(), z.array(z.string())).optional(),
+  calibration: calibrationOutputSchema.nullable().optional(),
+  structured_risks: z.array(structuredRiskSchema).optional(),
+  thesis_clusters: z.array(thesisClusterSchema).optional(),
+});
+
+export const debateAssignmentSchema = z.object({
+  round: z.number(),
+  model: z.string(),
+  targets: z.array(z.string()).optional(),
+  role: z.string().optional(),
+  rationale: z.string().optional(),
+});
+
+export const deliberationLayerSchema = z
+  .object({
+    report_id: z.string().optional(),
+    status: z.enum(["pending", "running", "complete", "failed", "skipped", "unavailable"]),
+    run_id: z.string().optional(),
+    started_at: z.string().optional(),
+    completed_at: z.string().optional(),
+    models_requested: z.array(z.string()).optional(),
+    models_used: z.array(z.string()).optional(),
+    round1: z.record(z.string(), independentOpinionSchema).optional(),
+    debate_rounds: z.array(z.record(z.string(), debateCritiqueSchema)).optional(),
+    debate_assignments: z.array(debateAssignmentSchema).optional(),
+    evidence_verification: z
+      .array(
+        z.object({
+          id: z.string(),
+          claim: z.string(),
+          source_title: z.string().nullable().optional(),
+          source_url: z.string().nullable().optional(),
+          status: z.string(),
+          supporting_models: z.array(z.string()).optional(),
+          contradicting_models: z.array(z.string()).optional(),
+        }),
+      )
+      .optional(),
+    consensus: consensusOutputSchema.optional(),
+    metrics: z
+      .object({
+        disagreement_matrix: z.record(z.string(), z.record(z.string(), z.string())).optional(),
+        confidence_drift: z
+          .array(
+            z.object({
+              model: z.string(),
+              before: z.number(),
+              after: z.number(),
+              delta: z.number(),
+            })
+          )
+          .optional(),
+        model_divergence: z.number().optional(),
+        confidence_spread: z.number().optional(),
+        contradiction_density: z.number().optional(),
+        reasoning_overlap: z.number().optional(),
+        round_novelty: z
+          .array(
+            z.object({
+              model: z.string(),
+              similarity: z.number(),
+              low_novelty: z.boolean(),
+            }),
+          )
+          .optional(),
+        disagreement_topology: z
+          .object({
+            axes: z.record(z.string(), z.number()).optional(),
+            overall: z.number().optional(),
+            hot_topics: z.array(z.string()).optional(),
+          })
+          .nullable()
+          .optional(),
+        conviction_heatmap: z
+          .object({
+            topics: z.array(z.string()).optional(),
+            models: z.array(z.string()).optional(),
+            cells: z
+              .record(
+                z.string(),
+                z.record(
+                  z.string(),
+                  z.object({
+                    stance: z.string(),
+                    confidence: z.number(),
+                    risk_score: z.number(),
+                  }),
+                ),
+              )
+              .optional(),
+          })
+          .nullable()
+          .optional(),
+        contradictions: z
+          .array(
+            z
+              .object({
+                type: z.string(),
+                topic: z.string().optional(),
+                model_a: z.string(),
+                model_b: z.string().optional(),
+                stance_a: z.string().optional(),
+                stance_b: z.string().optional(),
+                severity: z.string().optional(),
+                note: z.string().optional(),
+                evidence_refs: z.array(z.string()).optional(),
+              })
+              .passthrough(),
+          )
+          .optional(),
+      })
+      .passthrough()
+      .optional(),
+    error: z.string().optional(),
+    skip_reason: z.string().optional(),
+  })
+  .passthrough();
+
+export type DeliberationLayer = z.infer<typeof deliberationLayerSchema>;
+export type IndependentOpinion = z.infer<typeof independentOpinionSchema>;
+export type DebateCritique = z.infer<typeof debateCritiqueSchema>;
+export type ConsensusOutput = z.infer<typeof consensusOutputSchema>;
+export type CalibrationOutput = z.infer<typeof calibrationOutputSchema>;
+export type DebateAssignment = z.infer<typeof debateAssignmentSchema>;
+export type StructuredRisk = z.infer<typeof structuredRiskSchema>;
+export type ThesisCluster = z.infer<typeof thesisClusterSchema>;

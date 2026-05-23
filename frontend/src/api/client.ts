@@ -30,7 +30,9 @@ apiClient.interceptors.response.use(
         : Array.isArray(detail)
           ? "Validation error"
           : error.message;
-    if (status && status >= 500) {
+    if (status === 429) {
+      // Polling endpoints may briefly hit rate limits; callers handle retries.
+    } else if (status && status >= 500) {
       toast.error("Server error — try again shortly.");
     } else if (status === 401) {
       toast.error("Unauthorized");

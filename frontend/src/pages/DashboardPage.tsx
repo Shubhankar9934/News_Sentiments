@@ -1,6 +1,7 @@
 import { Suspense, useMemo, useState } from "react";
 import { Loader2, Moon, Sun } from "lucide-react";
 import { toast } from "sonner";
+import { DeliberationDashboard } from "@/components/deliberation/DeliberationDashboard";
 import { TradingIntelligenceDashboard, type AnalogRow } from "@/components/trading/TradingIntelligenceDashboard";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -159,14 +160,17 @@ export function DashboardPage() {
       )}
 
       {report && (
-        <TradingIntelligenceDashboard
-          ticker={ticker}
-          report={report}
-          isDark={theme === "dark"}
-          analogRows={(analogQuery.data as AnalogRow[] | undefined) ?? []}
-          analogsLoading={analogQuery.isLoading}
-          dominantEventLabel={dominantEvent}
-        />
+        <>
+          <TradingIntelligenceDashboard
+            ticker={ticker}
+            report={report}
+            isDark={theme === "dark"}
+            analogRows={(analogQuery.data as AnalogRow[] | undefined) ?? []}
+            analogsLoading={analogQuery.isLoading}
+            dominantEventLabel={dominantEvent}
+          />
+          <DeliberationDashboard ticker={ticker} report={report} isDark={theme === "dark"} />
+        </>
       )}
     </div>
   );

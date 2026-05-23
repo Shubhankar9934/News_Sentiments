@@ -1,0 +1,2 @@
+Consensus is computed deterministically by the platform — models do not produce final consensus.
+This file is reserved for documentation only.
