@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import type { DeliberationLayer } from "@/types/schemas";
-import { MODEL_LABELS, SectionTitle } from "./shared";
+import { deskLabel, modelTooltip, SectionTitle } from "./shared";
 
 type Props = { layer: DeliberationLayer };
 
@@ -15,8 +15,8 @@ export function ReasoningTree({ layer }: Props) {
           if (op.error) return null;
           const steps = op.reasoning_steps ?? [];
           return (
-            <div key={key}>
-              <p className="mb-2 text-sm font-semibold">{MODEL_LABELS[key] ?? key}</p>
+            <div key={key} title={modelTooltip(key, op.role_label)}>
+              <p className="mb-2 text-sm font-semibold">{deskLabel(key, op.role_label)}</p>
               <ol className="space-y-2 border-l-2 border-[hsl(var(--border))] pl-4">
                 {steps.map((s) => (
                   <li key={s.step} className="text-sm">

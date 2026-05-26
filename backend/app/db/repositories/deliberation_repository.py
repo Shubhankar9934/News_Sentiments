@@ -99,6 +99,55 @@ class DeliberationRepository:
         await self._session.commit()
         return True
 
+    async def update_executive_summary(
+        self,
+        report_id: uuid.UUID,
+        summary: dict[str, Any],
+    ) -> bool:
+        """JSONB-merge an ``executive_summary`` block onto a stored report.
+
+        Used by the deliberation runner to upgrade the grid card's metrics
+        from v1 (options-only) to v2 (with DIL consensus) once the debate
+        completes. Behaves identically to ``update_deliberation_layer`` —
+        loads the existing JSON, splices the field in, writes the column.
+        """
+        row = await self.get_report_by_id(report_id)
+        if not row:
+            return False
+        report_json = dict(row.report_json or {})
+        report_json["executive_summary"] = summary
+        await self._session.execute(
+            update(ResearchReportModel)
+            .where(ResearchReportModel.id == report_id)
+            .values(report_json=report_json)
+        )
+        await self._session.commit()
+        return True
+
+    async def replace_report_json(
+        self,
+        report_id: uuid.UUID,
+        report_json: dict[str, Any],
+        *,
+        commit: bool = True,
+    ) -> bool:
+        """Replace the stored ``report_json`` blob (e.g. after inline DIL merge)."""
+
+        row = await self.get_report_by_id(report_id)
+        if not row:
+            return False
+        import json
+
+        safe = json.loads(json.dumps(report_json, default=str))
+        await self._session.execute(
+            update(ResearchReportModel)
+            .where(ResearchReportModel.id == report_id)
+            .values(report_json=safe)
+        )
+        if commit:
+            await self._session.commit()
+        return True
+
     async def persist_deliberation_run(
         self,
         report_id: uuid.UUID,

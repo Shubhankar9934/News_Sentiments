@@ -30,12 +30,33 @@ apiClient.interceptors.response.use(
         : Array.isArray(detail)
           ? "Validation error"
           : error.message;
+
+    // When axios sees no `error.response`, the request never received headers
+    // (server overload, request aborted on navigation, true CORS misconfig,
+    // or a true network error). Chrome reports all of these as "blocked by
+    // CORS policy" in DevTools — surface a clearer message in the UI.
+    const isNetworkLike =
+      !error.response &&
+      (error.code === "ERR_NETWORK" ||
+        error.code === "ECONNABORTED" ||
+        error.code === "ERR_CANCELED" ||
+        error.message === "Network Error");
+
     if (status === 429) {
       // Polling endpoints may briefly hit rate limits; callers handle retries.
     } else if (status && status >= 500) {
       toast.error("Server error — try again shortly.");
     } else if (status === 401) {
       toast.error("Unauthorized");
+    } else if (isNetworkLike) {
+      // Quiet during navigation-cancellations: ERR_CANCELED is fired when
+      // an unmounting component aborts the request. Show a toast only for
+      // genuine network errors.
+      if (error.code !== "ERR_CANCELED") {
+        toast.error(
+          "Backend unreachable — check that the API is running on http://localhost:8000.",
+        );
+      }
     } else {
       toast.error(message);
     }

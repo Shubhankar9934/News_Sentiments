@@ -3,6 +3,8 @@ import { ResearchReportCharts } from "@/components/dashboard/ResearchReportChart
 import { NewsCard } from "@/components/news/NewsCard";
 import { NewsTimeline } from "@/components/news/NewsTimeline";
 import { SourceBadge } from "@/components/news/SourceBadge";
+import { OptionsIntelligencePanel } from "@/components/options/OptionsIntelligencePanel";
+import { TickerSummaryCard } from "@/components/trading/TickerSummaryCard";
 import { Card } from "@/components/ui/card";
 import {
   deriveTradingView,
@@ -21,6 +23,27 @@ export type AnalogRow = {
   impact_score?: number | null;
   close?: number | null;
   volume?: number | null;
+  match_reason?: string | null;
+  match_score?: number | null;
+};
+
+const ANALOG_REASON_LABEL: Record<string, { label: string; cls: string }> = {
+  exact_event_type: {
+    label: "Same event type",
+    cls: "border-slate-400/40 bg-slate-100/60 text-slate-700 dark:bg-slate-700/40 dark:text-slate-200",
+  },
+  semantic: {
+    label: "Semantic match",
+    cls: "border-sky-500/30 bg-sky-500/10 text-sky-700 dark:text-sky-200",
+  },
+  earnings_beat_sell_off: {
+    label: "Sell-the-news",
+    cls: "border-rose-500/30 bg-rose-500/10 text-rose-700 dark:text-rose-200",
+  },
+  sector_rotation: {
+    label: "Sector rotation",
+    cls: "border-amber-500/30 bg-amber-500/10 text-amber-900 dark:text-amber-100",
+  },
 };
 
 type Props = {
@@ -126,6 +149,8 @@ export function TradingIntelligenceDashboard({
 
   return (
     <div className="space-y-5">
+      <TickerSummaryCard ticker={ticker} report={report} />
+
       <div className="rounded-xl border border-indigo-500/25 bg-gradient-to-br from-indigo-500/5 via-transparent to-transparent px-4 py-3 dark:from-indigo-400/10">
         <p className="text-[11px] font-semibold uppercase tracking-wide text-indigo-700 dark:text-indigo-300">
           Core question
@@ -251,6 +276,11 @@ export function TradingIntelligenceDashboard({
         </div>
       </Card>
 
+      {/* 3.5 Options intelligence */}
+      {report.options_intelligence && (
+        <OptionsIntelligencePanel options={report.options_intelligence} />
+      )}
+
       {/* 4 Catalysts */}
       <Card className="p-4">
         <SectionTitle title="4 · Why the tape is moving">Top catalysts</SectionTitle>
@@ -328,15 +358,28 @@ export function TradingIntelligenceDashboard({
           <p className="text-xs text-slate-500">No analog rows for this event type yet — run more history through the pipeline.</p>
         )}
         <ul className="space-y-2 text-sm">
-          {(analogRows ?? []).slice(0, 5).map((r: AnalogRow, i: number) => (
-            <li key={`${r.headline}-${i}`} className="rounded-md border border-[hsl(var(--border))] px-3 py-2">
-              <div className="font-medium text-slate-900 dark:text-slate-50">{r.headline ?? "—"}</div>
-              <div className="mt-1 text-xs text-slate-500">
-                {r.published_at ? new Date(r.published_at).toLocaleDateString() : "—"} · close{" "}
-                {r.close != null ? r.close.toFixed(2) : "—"} · vol {r.volume != null ? r.volume.toLocaleString() : "—"}
-              </div>
-            </li>
-          ))}
+          {(analogRows ?? []).slice(0, 5).map((r: AnalogRow, i: number) => {
+            const badge = r.match_reason ? ANALOG_REASON_LABEL[r.match_reason] : undefined;
+            return (
+              <li key={`${r.headline}-${i}`} className="rounded-md border border-[hsl(var(--border))] px-3 py-2">
+                <div className="flex items-start justify-between gap-2">
+                  <div className="font-medium text-slate-900 dark:text-slate-50">{r.headline ?? "—"}</div>
+                  {badge && (
+                    <span className={`shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-semibold ${badge.cls}`}>
+                      {badge.label}
+                    </span>
+                  )}
+                </div>
+                <div className="mt-1 text-xs text-slate-500">
+                  {r.published_at ? new Date(r.published_at).toLocaleDateString() : "—"} · close{" "}
+                  {r.close != null ? r.close.toFixed(2) : "—"} · vol {r.volume != null ? r.volume.toLocaleString() : "—"}
+                  {typeof r.match_score === "number" && (
+                    <span className="ml-1 font-mono">· match {(r.match_score * 100).toFixed(0)}%</span>
+                  )}
+                </div>
+              </li>
+            );
+          })}
         </ul>
       </Card>
 

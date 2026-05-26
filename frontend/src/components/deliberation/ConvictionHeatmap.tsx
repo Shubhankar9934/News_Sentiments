@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import type { DeliberationLayer } from "@/types/schemas";
-import { MODEL_LABELS, Pill, SectionTitle, stanceTone } from "./shared";
+import { deskLabel, modelTooltip, Pill, SectionTitle, stanceTone } from "./shared";
 
 type Props = { layer: DeliberationLayer };
 
@@ -45,8 +45,9 @@ export function ConvictionHeatmap({ layer }: Props) {
                 <th
                   key={m}
                   className="border-b border-[hsl(var(--border))] p-2 text-left font-semibold"
+                  title={modelTooltip(m)}
                 >
-                  {MODEL_LABELS[m] ?? m}
+                  {deskLabel(m)}
                 </th>
               ))}
             </tr>

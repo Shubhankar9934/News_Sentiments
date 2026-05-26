@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import type { DeliberationLayer, StructuredRisk } from "@/types/schemas";
-import { MODEL_LABELS, Pill, SectionTitle } from "./shared";
+import { deskLabel, Pill, SectionTitle } from "./shared";
 
 type Props = { layer: DeliberationLayer };
 
@@ -22,7 +22,7 @@ function StructuredRiskList({
     <ul className="space-y-3">
       {risks.map((r) => {
         const supportLabels = (r.support_models ?? [])
-          .map((m) => MODEL_LABELS[m] ?? m)
+          .map((m) => deskLabel(m))
           .join(", ");
         const fraction =
           totalModels > 0 ? `${r.support_count ?? 0}/${totalModels}` : `${r.support_count ?? 0}`;

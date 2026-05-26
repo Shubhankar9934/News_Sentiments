@@ -85,10 +85,11 @@ def _recommended_positioning(consensus_label: str, risks: list[str]) -> str:
 
 def _dominant_and_conflicting_theses(round1: dict[str, IndependentOpinion]) -> tuple[str, str]:
     by_stance: dict[str, list[str]] = {}
-    for model, op in round1.items():
+    for desk_key, op in round1.items():
         if op.error:
             continue
-        by_stance.setdefault(op.stance, []).append(model)
+        label = op.role_label or desk_key
+        by_stance.setdefault(op.stance, []).append(label)
     if not by_stance:
         return "", ""
     dominant_stance = max(by_stance.keys(), key=lambda s: len(by_stance[s]))
@@ -134,9 +135,9 @@ def synthesize_consensus(
     )
     calibration = CalibrationOutput(**calibration_dict)
 
-    models_n = len([o for o in opinions if not o.error])
+    desks_n = len([o for o in opinions if not o.error])
     debate_summary = (
-        f"{models_n} models deliberated across {len(debate_rounds)} debate rounds. "
+        f"{desks_n} desks deliberated across {len(debate_rounds)} debate rounds. "
         f"Agreement {agree:.0%}, directional conviction "
         f"{calibration.directional_conviction:.0%}, consensus strength "
         f"{calibration.consensus_strength:.0%}, divergence "

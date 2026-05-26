@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import type { DeliberationLayer } from "@/types/schemas";
-import { MODEL_LABELS, Pill, SectionTitle, stanceTone } from "./shared";
+import { deskLabel, Pill, SectionTitle, stanceTone } from "./shared";
 
 type Props = { layer: DeliberationLayer };
 
@@ -40,8 +40,8 @@ export function ContradictionAnalysisPanel({ layer }: Props) {
       </SectionTitle>
       <ul className="space-y-2 text-sm">
         {contradictions.map((c, idx) => {
-          const a = MODEL_LABELS[c.model_a] ?? c.model_a;
-          const b = c.model_b ? (MODEL_LABELS[c.model_b] ?? c.model_b) : null;
+          const a = deskLabel(c.model_a);
+          const b = c.model_b ? deskLabel(c.model_b) : null;
           return (
             <li
               key={idx}

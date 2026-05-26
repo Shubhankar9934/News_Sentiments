@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import type { DeliberationLayer, ThesisCluster } from "@/types/schemas";
-import { MODEL_LABELS, Pill, SectionTitle, stanceTone } from "./shared";
+import { deskLabel, Pill, SectionTitle, stanceTone } from "./shared";
 
 type Props = { layer: DeliberationLayer };
 
@@ -22,7 +22,7 @@ function ThesisCard({
         </Pill>
         {models.length > 0 && (
           <span className="text-xs text-slate-500">
-            {models.map((m) => MODEL_LABELS[m] ?? m).join(", ")}
+            {models.map((m) => deskLabel(m)).join(", ")}
           </span>
         )}
       </div>

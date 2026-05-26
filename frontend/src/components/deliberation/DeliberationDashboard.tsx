@@ -15,6 +15,8 @@ import { HiddenRisksPanel } from "./HiddenRisksPanel";
 import { InstitutionalVerdict } from "./InstitutionalVerdict";
 import { ModelOpinionCards } from "./ModelOpinionCards";
 import { ReasoningTree } from "./ReasoningTree";
+import { CouncilPanel } from "./CouncilPanel";
+import { ResearchDesksPanel } from "./ResearchDesksPanel";
 import { ThesisClusterSummary } from "./ThesisClusterSummary";
 import { Pill } from "./shared";
 
@@ -66,7 +68,12 @@ export function DeliberationDashboard({ report, isDark }: Props) {
               ? "Deliberation running — querying GPT, Claude, and DeepSeek (this can take 2–5 minutes)…"
               : "Multi-model deliberation in progress…"}
           </p>
-          {layer?.models_requested && layer.models_requested.length > 0 && (
+          {layer?.desks_requested && layer.desks_requested.length > 0 && (
+            <p className="text-xs text-slate-500">
+              Desks: {layer.desks_requested.map((d) => d.replace(/_desk$/, "")).join(", ")}
+            </p>
+          )}
+          {layer?.models_requested && layer.models_requested.length > 0 && !layer.desks_requested?.length && (
             <p className="text-xs text-slate-500">
               Models: {layer.models_requested.join(", ")}
             </p>
@@ -98,6 +105,8 @@ export function DeliberationDashboard({ report, isDark }: Props) {
 
       {layer && status === "complete" && (
         <div className="space-y-4">
+          <ResearchDesksPanel layer={layer} />
+          <CouncilPanel layer={layer} />
           <ThesisClusterSummary layer={layer} />
           <ModelOpinionCards layer={layer} />
           <ReasoningTree layer={layer} />

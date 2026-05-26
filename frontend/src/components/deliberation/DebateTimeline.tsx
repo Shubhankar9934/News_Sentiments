@@ -4,11 +4,12 @@ import type {
   DebateCritique,
   DeliberationLayer,
 } from "@/types/schemas";
-import { MODEL_LABELS, Pill, SectionTitle } from "./shared";
+import { deskLabel, modelTooltip, Pill, SectionTitle } from "./shared";
 
 type Props = { layer: DeliberationLayer };
 
 const ROLE_LABELS: Record<string, string> = {
+  debate_devils_advocate: "Debate Devil's Advocate",
   devils_advocate: "Devil's Advocate",
   assumption_auditor: "Assumption Auditor",
   default: "",
@@ -34,10 +35,14 @@ function CritiqueBlock({
     novelty && typeof novelty.similarity === "number"
       ? `${Math.round(novelty.similarity * 100)}%`
       : null;
+  const deskKey = critique.role_key ?? critique.model;
   return (
-    <div className="rounded-md border border-[hsl(var(--border))] p-3 text-sm">
+    <div
+      className="rounded-md border border-[hsl(var(--border))] p-3 text-sm"
+      title={modelTooltip(deskKey, critique.role_label, critique.model)}
+    >
       <div className="mb-1 flex flex-wrap items-center gap-2">
-        <span className="font-semibold">{MODEL_LABELS[critique.model] ?? critique.model}</span>
+        <span className="font-semibold">{deskLabel(deskKey, critique.role_label)}</span>
         <span className="text-xs text-slate-500">{roundLabel}</span>
         {rev && (
           <Pill tone={rev.new < rev.old ? "warn" : "ok"}>
@@ -48,9 +53,7 @@ function CritiqueBlock({
           <Pill tone="warn">{ROLE_LABELS[role]}</Pill>
         )}
         {targets.length > 0 && (
-          <Pill>
-            → targets {targets.map((m) => MODEL_LABELS[m] ?? m).join(", ")}
-          </Pill>
+          <Pill>→ targets {targets.map((m) => deskLabel(m)).join(", ")}</Pill>
         )}
         {lowNovelty && (
           <Pill tone="warn">low novelty{similarityPct ? ` (sim ${similarityPct})` : ""}</Pill>
@@ -58,12 +61,12 @@ function CritiqueBlock({
       </div>
       {(critique.agrees_with?.length ?? 0) > 0 && (
         <p className="text-xs text-emerald-700 dark:text-emerald-300">
-          Agrees: {(critique.agrees_with ?? []).map((m) => MODEL_LABELS[m] ?? m).join(", ")}
+          Agrees: {(critique.agrees_with ?? []).map((m) => deskLabel(m)).join(", ")}
         </p>
       )}
       {(critique.disagrees_with?.length ?? 0) > 0 && (
         <p className="text-xs text-rose-700 dark:text-rose-300">
-          Disagrees: {(critique.disagrees_with ?? []).map((m) => MODEL_LABELS[m] ?? m).join(", ")}
+          Disagrees: {(critique.disagrees_with ?? []).map((m) => deskLabel(m)).join(", ")}
         </p>
       )}
       {critique.strongest_counterargument && (
@@ -89,12 +92,16 @@ export function DebateTimeline({ layer }: Props) {
   const assignments = layer.debate_assignments ?? [];
   const noveltyRaw =
     (layer.metrics as { round_novelty?: NoveltyEntry[] } | undefined)?.round_novelty ?? [];
-  const noveltyByModel = new Map<string, NoveltyEntry>(
+  const noveltyByDesk = new Map<string, NoveltyEntry>(
     noveltyRaw.map((n) => [n.model, n]),
   );
 
-  function lookupAssignment(roundIndex: number, model: string): DebateAssignment | undefined {
-    return assignments.find((a) => a.round === roundIndex + 1 && a.model === model);
+  function lookupAssignment(roundIndex: number, deskKey: string): DebateAssignment | undefined {
+    return assignments.find(
+      (a) =>
+        a.round === roundIndex + 1 &&
+        (a.desk_key === deskKey || a.model === deskKey),
+    );
   }
 
   return (
@@ -105,19 +112,21 @@ export function DebateTimeline({ layer }: Props) {
           <p className="text-sm text-slate-500">No debate rounds recorded.</p>
         )}
         {rounds.map((rd, idx) => {
-          // Novelty is computed between round 1 (cross-critique) and round 2
-          // (revision), so attach the score only to round-2 (idx === 1) cards.
           const isRevisionRound = idx === 1;
           return (
             <div key={idx} className="space-y-2">
               <p className="text-xs font-bold uppercase text-slate-500">Round {idx + 1}</p>
-              {Object.values(rd).map((c) => (
+              {Object.entries(rd).map(([deskKey, c]) => (
                 <CritiqueBlock
-                  key={c.model}
+                  key={deskKey}
                   roundLabel={`Debate ${idx + 1}`}
                   critique={c}
-                  assignment={lookupAssignment(idx, c.model)}
-                  novelty={isRevisionRound ? noveltyByModel.get(c.model) : undefined}
+                  assignment={lookupAssignment(idx, c.role_key ?? deskKey)}
+                  novelty={
+                    isRevisionRound
+                      ? noveltyByDesk.get(c.role_key ?? deskKey) ?? noveltyByDesk.get(c.model)
+                      : undefined
+                  }
                 />
               ))}
             </div>

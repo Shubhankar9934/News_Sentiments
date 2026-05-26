@@ -35,8 +35,4 @@ async def get_deliberation(
     if not layer:
         return {"status": "unavailable", "report_id": report_id}
 
-    from app.services.deliberation.runner import schedule_deliberation_if_stale
-
-    schedule_deliberation_if_stale(report_id, layer)
-
     return {"report_id": report_id, **layer}

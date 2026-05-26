@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import type { DeliberationLayer } from "@/types/schemas";
-import { MODEL_LABELS, Pill, SectionTitle } from "./shared";
+import { deskLabel, Pill, SectionTitle } from "./shared";
 
 type Props = { layer: DeliberationLayer };
 
@@ -55,7 +55,7 @@ export function CalibrationDisplay({ layer }: Props) {
             .sort(([, a], [, b]) => (b as string[]).length - (a as string[]).length)
             .map(([stance, models]) => {
               const list = models as string[];
-              const labels = list.map((m) => MODEL_LABELS[m] ?? m).join(", ");
+              const labels = list.map((m) => deskLabel(m)).join(", ");
               return (
                 <Pill key={stance}>
                   {stance} {list.length}/{total} ({labels})

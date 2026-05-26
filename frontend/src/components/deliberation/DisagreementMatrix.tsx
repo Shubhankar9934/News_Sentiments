@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import type { DeliberationLayer } from "@/types/schemas";
-import { MODEL_LABELS, Pill, SectionTitle } from "./shared";
+import { deskLabel, Pill, SectionTitle } from "./shared";
 
 type Props = { layer: DeliberationLayer };
 
@@ -42,7 +42,7 @@ export function DisagreementMatrix({ layer }: Props) {
                   key={m}
                   className="border border-[hsl(var(--border))] bg-[hsl(var(--muted))] p-2 text-center"
                 >
-                  {MODEL_LABELS[m] ?? m}
+                  {deskLabel(m)}
                 </th>
               ))}
               <th className="border border-[hsl(var(--border))] bg-[hsl(var(--muted))] p-2 text-center">

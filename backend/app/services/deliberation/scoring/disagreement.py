@@ -7,14 +7,30 @@ from typing import Any
 
 from app.services.deliberation.schemas import DebateCritique, DeliberationMetrics, IndependentOpinion, ModelKey
 
-TOPICS = ("macro", "earnings", "volatility", "valuation", "liquidity")
+TOPICS = (
+    "macro",
+    "earnings",
+    "volatility",
+    "valuation",
+    "liquidity",
+    "technical",
+    "flow",
+    "regime",
+    "news",
+    "event_risk",
+)
 
 TOPIC_KEYWORDS: dict[str, re.Pattern[str]] = {
     "macro": re.compile(r"macro|fed|rates|inflation|gdp|economy|geopolit", re.I),
     "earnings": re.compile(r"earn|eps|revenue|guidance|quarter|profit", re.I),
     "volatility": re.compile(r"volatil|vix|beta|swing|regime", re.I),
     "valuation": re.compile(r"valuat|multiple|pe\b|price.target|fair.value", re.I),
-    "liquidity": re.compile(r"liquid|volume|flow|spread|bid", re.I),
+    "liquidity": re.compile(r"liquid|volume|spread|bid|ask|open.interest", re.I),
+    "technical": re.compile(r"rsi|macd|support|resist|trend|atr|chart", re.I),
+    "flow": re.compile(r"flow|unusual|uoa|call.buy|put.buy|dark.pool", re.I),
+    "regime": re.compile(r"risk.on|risk.off|range.bound|macro.week|trending", re.I),
+    "news": re.compile(r"headline|narrative|press.release|news.momentum", re.I),
+    "event_risk": re.compile(r"fomc|cpi|nfp|event.risk|binary|calendar", re.I),
 }
 
 

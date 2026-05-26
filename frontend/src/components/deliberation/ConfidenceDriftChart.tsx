@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import type { DeliberationLayer } from "@/types/schemas";
-import { MODEL_LABELS, SectionTitle } from "./shared";
+import { deskLabel, modelTooltip, SectionTitle } from "./shared";
 
 type Props = { layer: DeliberationLayer; isDark: boolean };
 
@@ -15,7 +15,7 @@ export function ConfidenceDriftChart({ layer }: Props) {
         {drift.map((d) => (
           <div key={d.model}>
             <div className="mb-1 flex justify-between text-xs">
-              <span className="font-semibold">{MODEL_LABELS[d.model] ?? d.model}</span>
+              <span className="font-semibold" title={modelTooltip(d.model)}>{deskLabel(d.model)}</span>
               <span className="text-slate-500">
                 {Math.round(d.before * 100)}% → {Math.round(d.after * 100)}% (
                 {d.delta >= 0 ? "+" : ""}

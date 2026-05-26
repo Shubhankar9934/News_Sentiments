@@ -47,3 +47,63 @@ export const MODEL_LABELS: Record<string, string> = {
   deepseek: "DeepSeek",
   groq: "Groq",
 };
+
+/** Desk labels keyed by role_key (canonical) or legacy model key. */
+export const DESK_LABELS_BY_KEY: Record<string, string> = {
+  macro_desk: "Macro Desk",
+  fundamental_desk: "Fundamental Desk",
+  options_desk: "Options Desk",
+  risk_desk: "Risk Desk",
+  devils_advocate_desk: "Devil's Advocate Desk",
+  technical_desk: "Technical Desk",
+  news_desk: "News Intelligence Desk",
+  earnings_desk: "Earnings Desk",
+  event_risk_desk: "Event Risk Desk",
+  flow_desk: "Flow Desk",
+  liquidity_desk: "Liquidity Desk",
+  regime_desk: "Regime Desk",
+  quant_desk: "Quant Desk",
+  reverse_bwb_structure_desk: "Reverse BWB Structure Desk",
+  // Legacy model-key mapping
+  gpt: "Macro Desk",
+  claude: "Fundamental Desk",
+  gemini: "Devil's Advocate Desk",
+  deepseek: "Risk Desk",
+  groq: "Options Desk",
+};
+
+export const CORE_DESK_KEYS = [
+  "macro_desk",
+  "fundamental_desk",
+  "options_desk",
+  "risk_desk",
+  "devils_advocate_desk",
+] as const;
+
+export const SPECIALIZED_DESK_KEYS = [
+  "technical_desk",
+  "news_desk",
+  "earnings_desk",
+  "event_risk_desk",
+  "flow_desk",
+  "liquidity_desk",
+  "regime_desk",
+  "quant_desk",
+  "reverse_bwb_structure_desk",
+] as const;
+
+/** @deprecated use DESK_LABELS_BY_KEY */
+export const DESK_LABELS = DESK_LABELS_BY_KEY;
+
+export function deskLabel(deskKey: string, roleLabel?: string | null): string {
+  if (roleLabel && roleLabel.trim().length > 0) return roleLabel;
+  return DESK_LABELS_BY_KEY[deskKey] ?? deskKey.replace(/_/g, " ");
+}
+
+export function modelTooltip(deskKey: string, roleLabel?: string | null, provider?: string | null): string {
+  const desk = deskLabel(deskKey, roleLabel);
+  const m = provider ?? (MODEL_LABELS[deskKey] ? deskKey : null);
+  const providerLabel = m ? MODEL_LABELS[m] ?? m : null;
+  if (!providerLabel || desk === providerLabel) return desk;
+  return `${desk} (powered by ${providerLabel})`;
+}

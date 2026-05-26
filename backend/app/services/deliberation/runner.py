@@ -71,6 +71,46 @@ async def execute_deliberation(report_id: str) -> dict[str, Any]:
                         error=str(persist_err),
                     )
 
+                # Stage-2 executive-summary refresh: now that DIL consensus
+                # exists, recompute outlook/confidence/risk so the grid card
+                # upgrades from v1 to v2 metrics.
+                summary_v2: dict[str, Any] | None = None
+                if layer_dict.get("status") == "complete":
+                    try:
+                        from app.services.summary import extract_executive_summary
+
+                        merged = {**report, "deliberation_layer": layer_dict}
+                        summary_v2 = extract_executive_summary(merged).model_dump()
+                        await repo.update_executive_summary(rid, summary_v2)
+                    except Exception as summary_err:
+                        log.warning(
+                            "dil.executive_summary_refresh_failed",
+                            report_id=report_id,
+                            error=str(summary_err),
+                        )
+
+                    council_layer = layer_dict.get("council_layer") or {}
+                    council_consensus = council_layer.get("consensus") or {}
+                    mapped = layer_dict.get("mapped_decision")
+                    if mapped and council_consensus.get("decision"):
+                        try:
+                            from app.db.repositories.dashboard_repository import (
+                                DashboardRepository,
+                            )
+
+                            dash_repo = DashboardRepository(session)
+                            await dash_repo.patch_reverse_bwb_decision(
+                                ticker,
+                                mapped,
+                                council_decision=council_consensus.get("decision"),
+                            )
+                        except Exception as patch_err:
+                            log.warning(
+                                "dil.dashboard_patch_failed",
+                                report_id=report_id,
+                                error=str(patch_err),
+                            )
+
                 from redis.asyncio import Redis
 
                 from app.services.cache.redis_cache import RedisCache
@@ -78,9 +118,15 @@ async def execute_deliberation(report_id: str) -> dict[str, Any]:
                 redis_client = Redis.from_url(settings.redis_url, decode_responses=True)
                 try:
                     cache = RedisCache(redis_client)
+                    cache_payload: dict[str, Any] = {
+                        **report,
+                        "deliberation_layer": layer_dict,
+                    }
+                    if summary_v2 is not None:
+                        cache_payload["executive_summary"] = summary_v2
                     await cache.set_json(
                         f"research:last:{ticker}",
-                        {**report, "deliberation_layer": layer_dict},
+                        cache_payload,
                         ttl_seconds=120,
                     )
                 except Exception:
