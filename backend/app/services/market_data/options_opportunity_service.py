@@ -297,6 +297,9 @@ class OptionsOpportunityService:
                     continue
 
                 profile = compute_liquidity_profile(
+                    # BWB ratios: +1 long_wing_a / -2 short_body / +1 long_wing_b
+                    bid_size_legs=(qa.bid_size, qb.bid_size, qc.bid_size),
+                    ratios=(1, 2, 1),
                     oi_legs=(qa.open_interest, qb.open_interest, qc.open_interest),
                     vol_legs=(qa.volume, qb.volume, qc.volume),
                 )
@@ -314,6 +317,9 @@ class OptionsOpportunityService:
                 ):
                     atm_iv = qb.implied_vol
 
+                # OTM %: percentage distance of the first (lowest) combo strike
+                # from spot. Not options-Greek delta. CALL rows >= 0 (first
+                # strike at or above spot); PUT rows <= 0 (at or below spot).
                 delta_pct = ((cand.long_wing_a - last_price) / last_price) * 100.0
 
                 priced.append(
@@ -343,6 +349,7 @@ class OptionsOpportunityService:
             deterministic_margin(
                 wing_left=p.candidate.wing_left,
                 wing_right=p.candidate.wing_right,
+                premium_per_share=p.premium,
             )
             for p in priced
         ]
@@ -377,6 +384,7 @@ class OptionsOpportunityService:
                         priced_one.leg_quotes[2].con_id,
                     ),
                     ranking_score=rscore,
+                    premium_per_share=priced_one.premium,
                 )
             )
 

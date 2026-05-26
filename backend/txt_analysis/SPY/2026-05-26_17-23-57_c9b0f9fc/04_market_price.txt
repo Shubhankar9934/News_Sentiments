@@ -1,0 +1,17 @@
+================================================================================
+PIPELINE AUDIT — MARKET PRICE DATA
+Ticker : SPY
+Run ID : c9b0f9fc-a1bc-4240-a664-dfc5cc0a1c1b
+Time   : 2026-05-26_17-23-57
+================================================================================
+
+{
+  "ticker": "SPY",
+  "price_source_used": "ibkr_live",
+  "polygon_last_close": 745.64,
+  "ibkr_live_price": 748.67,
+  "final_last_close": 748.67,
+  "volatility_regime": "low",
+  "bars_fetched": 7,
+  "note": "IBKR live price used — Polygon close overridden"
+}

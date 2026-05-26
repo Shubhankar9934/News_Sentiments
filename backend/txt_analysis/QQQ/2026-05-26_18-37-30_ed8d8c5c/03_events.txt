@@ -1,0 +1,193 @@
+================================================================================
+PIPELINE AUDIT — EXTRACTED EVENTS (rule-based)
+Ticker : QQQ
+Run ID : ed8d8c5c-fa13-4990-bcbe-993c82504b4d
+Time   : 2026-05-26_18-37-30
+================================================================================
+
+[
+  {
+    "headline": "Nasdaq 100 Hits Record Above 30,000 On Micron's 18% Rally: Stock Market Today",
+    "event_type": "Analyst"
+  },
+  {
+    "headline": "Dow Jones, Nasdaq And S&P 500 Intraday Levels: Markets Are Sending Mixed Feelings On The Peace Deal",
+    "event_type": "Partnership"
+  },
+  {
+    "headline": "Small Caps Add Breadth Support, but Confirmation Is Still Incomplete",
+    "event_type": "Analyst"
+  },
+  {
+    "headline": "Beyond The AI Box: How Today's AI Buildout Is Reshaping Returns On Capital",
+    "event_type": "Partnership"
+  },
+  {
+    "headline": "GARP: The Numbers Don't Lie, This Large-Cap Growth ETF Is A Winner (Upgrade)",
+    "event_type": "Analyst"
+  },
+  {
+    "headline": "3 Reasons To Stick With Growth Stocks In Rotating Markets",
+    "event_type": "Analyst"
+  },
+  {
+    "headline": "Since 1930, This Is The Average Return Of The S&P 500 After A New Fed Chair Is Elected",
+    "event_type": "Macro"
+  },
+  {
+    "headline": "The Divorce Between Wall Street And Main Street",
+    "event_type": "Earnings"
+  },
+  {
+    "headline": "Weekly Market Pulse: The Real Deal",
+    "event_type": "Partnership"
+  },
+  {
+    "headline": "Inflation Troubles, Now And Ahead",
+    "event_type": "Macro"
+  },
+  {
+    "headline": "The Most Valuable Asset In The SpaceX IPO Is A Gift That Most Investors Will Ignore",
+    "event_type": "Partnership"
+  },
+  {
+    "headline": "Business Conditions Monthly March 2026",
+    "event_type": "Macro"
+  },
+  {
+    "headline": "Forget Yields, This Is The Real Black Swan",
+    "event_type": "Earnings"
+  },
+  {
+    "headline": "Mohamed El-Erian Warns Investors Can No Longer Count On Central Banks To Rescue Markets During Selloffs",
+    "event_type": "Earnings"
+  },
+  {
+    "headline": "Above The Noise: Solid Ground For Markets",
+    "event_type": "Macro"
+  },
+  {
+    "headline": "The US-Iran War: Deal Unlikely, Brace For Inflationary Shock",
+    "event_type": "Partnership"
+  },
+  {
+    "headline": "CIO Weekly: Interest Rates Come Back Into Focus",
+    "event_type": "Macro"
+  },
+  {
+    "headline": "Why Are Global Investors Looking To Asia As An Investment Destination?",
+    "event_type": "Partnership"
+  },
+  {
+    "headline": "Top 3 Catalysts For Nasdaq 100 And Dow Jones Indices This Week",
+    "event_type": "Earnings"
+  },
+  {
+    "headline": "Moving From Measuring Markets To Measuring The Real Economy: The FTSE All-World GDP Adjusted Index",
+    "event_type": "Macro"
+  },
+  {
+    "headline": "SpaceX IPO: Should I Buy It, Or Wait?",
+    "event_type": "Analyst"
+  },
+  {
+    "headline": "The 1-Minute Market Report, May 24, 2026",
+    "event_type": "Regulation"
+  },
+  {
+    "headline": "Vanguard's VOO ETF Inflows Top $59 Billion As Investors Flee SPY",
+    "event_type": "Partnership"
+  },
+  {
+    "headline": "Trump Wants Cuts, The Long End Needs Relief, And I'm Still Buying The Pullback",
+    "event_type": "Earnings"
+  },
+  {
+    "headline": "AI Race Is An Ultra Marathon, Not A Sprint",
+    "event_type": "Partnership"
+  },
+  {
+    "headline": "Here Come The Bankruptcies",
+    "event_type": "Regulation"
+  },
+  {
+    "headline": "A Massive Energy Crisis Is Brewing, And It Could Change Everything For Markets",
+    "event_type": "Supply Chain"
+  },
+  {
+    "headline": "Weekly Commentary: The Warsh Fed",
+    "event_type": "Macro"
+  },
+  {
+    "headline": "Markets Rally As IPO Momentum Builds",
+    "event_type": "Earnings"
+  },
+  {
+    "headline": "Semis Won The First AI Trade. Software May Win The Next One",
+    "event_type": "Product"
+  },
+  {
+    "headline": "This Week's Market Wrap: Nvidia, War Headlines, And FOMC Minutes",
+    "event_type": "Partnership"
+  },
+  {
+    "headline": "Dow Jones, Nasdaq And S&P 500 Intraday Levels - Stock Markets Dance Towards New Records Ahead Of A Long Weekend",
+    "event_type": "Earnings"
+  },
+  {
+    "headline": "A Look At The Balance Sheet New Fed Chair Warsh Will Inherit",
+    "event_type": "Macro"
+  },
+  {
+    "headline": "Are Equity Markets Underpricing The Oil Risk?",
+    "event_type": "Partnership"
+  },
+  {
+    "headline": "Breadth Improves Again, But Leadership Still Looks Narrow",
+    "event_type": "Analyst"
+  },
+  {
+    "headline": "Housing Bubble Cracks Emerge: Foreclosures Hit 6-Year Highs As Mortgage Rates, Inventory And Days On Market Surges",
+    "event_type": "Supply Chain"
+  },
+  {
+    "headline": "Stagflation Is Intensifying: It's (Almost) Time To Panic",
+    "event_type": "Macro"
+  },
+  {
+    "headline": "First-Quarter Earnings Driving Stocks To Record Highs",
+    "event_type": "Earnings"
+  },
+  {
+    "headline": "Headline Inflation Surges, But Core Measures Keep The Fed On Hold",
+    "event_type": "Macro"
+  },
+  {
+    "headline": "I'm In My 30s And This Is Why I Invest In Old Economy For Income",
+    "event_type": "Regulation"
+  },
+  {
+    "headline": "The Most Valuable Asset in SpaceX IPO Is a Gift That Most Investors Will Ignore",
+    "event_type": "Partnership"
+  },
+  {
+    "headline": "Stock Market Today: Dow, S&P 500, Nasdaq Futures Rise As Investors Eye U.S.-Iran Peace Talks— Estee Lauder, Workday, Zoom In Focus  (UPDATED)",
+    "event_type": "Macro"
+  },
+  {
+    "headline": "Fed Minutes Flip The Script: Officials Open Door To Rate Hike",
+    "event_type": "Macro"
+  },
+  {
+    "headline": "Nvidia Earnings Preview: The AI Bellwether Faces Its Moment of Truth",
+    "event_type": "Earnings"
+  },
+  {
+    "headline": "Earnings Become Key as Markets Look Past High Oil and Interest Rates",
+    "event_type": "Earnings"
+  },
+  {
+    "headline": "Stock Market Today: Do, S&P 500, Nasdaq Futures Gain Ahead Of NVDA's Q1 Report— CAVA, AMC Entertainment, Roblox In Focus (UPDATED)",
+    "event_type": "Earnings"
+  }
+]

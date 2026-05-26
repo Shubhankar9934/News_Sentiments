@@ -327,11 +327,23 @@ def numeric_liquidity(
 ) -> int:
     """Numeric Reverse BWB liquidity = ``min(OI per leg)``.
 
-    Liquidity is a pure number — never a string. ``None`` legs count as
-    zero so a missing OI never silently inflates the liquidity score.
+    Liquidity is a pure number — never a string.
+
+    Only considers legs for which OI is actually available (not ``None``).
+    If ALL legs have ``None`` OI (e.g. IBKR snapshot mode), returns 0 —
+    callers should then look at volume via :func:`compute_liquidity_profile`
+    in ``liquidity_engine``.
+
+    .. deprecated::
+        The live Workstation path uses
+        :func:`app.services.market_data.liquidity_engine.compute_liquidity_profile`
+        which handles the per-leg OI→volume fallback correctly.
+        This helper is retained only for the legacy placeholder generator.
     """
-    values = [oi_leg1 or 0, oi_leg2 or 0, oi_leg3 or 0]
-    return max(0, int(min(values)))
+    present = [v for v in (oi_leg1, oi_leg2, oi_leg3) if v is not None]
+    if not present:
+        return 0
+    return max(0, int(min(present)))
 
 
 def grade_liquidity(

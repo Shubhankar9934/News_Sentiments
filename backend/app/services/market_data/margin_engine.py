@@ -4,9 +4,10 @@ Two-tier margin computation that fits within IBKR's WhatIf pacing
 budget (~10-20 round-trips per minute sustainable):
 
     1. Deterministic margin for ALL rows.
-       ``init_margin = max(wing_left, wing_right) * 100 * 1.05``
-       The +5% pad covers commissions and the slight discrepancy
-       between max-loss and broker maintenance requirements.
+       ``init_margin = (WiderWing - NarrowerWing - Credit) * 100``
+       This is the exact max theoretical loss of a Broken Wing Butterfly:
+       the wider side caps the loss; the narrower wing and the credit
+       received both reduce it. ``max(..., 0)`` guards the debit case.
 
     2. WhatIf refinement for the top-N ranked rows per side per ticker.
        Limited by ``OPP_WHATIF_TOP_N`` and a per-minute throttle
@@ -50,6 +51,8 @@ class MarginRequest:
     # Pre-computed deterministic ranking score so the engine can decide
     # which rows deserve a WhatIf round-trip.
     ranking_score: float
+    # Net per-share premium (negative = credit). Used by deterministic_margin.
+    premium_per_share: float = 0.0
 
 
 @dataclass
@@ -59,15 +62,21 @@ class MarginResult:
     source: str  # "deterministic" | "whatif"
 
 
-def deterministic_margin(*, wing_left: float, wing_right: float) -> float:
-    """Closed-form margin estimate used for every row.
+def deterministic_margin(
+    *, wing_left: float, wing_right: float, premium_per_share: float = 0.0
+) -> float:
+    """Closed-form BWB margin = (WiderWing - NarrowerWing - Credit) × 100.
 
-    The 4-leg Reverse BWB's worst-case loss is bounded by the wider of
-    the two wings; the 1.05 multiplier pads for commissions and the
-    typical broker buffer over theoretical max loss.
+    For a Broken Wing Butterfly the maximum theoretical loss is the
+    difference between the wider and the narrower wing widths, reduced by
+    any credit received.  Both inputs are in strike-point dollars; the
+    ×100 multiplier converts to per-contract dollars.
     """
-    wing_dollars = max(float(wing_left), float(wing_right))
-    return round(wing_dollars * 100.0 * 1.05, 2)
+    wider = max(float(wing_left), float(wing_right))
+    narrower = min(float(wing_left), float(wing_right))
+    credit = abs(min(float(premium_per_share), 0.0))  # 0 for debit combos
+    max_loss = max(wider - narrower - credit, 0.0)
+    return round(max_loss * 100.0, 2)
 
 
 class WhatIfBudget:
@@ -143,6 +152,7 @@ class MarginEngine:
                 init_margin=deterministic_margin(
                     wing_left=req.wing_left,
                     wing_right=req.wing_right,
+                    premium_per_share=req.premium_per_share,
                 ),
                 maint_margin=None,
                 source="deterministic",

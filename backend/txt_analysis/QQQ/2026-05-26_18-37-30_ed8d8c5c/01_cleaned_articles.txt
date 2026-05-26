@@ -1,0 +1,349 @@
+================================================================================
+PIPELINE AUDIT — CLEANED ARTICLES (after deduplication)
+Ticker : QQQ
+Run ID : ed8d8c5c-fa13-4990-bcbe-993c82504b4d
+Time   : 2026-05-26_18-37-30
+================================================================================
+
+{
+  "total_input": 67,
+  "unique": 61,
+  "duplicates_removed": 6,
+  "articles": [
+    {
+      "headline": "Nasdaq 100 Hits Record Above 30,000 On Micron's 18% Rally: Stock Market Today",
+      "source": "Benzinga",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Dow Jones, Nasdaq And S&P 500 Intraday Levels: Markets Are Sending Mixed Feelings On The Peace Deal",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Small Caps Add Breadth Support, but Confirmation Is Still Incomplete",
+      "source": "ChartMill",
+      "is_duplicate": false
+    },
+    {
+      "headline": "The Need To Diversify Diversifiers",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Beyond The AI Box: How Today's AI Buildout Is Reshaping Returns On Capital",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "GARP: The Numbers Don't Lie, This Large-Cap Growth ETF Is A Winner (Upgrade)",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "3 Reasons To Stick With Growth Stocks In Rotating Markets",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "S&P 500: 20% Moves Up And Down During Next 6-12 Months Very Likely. Here's Why",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Since 1930, This Is The Average Return Of The S&P 500 After A New Fed Chair Is Elected",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Stock Market Today: S&P 500, Dow, Nasdaq Futures Up Amid US 'Defensive Strikes' On Iran— Elbit Systems, Intuitive Machines, Zscaler In Focus (UPDATED)",
+      "source": "Benzinga",
+      "is_duplicate": false
+    },
+    {
+      "headline": "The Divorce Between Wall Street And Main Street",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Weekly Market Pulse: The Real Deal",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Inflation Troubles, Now And Ahead",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Dow Jones, Nasdaq And S&P 500 Intraday Levels - Markets Are Closed, But Futures Are Exploding",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "No, The Market Is Not Getting Cheaper",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "The Most Valuable Asset In The SpaceX IPO Is A Gift That Most Investors Will Ignore",
+      "source": "SeekingAlpha",
+      "is_duplicate": true
+    },
+    {
+      "headline": "Business Conditions Monthly March 2026",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Corrections Vs. Bear Markets: Why 20% Declines Are Obsolete",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Forget Yields, This Is The Real Black Swan",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Iran: It Ain't Over 'Til It's Over",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Mohamed El-Erian Warns Investors Can No Longer Count On Central Banks To Rescue Markets During Selloffs",
+      "source": "Benzinga",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Above The Noise: Solid Ground For Markets",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "The US-Iran War: Deal Unlikely, Brace For Inflationary Shock",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Tom Lee Says Mag-7 Bear Market Is Over, But Trouble Is Brewing For Rest Of Wall Street: 'Day Of Reckoning'",
+      "source": "Benzinga",
+      "is_duplicate": false
+    },
+    {
+      "headline": "CIO Weekly: Interest Rates Come Back Into Focus",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Memorial Day 2026: Is Stock Market Open Today?",
+      "source": "Benzinga",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Why Are Global Investors Looking To Asia As An Investment Destination?",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Top 3 Catalysts For Nasdaq 100 And Dow Jones Indices This Week",
+      "source": "Benzinga",
+      "is_duplicate": false
+    },
+    {
+      "headline": "A Final Path To Peace? Markets Weekly Outlook",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Moving From Measuring Markets To Measuring The Real Economy: The FTSE All-World GDP Adjusted Index",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "A $100 Billion Liquidity Drain May Hit Markets This Week",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "SpaceX IPO: Should I Buy It, Or Wait?",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Equities In Bubble Territory: 6 Hard-To-Ignore Signs",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "The 1-Minute Market Report, May 24, 2026",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Vanguard's VOO ETF Inflows Top $59 Billion As Investors Flee SPY",
+      "source": "Benzinga",
+      "is_duplicate": false
+    },
+    {
+      "headline": "RDVI: Targeting A Positive Income Outcome With Capital Appreciation",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Trump Wants Cuts, The Long End Needs Relief, And I'm Still Buying The Pullback",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Weekly Indicators: Consumers Continue To Power Through Gas Price Increases",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "AI Race Is An Ultra Marathon, Not A Sprint",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Here Come The Bankruptcies",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "A Massive Energy Crisis Is Brewing, And It Could Change Everything For Markets",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Weekly Commentary: The Warsh Fed",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Flash PMIs Signal Stagflation Among The Major Developed Economies As Growth Falters Amid Price Hikes",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Markets Rally As IPO Momentum Builds",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Semis Won The First AI Trade. Software May Win The Next One",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "This Week's Market Wrap: Nvidia, War Headlines, And FOMC Minutes",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Stocks Are At Record Highs — Yet Only 40% Of Voters Approve Of Trump's Economy",
+      "source": "Benzinga",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Dow Jones, Nasdaq And S&P 500 Intraday Levels - Stock Markets Dance Towards New Records Ahead Of A Long Weekend",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "A Look At The Balance Sheet New Fed Chair Warsh Will Inherit",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Iran Optimism Drives Semi Mania, Potential Short Squeeze Ahead",
+      "source": "Benzinga",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Are Equity Markets Underpricing The Oil Risk?",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Breadth Improves Again, But Leadership Still Looks Narrow",
+      "source": "ChartMill",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Housing Bubble Cracks Emerge: Foreclosures Hit 6-Year Highs As Mortgage Rates, Inventory And Days On Market Surges",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Dow Jones Hits Record Highs, DELL Jumps 15%: Stock Market Today",
+      "source": "Benzinga",
+      "is_duplicate": true
+    },
+    {
+      "headline": "Stagflation Is Intensifying: It's (Almost) Time To Panic",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "First-Quarter Earnings Driving Stocks To Record Highs",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "How To Build A $1 Million Conservative Retirement Portfolio",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Headline Inflation Surges, But Core Measures Keep The Fed On Hold",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "I'm In My 30s And This Is Why I Invest In Old Economy For Income",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Rising Global Bond Yields: The Test For Risk Assets",
+      "source": "SeekingAlpha",
+      "is_duplicate": false
+    },
+    {
+      "headline": "The Most Valuable Asset in SpaceX IPO Is a Gift That Most Investors Will Ignore",
+      "source": "Investing.com",
+      "is_duplicate": true
+    },
+    {
+      "headline": "Stock Market Today: Dow, S&P 500, Nasdaq Futures Rise As Investors Eye U.S.-Iran Peace Talks— Estee Lauder, Workday, Zoom In Focus  (UPDATED)",
+      "source": "Benzinga",
+      "is_duplicate": true
+    },
+    {
+      "headline": "Exclusive: Treasury Yields Near 5%—Is This 'Sustainable Regime' Shift Or Will Bonds 'Cool Off' Soon?",
+      "source": "Benzinga",
+      "is_duplicate": true
+    },
+    {
+      "headline": "Fed Minutes Flip The Script: Officials Open Door To Rate Hike",
+      "source": "Benzinga",
+      "is_duplicate": true
+    },
+    {
+      "headline": "Nvidia Earnings Preview: The AI Bellwether Faces Its Moment of Truth",
+      "source": "Investing.com",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Earnings Become Key as Markets Look Past High Oil and Interest Rates",
+      "source": "Investing.com",
+      "is_duplicate": false
+    },
+    {
+      "headline": "Stock Market Today: Do, S&P 500, Nasdaq Futures Gain Ahead Of NVDA's Q1 Report— CAVA, AMC Entertainment, Roblox In Focus (UPDATED)",
+      "source": "Benzinga",
+      "is_duplicate": false
+    }
+  ]
+}

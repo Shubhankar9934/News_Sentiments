@@ -1,0 +1,385 @@
+================================================================================
+PIPELINE AUDIT — CLAUDE LLM REPORT
+Ticker : QQQ
+Run ID : ed8d8c5c-fa13-4990-bcbe-993c82504b4d
+Time   : 2026-05-26_18-37-30
+================================================================================
+
+{
+  "data_mode": "real",
+  "data_quality_note": "13 pre-processed news clusters across 32 articles analyzed; all reliability scores are 60, indicating mid-tier sources with no Tier 1 primary data feeds present.",
+  "articles_analyzed": 32,
+  "unique_sources": 3,
+  "duplicates_removed": 0,
+  "overall_sentiment_score": 0.04,
+  "overall_sentiment_label": "Mixed",
+  "sentiment_breakdown": [
+    {
+      "label": "Bullish",
+      "count": 5,
+      "pct": 38.5,
+      "score": 0.7
+    },
+    {
+      "label": "Neutral",
+      "count": 4,
+      "pct": 30.8,
+      "score": 0.0
+    },
+    {
+      "label": "Bearish",
+      "count": 4,
+      "pct": 30.8,
+      "score": -0.6
+    }
+  ],
+  "key_events": [
+    {
+      "type": "Macro",
+      "description": "Stagflation fears are intensifying with headline inflation surging while core measures keep the Fed on hold, creating a challenging macro backdrop.",
+      "impact": "High",
+      "impact_score": 0.2446
+    },
+    {
+      "type": "Partnership",
+      "description": "Markets are sending mixed signals on a US-Iran peace deal amid concerns about an inflationary oil shock and potential equity mispricing of geopolitical risk.",
+      "impact": "High",
+      "impact_score": 0.2307
+    },
+    {
+      "type": "Analyst",
+      "description": "Nasdaq 100 hit a record above 30,000 driven by Micron's 18% rally, reflecting strong tech momentum despite narrow leadership breadth.",
+      "impact": "High",
+      "impact_score": 0.2035
+    },
+    {
+      "type": "Macro",
+      "description": "US defensive strikes on Iran pushed futures higher intraday while consumer resilience to gas price increases provided a partial offset to geopolitical headwinds.",
+      "impact": "Medium",
+      "impact_score": 0.1918
+    },
+    {
+      "type": "Macro",
+      "description": "Interest rates are coming back into focus as a key macro variable for equity market direction heading into late May.",
+      "impact": "Medium",
+      "impact_score": 0.1906
+    },
+    {
+      "type": "Earnings",
+      "description": "Strong Q1 earnings results drove stocks toward record highs, with QQQ posting a +0.42% abnormal return on May 22.",
+      "impact": "Medium",
+      "impact_score": 0.1551
+    },
+    {
+      "type": "Earnings",
+      "description": "Markets looked past high oil and interest rates with earnings becoming the primary price driver, coinciding with a +1.66% abnormal return on May 20.",
+      "impact": "Medium",
+      "impact_score": 0.0834
+    }
+  ],
+  "dominant_narrative": "Tech-led equity markets are testing record highs driven by strong Q1 earnings and Micron/Nvidia momentum, but the rally faces mounting headwinds from stagflation fears, elevated oil prices tied to US-Iran tensions, and narrow market breadth.",
+  "what_happened": "The Nasdaq 100 broke above 30,000 for the first time, powered by Micron's 18% rally and broadly strong Q1 earnings that drove QQQ to post positive abnormal returns on May 20 (+1.66%) and May 22 (+0.42%). Simultaneously, macro risks escalated as headline inflation surged, stagflation commentary intensified, and US defensive strikes on Iran injected geopolitical uncertainty that kept oil risk elevated and created mixed sentiment across equity markets heading into the long weekend.",
+  "price_movers": "The strongest price movers were earnings-driven: the May 20 session saw a +1.66% abnormal return as markets looked past oil and rate headwinds on strong earnings, and the May 22 session added +0.42% on Nvidia Q1 anticipation and Q1 earnings broadly driving toward record highs.",
+  "source_reliability": [
+    {
+      "source": "SeekingAlpha",
+      "articles": 22,
+      "reliability_score": 60,
+      "tier": "Tier 2"
+    },
+    {
+      "source": "Benzinga",
+      "articles": 6,
+      "reliability_score": 60,
+      "tier": "Tier 2"
+    },
+    {
+      "source": "Investing.com",
+      "articles": 4,
+      "reliability_score": 60,
+      "tier": "Tier 2"
+    }
+  ],
+  "articles": [
+    {
+      "headline": "Business Conditions Monthly March 2026",
+      "source": "SeekingAlpha",
+      "published_at": "2026-05-25T11:23:00+00:00",
+      "sentiment": -0.79,
+      "sentiment_label": "Bearish",
+      "event_type": "Macro",
+      "reliability_score": 60,
+      "impact_score": 0.2446
+    },
+    {
+      "headline": "Stagflation Is Intensifying: It's (Almost) Time To Panic",
+      "source": "SeekingAlpha",
+      "published_at": "2026-05-25T11:23:00+00:00",
+      "sentiment": -0.79,
+      "sentiment_label": "Bearish",
+      "event_type": "Macro",
+      "reliability_score": 60,
+      "impact_score": 0.2446
+    },
+    {
+      "headline": "Headline Inflation Surges, But Core Measures Keep The Fed On Hold",
+      "source": "SeekingAlpha",
+      "published_at": "2026-05-25T11:23:00+00:00",
+      "sentiment": -0.79,
+      "sentiment_label": "Bearish",
+      "event_type": "Macro",
+      "reliability_score": 60,
+      "impact_score": 0.2446
+    },
+    {
+      "headline": "Dow Jones, Nasdaq And S&P 500 Intraday Levels: Markets Are Sending Mixed Feelings On The Peace Deal",
+      "source": "SeekingAlpha",
+      "published_at": "2026-05-26T13:25:00+00:00",
+      "sentiment": -0.781,
+      "sentiment_label": "Bearish",
+      "event_type": "Partnership",
+      "reliability_score": 60,
+      "impact_score": 0.2307
+    },
+    {
+      "headline": "The US-Iran War: Deal Unlikely, Brace For Inflationary Shock",
+      "source": "SeekingAlpha",
+      "published_at": "2026-05-26T13:25:00+00:00",
+      "sentiment": -0.781,
+      "sentiment_label": "Bearish",
+      "event_type": "Partnership",
+      "reliability_score": 60,
+      "impact_score": 0.2307
+    },
+    {
+      "headline": "Are Equity Markets Underpricing The Oil Risk?",
+      "source": "SeekingAlpha",
+      "published_at": "2026-05-26T13:25:00+00:00",
+      "sentiment": -0.781,
+      "sentiment_label": "Bearish",
+      "event_type": "Partnership",
+      "reliability_score": 60,
+      "impact_score": 0.2307
+    },
+    {
+      "headline": "Nasdaq 100 Hits Record Above 30,000 On Micron's 18% Rally: Stock Market Today",
+      "source": "Benzinga",
+      "published_at": "2026-05-26T13:57:30+00:00",
+      "sentiment": 0.867,
+      "sentiment_label": "Bullish",
+      "event_type": "Analyst",
+      "reliability_score": 60,
+      "impact_score": 0.2035
+    },
+    {
+      "headline": "SpaceX IPO: Should I Buy It, Or Wait?",
+      "source": "Benzinga",
+      "published_at": "2026-05-26T13:57:30+00:00",
+      "sentiment": 0.867,
+      "sentiment_label": "Bullish",
+      "event_type": "Analyst",
+      "reliability_score": 60,
+      "impact_score": 0.2035
+    },
+    {
+      "headline": "Breadth Improves Again, But Leadership Still Looks Narrow",
+      "source": "Benzinga",
+      "published_at": "2026-05-26T13:57:30+00:00",
+      "sentiment": 0.867,
+      "sentiment_label": "Bullish",
+      "event_type": "Analyst",
+      "reliability_score": 60,
+      "impact_score": 0.2035
+    },
+    {
+      "headline": "Stock Market Today: S&P 500, Dow, Nasdaq Futures Up Amid US 'Defensive Strikes' On Iran — Elbit Systems, Intuitive Machines, Zscaler In Focus (UPDATED)",
+      "source": "Benzinga",
+      "published_at": "2026-05-26T08:47:44+00:00",
+      "sentiment": 0.822,
+      "sentiment_label": "Bullish",
+      "event_type": null,
+      "reliability_score": 60,
+      "impact_score": 0.1918
+    },
+    {
+      "headline": "Dow Jones, Nasdaq And S&P 500 Intraday Levels - Markets Are Closed, But Futures Are Exploding",
+      "source": "Benzinga",
+      "published_at": "2026-05-26T08:47:44+00:00",
+      "sentiment": 0.822,
+      "sentiment_label": "Bullish",
+      "event_type": null,
+      "reliability_score": 60,
+      "impact_score": 0.1918
+    },
+    {
+      "headline": "Weekly Indicators: Consumers Continue To Power Through Gas Price Increases",
+      "source": "Benzinga",
+      "published_at": "2026-05-26T08:47:44+00:00",
+      "sentiment": 0.822,
+      "sentiment_label": "Bullish",
+      "event_type": null,
+      "reliability_score": 60,
+      "impact_score": 0.1918
+    },
+    {
+      "headline": "CIO Weekly: Interest Rates Come Back Into Focus",
+      "source": "SeekingAlpha",
+      "published_at": "2026-05-25T04:49:00+00:00",
+      "sentiment": 0.762,
+      "sentiment_label": "Bullish",
+      "event_type": "Macro",
+      "reliability_score": 60,
+      "impact_score": 0.1906
+    },
+    {
+      "headline": "S&P 500: 20% Moves Up And Down During Next 6-12 Months Very Likely. Here's Why",
+      "source": "SeekingAlpha",
+      "published_at": "2026-05-26T09:00:00+00:00",
+      "sentiment": -0.756,
+      "sentiment_label": "Bearish",
+      "event_type": null,
+      "reliability_score": 60,
+      "impact_score": 0.1663
+    },
+    {
+      "headline": "Equities In Bubble Territory: 6 Hard-To-Ignore Signs",
+      "source": "SeekingAlpha",
+      "published_at": "2026-05-26T09:00:00+00:00",
+      "sentiment": -0.756,
+      "sentiment_label": "Bearish",
+      "event_type": null,
+      "reliability_score": 60,
+      "impact_score": 0.1663
+    },
+    {
+      "headline": "How To Build A $1 Million Conservative Retirement Portfolio",
+      "source": "SeekingAlpha",
+      "published_at": "2026-05-26T09:00:00+00:00",
+      "sentiment": -0.756,
+      "sentiment_label": "Bearish",
+      "event_type": null,
+      "reliability_score": 60,
+      "impact_score": 0.1663
+    },
+    {
+      "headline": "First-Quarter Earnings Driving Stocks To Record Highs",
+      "source": "SeekingAlpha",
+      "published_at": "2026-05-22T10:05:00+00:00",
+      "sentiment": 0.871,
+      "sentiment_label": "Bullish",
+      "event_type": "Earnings",
+      "reliability_score": 60,
+      "impact_score": 0.1551
+    },
+    {
+      "headline": "Dow Jones, Nasdaq And S&P 500 Intraday Levels - Stock Markets Dance Towards New Records Ahead Of A Long Weekend",
+      "source": "SeekingAlpha",
+      "published_at": "2026-05-22T10:05:00+00:00",
+      "sentiment": 0.871,
+      "sentiment_label": "Bullish",
+      "event_type": "Earnings",
+      "reliability_score": 60,
+      "impact_score": 0.1551
+    },
+    {
+      "headline": "Stock Market Today: Do, S&P 500, Nasdaq Futures Gain Ahead Of NVDA's Q1 Report — CAVA, AMC Entertainment, Roblox In Focus (UPDATED)",
+      "source": "SeekingAlpha",
+      "published_at": "2026-05-22T10:05:00+00:00",
+      "sentiment": 0.871,
+      "sentiment_label": "Bullish",
+      "event_type": "Earnings",
+      "reliability_score": 60,
+      "impact_score": 0.1551
+    },
+    {
+      "headline": "Earnings Become Key as Markets Look Past High Oil and Interest Rates",
+      "source": "Investing.com",
+      "published_at": "2026-05-20T17:27:00+00:00",
+      "sentiment": -0.75,
+      "sentiment_label": "Bearish",
+      "event_type": "Earnings",
+      "reliability_score": 60,
+      "impact_score": 0.0834
+    },
+    {
+      "headline": "This Week's Market Wrap: Nvidia, War Headlines, And FOMC Minutes",
+      "source": "SeekingAlpha",
+      "published_at": "2026-05-22T23:55:00+00:00",
+      "sentiment": 0.562,
+      "sentiment_label": "Bullish",
+      "event_type": "Partnership",
+      "reliability_score": 60,
+      "impact_score": 0.0739
+    },
+    {
+      "headline": "Forget Yields, This Is The Real Black Swan",
+      "source": "SeekingAlpha",
+      "published_at": "2026-05-25T10:30:44+00:00",
+      "sentiment": 0.0,
+      "sentiment_label": "Neutral",
+      "event_type": "Earnings",
+      "reliability_score": 60,
+      "impact_score": 0.0
+    },
+    {
+      "headline": "Top 3 Catalysts For Nasdaq 100 And Dow Jones Indices This Week",
+      "source": "SeekingAlpha",
+      "published_at": "2026-05-25T10:30:44+00:00",
+      "sentiment": 0.0,
+      "sentiment_label": "Neutral",
+      "event_type": "Earnings",
+      "reliability_score": 60,
+      "impact_score": 0.0
+    },
+    {
+      "headline": "Trump Wants Cuts, The Long End Needs Relief, And I'm Still Buying The Pullback",
+      "source": "SeekingAlpha",
+      "published_at": "2026-05-25T10:30:44+00:00",
+      "sentiment": 0.0,
+      "sentiment_label": "Neutral",
+      "event_type": "Earnings",
+      "reliability_score": 60,
+      "impact_score": 0.0
+    },
+    {
+      "headline": "Since 1930, This Is The Average Return Of The S&P 500 After A New Fed Chair Is Elected",
+      "source": "SeekingAlpha",
+      "published_at": "2026-05-26T09:00:00+00:00",
+      "sentiment": 0.0,
+      "sentiment_label": "Neutral",
+      "event_type": "Macro",
+      "reliability_score": 60,
+      "impact_score": 0.0
+    },
+    {
+      "headline": "Inflation Troubles, Now And Ahead",
+      "source": "SeekingAlpha",
+      "published_at": "2026-05-26T09:00:00+00:00",
+      "sentiment": 0.0,
+      "sentiment_label": "Neutral",
+      "event_type": "Macro",
+      "reliability_score": 60,
+      "impact_score": 0.0
+    },
+    {
+      "headline": "Above The Noise: Solid Ground For Markets",
+      "source": "SeekingAlpha",
+      "published_at": "2026-05-26T09:00:00+00:00",
+      "sentiment": 0.0,
+      "sentiment_label": "Neutral",
+      "event_type": "Macro",
+      "reliability_score": 60,
+      "impact_score": 0.0
+    },
+    {
+      "headline": "The 1-Minute Market Report, May 24, 2026",
+      "source": "SeekingAlpha",
+      "published_at": "2026-05-23T22:41:52+00:00",
+      "sentiment": 0.0,
+      "sentiment_label": "Neutral",
+      "event_type": "Regulation",
+      "reliability_score": 60,
+      "impact_score": 0.0
+    }
+  ]
+}

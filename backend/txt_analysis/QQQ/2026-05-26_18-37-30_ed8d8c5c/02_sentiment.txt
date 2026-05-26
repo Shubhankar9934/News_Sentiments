@@ -1,0 +1,344 @@
+================================================================================
+PIPELINE AUDIT — SENTIMENT SCORES (FinBERT)
+Ticker : QQQ
+Run ID : ed8d8c5c-fa13-4990-bcbe-993c82504b4d
+Time   : 2026-05-26_18-37-30
+================================================================================
+
+[
+  {
+    "headline": "Nasdaq 100 Hits Record Above 30,000 On Micron's 18% Rally: Stock Market Today",
+    "sentiment_label": "Bullish",
+    "sentiment_score": 0.946
+  },
+  {
+    "headline": "Dow Jones, Nasdaq And S&P 500 Intraday Levels: Markets Are Sending Mixed Feelings On The Peace Deal",
+    "sentiment_label": "Bearish",
+    "sentiment_score": -0.77
+  },
+  {
+    "headline": "Small Caps Add Breadth Support, but Confirmation Is Still Incomplete",
+    "sentiment_label": "Bullish",
+    "sentiment_score": 0.957
+  },
+  {
+    "headline": "The Need To Diversify Diversifiers",
+    "sentiment_label": "Neutral",
+    "sentiment_score": 0.0
+  },
+  {
+    "headline": "Beyond The AI Box: How Today's AI Buildout Is Reshaping Returns On Capital",
+    "sentiment_label": "Neutral",
+    "sentiment_score": 0.0
+  },
+  {
+    "headline": "GARP: The Numbers Don't Lie, This Large-Cap Growth ETF Is A Winner (Upgrade)",
+    "sentiment_label": "Bullish",
+    "sentiment_score": 0.918
+  },
+  {
+    "headline": "3 Reasons To Stick With Growth Stocks In Rotating Markets",
+    "sentiment_label": "Bearish",
+    "sentiment_score": -0.863
+  },
+  {
+    "headline": "S&P 500: 20% Moves Up And Down During Next 6-12 Months Very Likely. Here's Why",
+    "sentiment_label": "Bearish",
+    "sentiment_score": -0.811
+  },
+  {
+    "headline": "Since 1930, This Is The Average Return Of The S&P 500 After A New Fed Chair Is Elected",
+    "sentiment_label": "Neutral",
+    "sentiment_score": 0.0
+  },
+  {
+    "headline": "Stock Market Today: S&P 500, Dow, Nasdaq Futures Up Amid US 'Defensive Strikes' On Iran— Elbit Systems, Intuitive Machines, Zscaler In Focus (UPDATED)",
+    "sentiment_label": "Bullish",
+    "sentiment_score": 0.937
+  },
+  {
+    "headline": "The Divorce Between Wall Street And Main Street",
+    "sentiment_label": "Bullish",
+    "sentiment_score": 0.868
+  },
+  {
+    "headline": "Weekly Market Pulse: The Real Deal",
+    "sentiment_label": "Neutral",
+    "sentiment_score": 0.0
+  },
+  {
+    "headline": "Inflation Troubles, Now And Ahead",
+    "sentiment_label": "Neutral",
+    "sentiment_score": 0.0
+  },
+  {
+    "headline": "Dow Jones, Nasdaq And S&P 500 Intraday Levels - Markets Are Closed, But Futures Are Exploding",
+    "sentiment_label": "Bullish",
+    "sentiment_score": 0.639
+  },
+  {
+    "headline": "No, The Market Is Not Getting Cheaper",
+    "sentiment_label": "Neutral",
+    "sentiment_score": 0.0
+  },
+  {
+    "headline": "The Most Valuable Asset In The SpaceX IPO Is A Gift That Most Investors Will Ignore",
+    "sentiment_label": "Neutral",
+    "sentiment_score": 0.0
+  },
+  {
+    "headline": "Business Conditions Monthly March 2026",
+    "sentiment_label": "Bearish",
+    "sentiment_score": -0.918
+  },
+  {
+    "headline": "Corrections Vs. Bear Markets: Why 20% Declines Are Obsolete",
+    "sentiment_label": "Neutral",
+    "sentiment_score": 0.0
+  },
+  {
+    "headline": "Forget Yields, This Is The Real Black Swan",
+    "sentiment_label": "Neutral",
+    "sentiment_score": 0.0
+  },
+  {
+    "headline": "Iran: It Ain't Over 'Til It's Over",
+    "sentiment_label": "Neutral",
+    "sentiment_score": 0.0
+  },
+  {
+    "headline": "Mohamed El-Erian Warns Investors Can No Longer Count On Central Banks To Rescue Markets During Selloffs",
+    "sentiment_label": "Neutral",
+    "sentiment_score": 0.0
+  },
+  {
+    "headline": "Above The Noise: Solid Ground For Markets",
+    "sentiment_label": "Neutral",
+    "sentiment_score": 0.0
+  },
+  {
+    "headline": "The US-Iran War: Deal Unlikely, Brace For Inflationary Shock",
+    "sentiment_label": "Bearish",
+    "sentiment_score": -0.705
+  },
+  {
+    "headline": "Tom Lee Says Mag-7 Bear Market Is Over, But Trouble Is Brewing For Rest Of Wall Street: 'Day Of Reckoning'",
+    "sentiment_label": "Neutral",
+    "sentiment_score": 0.0
+  },
+  {
+    "headline": "CIO Weekly: Interest Rates Come Back Into Focus",
+    "sentiment_label": "Bullish",
+    "sentiment_score": 0.762
+  },
+  {
+    "headline": "Memorial Day 2026: Is Stock Market Open Today?",
+    "sentiment_label": "Neutral",
+    "sentiment_score": 0.0
+  },
+  {
+    "headline": "Why Are Global Investors Looking To Asia As An Investment Destination?",
+    "sentiment_label": "Neutral",
+    "sentiment_score": 0.0
+  },
+  {
+    "headline": "Top 3 Catalysts For Nasdaq 100 And Dow Jones Indices This Week",
+    "sentiment_label": "Neutral",
+    "sentiment_score": 0.0
+  },
+  {
+    "headline": "A Final Path To Peace? Markets Weekly Outlook",
+    "sentiment_label": "Neutral",
+    "sentiment_score": 0.0
+  },
+  {
+    "headline": "Moving From Measuring Markets To Measuring The Real Economy: The FTSE All-World GDP Adjusted Index",
+    "sentiment_label": "Neutral",
+    "sentiment_score": 0.0
+  },
+  {
+    "headline": "A $100 Billion Liquidity Drain May Hit Markets This Week",
+    "sentiment_label": "Bearish",
+    "sentiment_score": -0.54
+  },
+  {
+    "headline": "SpaceX IPO: Should I Buy It, Or Wait?",
+    "sentiment_label": "Bullish",
+    "sentiment_score": 0.717
+  },
+  {
+    "headline": "Equities In Bubble Territory: 6 Hard-To-Ignore Signs",
+    "sentiment_label": "Bearish",
+    "sentiment_score": -0.638
+  },
+  {
+    "headline": "The 1-Minute Market Report, May 24, 2026",
+    "sentiment_label": "Neutral",
+    "sentiment_score": 0.0
+  },
+  {
+    "headline": "Vanguard's VOO ETF Inflows Top $59 Billion As Investors Flee SPY",
+    "sentiment_label": "Bullish",
+    "sentiment_score": 0.945
+  },
+  {
+    "headline": "RDVI: Targeting A Positive Income Outcome With Capital Appreciation",
+    "sentiment_label": "Bullish",
+    "sentiment_score": 0.942
+  },
+  {
+    "headline": "Trump Wants Cuts, The Long End Needs Relief, And I'm Still Buying The Pullback",
+    "sentiment_label": "Neutral",
+    "sentiment_score": 0.0
+  },
+  {
+    "headline": "Weekly Indicators: Consumers Continue To Power Through Gas Price Increases",
+    "sentiment_label": "Bullish",
+    "sentiment_score": 0.926
+  },
+  {
+    "headline": "AI Race Is An Ultra Marathon, Not A Sprint",
+    "sentiment_label": "Neutral",
+    "sentiment_score": 0.0
+  },
+  {
+    "headline": "Here Come The Bankruptcies",
+    "sentiment_label": "Bearish",
+    "sentiment_score": -0.723
+  },
+  {
+    "headline": "A Massive Energy Crisis Is Brewing, And It Could Change Everything For Markets",
+    "sentiment_label": "Neutral",
+    "sentiment_score": 0.0
+  },
+  {
+    "headline": "Weekly Commentary: The Warsh Fed",
+    "sentiment_label": "Neutral",
+    "sentiment_score": 0.0
+  },
+  {
+    "headline": "Flash PMIs Signal Stagflation Among The Major Developed Economies As Growth Falters Amid Price Hikes",
+    "sentiment_label": "Bearish",
+    "sentiment_score": -0.971
+  },
+  {
+    "headline": "Markets Rally As IPO Momentum Builds",
+    "sentiment_label": "Bullish",
+    "sentiment_score": 0.952
+  },
+  {
+    "headline": "Semis Won The First AI Trade. Software May Win The Next One",
+    "sentiment_label": "Neutral",
+    "sentiment_score": 0.0
+  },
+  {
+    "headline": "This Week's Market Wrap: Nvidia, War Headlines, And FOMC Minutes",
+    "sentiment_label": "Bullish",
+    "sentiment_score": 0.562
+  },
+  {
+    "headline": "Stocks Are At Record Highs — Yet Only 40% Of Voters Approve Of Trump's Economy",
+    "sentiment_label": "Bearish",
+    "sentiment_score": -0.967
+  },
+  {
+    "headline": "Dow Jones, Nasdaq And S&P 500 Intraday Levels - Stock Markets Dance Towards New Records Ahead Of A Long Weekend",
+    "sentiment_label": "Bullish",
+    "sentiment_score": 0.741
+  },
+  {
+    "headline": "A Look At The Balance Sheet New Fed Chair Warsh Will Inherit",
+    "sentiment_label": "Neutral",
+    "sentiment_score": 0.0
+  },
+  {
+    "headline": "Iran Optimism Drives Semi Mania, Potential Short Squeeze Ahead",
+    "sentiment_label": "Neutral",
+    "sentiment_score": 0.0
+  },
+  {
+    "headline": "Are Equity Markets Underpricing The Oil Risk?",
+    "sentiment_label": "Bearish",
+    "sentiment_score": -0.868
+  },
+  {
+    "headline": "Breadth Improves Again, But Leadership Still Looks Narrow",
+    "sentiment_label": "Bullish",
+    "sentiment_score": 0.938
+  },
+  {
+    "headline": "Housing Bubble Cracks Emerge: Foreclosures Hit 6-Year Highs As Mortgage Rates, Inventory And Days On Market Surges",
+    "sentiment_label": "Neutral",
+    "sentiment_score": 0.0
+  },
+  {
+    "headline": "Dow Jones Hits Record Highs, DELL Jumps 15%: Stock Market Today",
+    "sentiment_label": "Bullish",
+    "sentiment_score": 0.738
+  },
+  {
+    "headline": "Stagflation Is Intensifying: It's (Almost) Time To Panic",
+    "sentiment_label": "Bearish",
+    "sentiment_score": -0.897
+  },
+  {
+    "headline": "First-Quarter Earnings Driving Stocks To Record Highs",
+    "sentiment_label": "Bullish",
+    "sentiment_score": 0.943
+  },
+  {
+    "headline": "How To Build A $1 Million Conservative Retirement Portfolio",
+    "sentiment_label": "Bearish",
+    "sentiment_score": -0.82
+  },
+  {
+    "headline": "Headline Inflation Surges, But Core Measures Keep The Fed On Hold",
+    "sentiment_label": "Bearish",
+    "sentiment_score": -0.556
+  },
+  {
+    "headline": "I'm In My 30s And This Is Why I Invest In Old Economy For Income",
+    "sentiment_label": "Neutral",
+    "sentiment_score": 0.0
+  },
+  {
+    "headline": "Rising Global Bond Yields: The Test For Risk Assets",
+    "sentiment_label": "Bullish",
+    "sentiment_score": 0.784
+  },
+  {
+    "headline": "The Most Valuable Asset in SpaceX IPO Is a Gift That Most Investors Will Ignore",
+    "sentiment_label": "Neutral",
+    "sentiment_score": 0.0
+  },
+  {
+    "headline": "Stock Market Today: Dow, S&P 500, Nasdaq Futures Rise As Investors Eye U.S.-Iran Peace Talks— Estee Lauder, Workday, Zoom In Focus  (UPDATED)",
+    "sentiment_label": "Bullish",
+    "sentiment_score": 0.934
+  },
+  {
+    "headline": "Exclusive: Treasury Yields Near 5%—Is This 'Sustainable Regime' Shift Or Will Bonds 'Cool Off' Soon?",
+    "sentiment_label": "Bearish",
+    "sentiment_score": -0.654
+  },
+  {
+    "headline": "Fed Minutes Flip The Script: Officials Open Door To Rate Hike",
+    "sentiment_label": "Bullish",
+    "sentiment_score": 0.742
+  },
+  {
+    "headline": "Nvidia Earnings Preview: The AI Bellwether Faces Its Moment of Truth",
+    "sentiment_label": "Neutral",
+    "sentiment_score": 0.0
+  },
+  {
+    "headline": "Earnings Become Key as Markets Look Past High Oil and Interest Rates",
+    "sentiment_label": "Bearish",
+    "sentiment_score": -0.75
+  },
+  {
+    "headline": "Stock Market Today: Do, S&P 500, Nasdaq Futures Gain Ahead Of NVDA's Q1 Report— CAVA, AMC Entertainment, Roblox In Focus (UPDATED)",
+    "sentiment_label": "Bullish",
+    "sentiment_score": 0.93
+  }
+]

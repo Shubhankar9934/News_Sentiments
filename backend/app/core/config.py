@@ -277,6 +277,12 @@ class Settings(BaseSettings):
     # Off by default; set REDIS_PUBSUB_ENABLED=true for horizontal scaling.
     redis_pubsub_enabled: bool = Field(default=False, alias="REDIS_PUBSUB_ENABLED")
 
+    # Pipeline data audit — writes each stage's snapshot to txt files for
+    # debugging. Enabled by default so every Run Analysis is traceable.
+    # Set PIPELINE_AUDIT_ENABLED=false in production to suppress disk writes.
+    pipeline_audit_enabled: bool = Field(default=True, alias="PIPELINE_AUDIT_ENABLED")
+    pipeline_audit_path: str = Field(default="txt_analysis", alias="PIPELINE_AUDIT_PATH")
+
     @field_validator("cors_origins", mode="before")
     @classmethod
     def join_cors(cls, v: str | list[str]) -> str:

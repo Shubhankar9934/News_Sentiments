@@ -1,0 +1,189 @@
+================================================================================
+PIPELINE AUDIT — IMPACT SCORES
+Ticker : SPY
+Run ID : c9b0f9fc-a1bc-4240-a664-dfc5cc0a1c1b
+Time   : 2026-05-26_17-23-57
+================================================================================
+
+[
+  {
+    "headline": "Stock Market Today: Nasdaq Leads On U.S.-Iran Deal Anticipation; AutoZone Crashes (Live Coverage)",
+    "impact_score": 0.3634,
+    "event_type": "Earnings",
+    "abnormal_return": null
+  },
+  {
+    "headline": "GTS Securities Slashes Its XOVR Stake -- Selling $354 Million Worth of Shares",
+    "impact_score": 0.3619,
+    "event_type": "Regulation",
+    "abnormal_return": null
+  },
+  {
+    "headline": "The Divorce Between Wall Street And Main Street",
+    "impact_score": 0.3579,
+    "event_type": "Earnings",
+    "abnormal_return": null
+  },
+  {
+    "headline": "S&P 500 Other Than AI Infrastructure Is Growing at 0%. Lance Roberts Warns What Happens if the AI Boom Stumbles.",
+    "impact_score": 0.3115,
+    "event_type": "Earnings",
+    "abnormal_return": null
+  },
+  {
+    "headline": "Exchange-Traded Funds, Equity Futures Rise Pre-Bell Tuesday Amid Renewed Hopes Around Middle East Peace Deal",
+    "impact_score": 0.2858,
+    "event_type": "Partnership",
+    "abnormal_return": null
+  },
+  {
+    "headline": "Stock Market Today: Dow Rises On U.S.-Iran Deal Hopes; AppLovin, Micron Surge (Live Coverage)",
+    "impact_score": 0.2856,
+    "event_type": "Partnership",
+    "abnormal_return": null
+  },
+  {
+    "headline": "ValuEngine Weekly Market Summary And Commentary",
+    "impact_score": 0.2851,
+    "event_type": "Regulation",
+    "abnormal_return": null
+  },
+  {
+    "headline": "The 5-Day Trap: How Missing Less Than a Week Wiped Out $154,000",
+    "impact_score": 0.2744,
+    "event_type": "Earnings",
+    "abnormal_return": null
+  },
+  {
+    "headline": "Equinix Stock Outlook: Is Wall Street Bullish or Bearish?",
+    "impact_score": 0.2542,
+    "event_type": "Earnings",
+    "abnormal_return": null
+  },
+  {
+    "headline": "Business Conditions Monthly March 2026",
+    "impact_score": 0.2475,
+    "event_type": "Macro",
+    "abnormal_return": null
+  },
+  {
+    "headline": "Understanding WQTM: Investing In The Quantum Computing Opportunity",
+    "impact_score": 0.2454,
+    "event_type": "Partnership",
+    "abnormal_return": null
+  },
+  {
+    "headline": "S&P 500, Nasdaq, Dow Futures Rise On Hopes Of Hormuz Reopening As Trump Teases ‘Great Deal’ With Iran: BB, INFQ, NVTS, ASTS In Focus",
+    "impact_score": 0.2373,
+    "event_type": "Partnership",
+    "abnormal_return": null
+  },
+  {
+    "headline": "The Anatomy of a Disconnect: How $4.35 Trillion in Corporate Profits Cleared the Way for Record Highs",
+    "impact_score": 0.2113,
+    "event_type": "Earnings",
+    "abnormal_return": null
+  },
+  {
+    "headline": "Wall Street Lunch: BP Slips After Ousting Chairman Albert Manifold Over Governance Concerns",
+    "impact_score": 0.2069,
+    "event_type": null,
+    "abnormal_return": null
+  },
+  {
+    "headline": "Small Caps Add Breadth Support, but Confirmation Is Still Incomplete",
+    "impact_score": 0.2053,
+    "event_type": "Analyst",
+    "abnormal_return": null
+  },
+  {
+    "headline": "S&P 500 Fully Recovers As Iran War Impact Disappears From Stock Prices",
+    "impact_score": 0.1953,
+    "event_type": null,
+    "abnormal_return": null
+  },
+  {
+    "headline": "Stock Market Today: S&P 500, Dow, Nasdaq Futures Up Amid US 'Defensive Strikes' On Iran— Elbit Systems, Intuitive Machines, Zscaler In Focus (UPDATED)",
+    "impact_score": 0.194,
+    "event_type": null,
+    "abnormal_return": null
+  },
+  {
+    "headline": "CIO Weekly: Interest Rates Come Back Into Focus",
+    "impact_score": 0.1929,
+    "event_type": "Macro",
+    "abnormal_return": null
+  },
+  {
+    "headline": "S&P 500: 20% Moves Up And Down During Next 6-12 Months Very Likely. Here's Why",
+    "impact_score": 0.1683,
+    "event_type": null,
+    "abnormal_return": null
+  },
+  {
+    "headline": "S&P 500 Dividends Just Hit an All-Time Low Going Back to the 1800s — Here’s What Retirees Need to Know",
+    "impact_score": 0.1659,
+    "event_type": null,
+    "abnormal_return": null
+  },
+  {
+    "headline": "Best Dividend Kings: May 2026",
+    "impact_score": 0.1628,
+    "event_type": null,
+    "abnormal_return": null
+  },
+  {
+    "headline": "The US-Iran War: Deal Unlikely, Brace For Inflationary Shock",
+    "impact_score": 0.1586,
+    "event_type": "Partnership",
+    "abnormal_return": null
+  },
+  {
+    "headline": "Eight Weeks Up, And Even A Hawkish Fed Can't Stop It: This Week On Wall Street",
+    "impact_score": 0.1567,
+    "event_type": "Earnings",
+    "abnormal_return": 0.3931
+  },
+  {
+    "headline": "The Stock Market Is at a 40-to-1 CAPE Ratio Seen Only Twice Before. 1929 and 1999 Preceded Crashes.",
+    "impact_score": 0.151,
+    "event_type": null,
+    "abnormal_return": null
+  },
+  {
+    "headline": "These Four Red-Hot ETFs Have Left SPY Trailing In 2026",
+    "impact_score": 0.146,
+    "event_type": "Analyst",
+    "abnormal_return": null
+  },
+  {
+    "headline": "Stock Market Today: Dow, S&P 500, Nasdaq Futures Rise As Investors Eye U.S.-Iran Peace Talks— Estee Lauder, Workday, Zoom In Focus  (UPDATED)",
+    "impact_score": 0.1272,
+    "event_type": "Macro",
+    "abnormal_return": 0.3931
+  },
+  {
+    "headline": "The Stock Market Just Saw One of Its Best 8-Week Stretches Ever. What Normally Happens Next Will Surprise You.",
+    "impact_score": 0.1101,
+    "event_type": null,
+    "abnormal_return": null
+  },
+  {
+    "headline": "Dow Jones, Nasdaq And S&P 500 Intraday Levels - Markets Are Closed, But Futures Are Exploding",
+    "impact_score": 0.1099,
+    "event_type": null,
+    "abnormal_return": null
+  },
+  {
+    "headline": "REITs Rip As Mega-Deals Hit",
+    "impact_score": 0.1095,
+    "event_type": "Partnership",
+    "abnormal_return": null
+  },
+  {
+    "headline": "Earn While You Hedge: 2 Safe Havens Built For Bear Markets",
+    "impact_score": 0.1009,
+    "event_type": null,
+    "abnormal_return": null
+  }
+]

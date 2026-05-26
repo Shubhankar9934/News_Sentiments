@@ -88,28 +88,9 @@ async def lifespan(app: FastAPI):
         except Exception as e:
             log.warning("otel.setup_failed", error=str(e))
 
-    # Reverse BWB Intelligence Dashboard — sequential watchlist batch.
-    # The service is constructed eagerly so the route handlers can resolve
-    # it via ``app.state.watchlist_batch`` even when auto-run is disabled.
-    app.state.watchlist_task = None
-    try:
-        from app.services.dashboard.watchlist_batch import WatchlistBatchService
-
-        batch = WatchlistBatchService.from_app_state(app, settings)
-        if settings.watchlist_auto_run_on_startup and app.state.db_ok:
-            log.info(
-                "watchlist.startup.scheduling",
-                note="WATCHLIST_AUTO_RUN_ON_STARTUP=true — batch will run without UI click",
-            )
-            app.state.watchlist_task = asyncio.create_task(batch.run_once())
-        elif settings.watchlist_auto_run_on_startup and not app.state.db_ok:
-            log.warning("watchlist.startup.skipped", reason="db_unavailable")
-        else:
-            log.info("watchlist.startup.disabled", auto_run=False)
-    except Exception as e:  # pragma: no cover - defensive
-        log.warning("watchlist.startup.failed", error=str(e))
-
     # IBKR Live Market Data — singleton connection + background workers.
+    # Started BEFORE the watchlist batch so that opp_service is available on
+    # app.state when WatchlistBatchService.from_app_state() is called below.
     # Strictly separate from the analysis batch above; the price worker only
     # writes to ``ticker_market_data`` (via QuoteCache flush) and
     # ``market_candles_1m``; the opportunity worker writes to
@@ -119,6 +100,7 @@ async def lifespan(app: FastAPI):
     app.state.market_data_worker = None
     app.state.market_data_pubsub = None
     app.state.opportunity_worker = None
+    app.state.opp_service = None  # OptionsOpportunityService — used by WatchlistBatchService
     app.state.redis_pubsub_bridge = None
     if settings.ibkr_enabled:
         try:
@@ -183,6 +165,10 @@ async def lifespan(app: FastAPI):
                     SessionLocal(),
                 ),
             )
+            # Store on app.state so WatchlistBatchService (created below) picks
+            # it up via from_app_state() for IbkrOpportunitySource.
+            app.state.opp_service = opp_service
+
             opp_worker = OpportunityEngineWorker(
                 settings=settings,
                 opp_service=opp_service,
@@ -198,6 +184,28 @@ async def lifespan(app: FastAPI):
             log.warning("ibkr.lifespan.startup_failed", error=str(e))
     else:
         log.info("ibkr.lifespan.disabled", note="IBKR_ENABLED=false")
+
+    # Reverse BWB Intelligence Dashboard — sequential watchlist batch.
+    # Constructed AFTER IBKR so that from_app_state() picks up opp_service,
+    # ibkr connection and quote_cache for live opportunity generation.
+    # Route handlers resolve it via ``app.state.watchlist_batch``.
+    app.state.watchlist_task = None
+    try:
+        from app.services.dashboard.watchlist_batch import WatchlistBatchService
+
+        batch = WatchlistBatchService.from_app_state(app, settings)
+        if settings.watchlist_auto_run_on_startup and app.state.db_ok:
+            log.info(
+                "watchlist.startup.scheduling",
+                note="WATCHLIST_AUTO_RUN_ON_STARTUP=true — batch will run without UI click",
+            )
+            app.state.watchlist_task = asyncio.create_task(batch.run_once())
+        elif settings.watchlist_auto_run_on_startup and not app.state.db_ok:
+            log.warning("watchlist.startup.skipped", reason="db_unavailable")
+        else:
+            log.info("watchlist.startup.disabled", auto_run=False)
+    except Exception as e:  # pragma: no cover - defensive
+        log.warning("watchlist.startup.failed", error=str(e))
 
     yield
 

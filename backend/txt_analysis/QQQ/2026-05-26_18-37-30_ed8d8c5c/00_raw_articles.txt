@@ -1,0 +1,417 @@
+================================================================================
+PIPELINE AUDIT — RAW ARTICLES (from news collectors)
+Ticker : QQQ
+Run ID : ed8d8c5c-fa13-4990-bcbe-993c82504b4d
+Time   : 2026-05-26_18-37-30
+================================================================================
+
+[
+  {
+    "headline": "Nasdaq 100 Hits Record Above 30,000 On Micron's 18% Rally: Stock Market Today",
+    "source": "Benzinga",
+    "url": "https://finnhub.io/api/news?id=5678d4765bb38aaaf0187cf04891014921f7890ea88af8fb0a60f5889e865ac4",
+    "published_at": "2026-05-26 13:57:30+00:00"
+  },
+  {
+    "headline": "Dow Jones, Nasdaq And S&P 500 Intraday Levels: Markets Are Sending Mixed Feelings On The Peace Deal",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=f47bb4efa2be9f7a4f0789ad8245b81be1876309958d367e05005c8173c58c36",
+    "published_at": "2026-05-26 13:25:00+00:00"
+  },
+  {
+    "headline": "Small Caps Add Breadth Support, but Confirmation Is Still Incomplete",
+    "source": "ChartMill",
+    "url": "https://finnhub.io/api/news?id=6faea010b039a68eb188a5860d5a8f297c1e9971c06c8af531fb4960cdeef096",
+    "published_at": "2026-05-26 12:26:22+00:00"
+  },
+  {
+    "headline": "The Need To Diversify Diversifiers",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=47c911a56717adfad42002c59c05feb42b8225533344f0ff620508ce10c6f6eb",
+    "published_at": "2026-05-26 11:45:00+00:00"
+  },
+  {
+    "headline": "Beyond The AI Box: How Today's AI Buildout Is Reshaping Returns On Capital",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=7c711e02050640281dee36cc9571f2c49bbc9a65d15c9bce2edd6a764cd239db",
+    "published_at": "2026-05-26 10:50:00+00:00"
+  },
+  {
+    "headline": "GARP: The Numbers Don't Lie, This Large-Cap Growth ETF Is A Winner (Upgrade)",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=381f0e76244821d7175bd4563a62724143db78ca2a48fd0d2bd6b57220b69880",
+    "published_at": "2026-05-26 09:54:46+00:00"
+  },
+  {
+    "headline": "3 Reasons To Stick With Growth Stocks In Rotating Markets",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=a3c4e7851be510e255a05568e9f98344df216ee78a22968df3cea259628a103b",
+    "published_at": "2026-05-26 09:16:00+00:00"
+  },
+  {
+    "headline": "S&P 500: 20% Moves Up And Down During Next 6-12 Months Very Likely. Here's Why",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=ebe376d001b97102070fb26b770ad677987d6b572f15bb1c5d1019b6ca7590e8",
+    "published_at": "2026-05-26 09:00:00+00:00"
+  },
+  {
+    "headline": "Since 1930, This Is The Average Return Of The S&P 500 After A New Fed Chair Is Elected",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=a55c97278148a6cc88ea995c9253c21d942d4dd0d66373d7258a636d7fb22dc0",
+    "published_at": "2026-05-26 09:00:00+00:00"
+  },
+  {
+    "headline": "Stock Market Today: S&P 500, Dow, Nasdaq Futures Up Amid US 'Defensive Strikes' On Iran— Elbit Systems, Intuitive Machines, Zscaler In Focus (UPDATED)",
+    "source": "Benzinga",
+    "url": "https://finnhub.io/api/news?id=cddd96fd02911e3e09370c846a25e9cb28dee197888a2eabce765cfd03dc19fc",
+    "published_at": "2026-05-26 08:47:44+00:00"
+  },
+  {
+    "headline": "The Divorce Between Wall Street And Main Street",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=403085f241dbeb5e4defe5574f3853a888ef9ccc14a27963282588dc25881256",
+    "published_at": "2026-05-26 08:20:00+00:00"
+  },
+  {
+    "headline": "Weekly Market Pulse: The Real Deal",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=d6955b16d548f31d66b3ac475a7b9e6fc2a4af05d919a85ff6fb59c007a131e3",
+    "published_at": "2026-05-26 08:05:00+00:00"
+  },
+  {
+    "headline": "Inflation Troubles, Now And Ahead",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=8fe604518f245e6b60312b185c7da5656fd3a24915d52f7d5a1c4885be1cc92c",
+    "published_at": "2026-05-25 15:50:00+00:00"
+  },
+  {
+    "headline": "Dow Jones, Nasdaq And S&P 500 Intraday Levels - Markets Are Closed, But Futures Are Exploding",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=731cb0af31987c3decf171eee31988087508a93bb3e07c8db4c28c44e564dd33",
+    "published_at": "2026-05-25 13:30:00+00:00"
+  },
+  {
+    "headline": "No, The Market Is Not Getting Cheaper",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=cd255146e646e6acb87e8a9387d0458eba3a4567f9047e7e6804b7b198d5e6cb",
+    "published_at": "2026-05-25 13:15:00+00:00"
+  },
+  {
+    "headline": "The Most Valuable Asset In The SpaceX IPO Is A Gift That Most Investors Will Ignore",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=c0ce2ad425fd2b55e5720eeff42a4f407dec46e8bf47939be53f6f20cf630632",
+    "published_at": "2026-05-25 13:05:00+00:00"
+  },
+  {
+    "headline": "Business Conditions Monthly March 2026",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=c058d5e7c09a9317727bcafa9fef8d0bc3867ace51dbea80f3bb67e5ee4973fc",
+    "published_at": "2026-05-25 11:23:00+00:00"
+  },
+  {
+    "headline": "Corrections Vs. Bear Markets: Why 20% Declines Are Obsolete",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=04630c46eba5cd583505278648818b7d994855130a1f0d6451f9853a76b27347",
+    "published_at": "2026-05-25 10:56:00+00:00"
+  },
+  {
+    "headline": "Forget Yields, This Is The Real Black Swan",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=cce9f3c1942bb2fdb0d126b5cf7404449a970340e48624642fa3ea0d2b1564b3",
+    "published_at": "2026-05-25 10:30:44+00:00"
+  },
+  {
+    "headline": "Iran: It Ain't Over 'Til It's Over",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=08fc6f2fba191065093e1995b9fcc800902045ddc884b1e21e78d95cd60d317c",
+    "published_at": "2026-05-25 08:13:54+00:00"
+  },
+  {
+    "headline": "Mohamed El-Erian Warns Investors Can No Longer Count On Central Banks To Rescue Markets During Selloffs",
+    "source": "Benzinga",
+    "url": "https://finnhub.io/api/news?id=9782a84dd7e8945e12e637778ee4a921611e96ef6164b83f5fa1864a49476918",
+    "published_at": "2026-05-25 07:58:37+00:00"
+  },
+  {
+    "headline": "Above The Noise: Solid Ground For Markets",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=ddf6d87b4180b797d4dc970a916dd2ce2abdd3bb972b6296830cd8d8442217e6",
+    "published_at": "2026-05-25 07:35:00+00:00"
+  },
+  {
+    "headline": "The US-Iran War: Deal Unlikely, Brace For Inflationary Shock",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=83c30dec4d0e4ec767c8a7e90b72e36f9c24c6864585a728d32e4b0c9ea6b951",
+    "published_at": "2026-05-25 06:27:47+00:00"
+  },
+  {
+    "headline": "Tom Lee Says Mag-7 Bear Market Is Over, But Trouble Is Brewing For Rest Of Wall Street: 'Day Of Reckoning'",
+    "source": "Benzinga",
+    "url": "https://finnhub.io/api/news?id=6bd8bfe6f57e73f09b8160122233b577667a9413a712c2504a90513425c6c407",
+    "published_at": "2026-05-25 06:07:25+00:00"
+  },
+  {
+    "headline": "CIO Weekly: Interest Rates Come Back Into Focus",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=775b7cba25c7ccb8c7ec88d1bc02075ae1066edbbe98e7530e7fbad0bd3b99c9",
+    "published_at": "2026-05-25 04:49:00+00:00"
+  },
+  {
+    "headline": "Memorial Day 2026: Is Stock Market Open Today?",
+    "source": "Benzinga",
+    "url": "https://finnhub.io/api/news?id=f14b84d9d9f4efa49898014cbe9dec0f875113030df0fe0d9786fb60ee86bc02",
+    "published_at": "2026-05-25 04:00:21+00:00"
+  },
+  {
+    "headline": "Why Are Global Investors Looking To Asia As An Investment Destination?",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=e6474136a86cdfb73d6334949feb57437af8daa9950bc5fc72828fd1d2aa39ff",
+    "published_at": "2026-05-24 16:20:00+00:00"
+  },
+  {
+    "headline": "Top 3 Catalysts For Nasdaq 100 And Dow Jones Indices This Week",
+    "source": "Benzinga",
+    "url": "https://finnhub.io/api/news?id=a1acbc8b2ea1a8fc3e19c515b95102a7d8042f4ecb66d416d91cecae5b4e619a",
+    "published_at": "2026-05-24 14:46:48+00:00"
+  },
+  {
+    "headline": "A Final Path To Peace? Markets Weekly Outlook",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=e986cc0c83d17f6be2e71d7843d36973b68f8f7618813c0c90449e5ef9f12228",
+    "published_at": "2026-05-24 11:35:00+00:00"
+  },
+  {
+    "headline": "Moving From Measuring Markets To Measuring The Real Economy: The FTSE All-World GDP Adjusted Index",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=bca81c40eae3be037514a41ecbaecc46e32faa5e7aacdab0b48785de7c0c7775",
+    "published_at": "2026-05-24 10:30:00+00:00"
+  },
+  {
+    "headline": "A $100 Billion Liquidity Drain May Hit Markets This Week",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=7d6455cfefe9ebca008dd5463828a5521e1c045df53ae8562ad7fdf2a6619197",
+    "published_at": "2026-05-24 10:00:00+00:00"
+  },
+  {
+    "headline": "SpaceX IPO: Should I Buy It, Or Wait?",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=754069ff190d6839eb51f93debbc56ca04cf56cb32f90647ba1a2afb866d7942",
+    "published_at": "2026-05-24 07:30:00+00:00"
+  },
+  {
+    "headline": "Equities In Bubble Territory: 6 Hard-To-Ignore Signs",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=785ba296b073ae97e02647657a550ea76bd2dae7e89db49d1aa1dfbcc9daf299",
+    "published_at": "2026-05-24 07:02:55+00:00"
+  },
+  {
+    "headline": "The 1-Minute Market Report, May 24, 2026",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=feaacce9fb31f37af2a5a00c3ca02907af1f214df4aafbf04cafad682e1d525b",
+    "published_at": "2026-05-23 22:41:52+00:00"
+  },
+  {
+    "headline": "Vanguard's VOO ETF Inflows Top $59 Billion As Investors Flee SPY",
+    "source": "Benzinga",
+    "url": "https://finnhub.io/api/news?id=2af76f061ae2c0508d74eb6ec912aeba5416e7bd3a1d378bae7e6848f878ebf3",
+    "published_at": "2026-05-23 18:31:18+00:00"
+  },
+  {
+    "headline": "RDVI: Targeting A Positive Income Outcome With Capital Appreciation",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=6eaca9c262b9f7a5d23b854b94d21bdeebc6a750b1f49f62a942258d4f3da70a",
+    "published_at": "2026-05-23 11:08:53+00:00"
+  },
+  {
+    "headline": "Trump Wants Cuts, The Long End Needs Relief, And I'm Still Buying The Pullback",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=5f62451ef86f6d9cb15360da91cfefc684feb71a9f82e29b7f187c730fbb6132",
+    "published_at": "2026-05-23 08:30:00+00:00"
+  },
+  {
+    "headline": "Weekly Indicators: Consumers Continue To Power Through Gas Price Increases",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=31e6d092e051a7959fc6e9a444bdd6503972b7e4b1eeffb0910df7b2c649770a",
+    "published_at": "2026-05-23 08:00:00+00:00"
+  },
+  {
+    "headline": "AI Race Is An Ultra Marathon, Not A Sprint",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=61bb4754cf444f82622fef1a79ac479cde05ca00e656b2164bc1d6e61efcdb8d",
+    "published_at": "2026-05-23 08:00:00+00:00"
+  },
+  {
+    "headline": "Here Come The Bankruptcies",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=a35bb76a36c92248fcbed0e32301d570893c169c8c1c5a0bae49738339c7a250",
+    "published_at": "2026-05-23 08:00:00+00:00"
+  },
+  {
+    "headline": "A Massive Energy Crisis Is Brewing, And It Could Change Everything For Markets",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=519839bfce90d964d89711d27026d170fc90f1d60298a91bcb55460e94784547",
+    "published_at": "2026-05-23 07:05:00+00:00"
+  },
+  {
+    "headline": "Weekly Commentary: The Warsh Fed",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=29538514869c5fbc083f282358e1a0231d1ec43eeca99bc9eed3edf0cac02847",
+    "published_at": "2026-05-23 04:40:46+00:00"
+  },
+  {
+    "headline": "Flash PMIs Signal Stagflation Among The Major Developed Economies As Growth Falters Amid Price Hikes",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=7129d609df05fa8259deb42262db6501ef0a8a3bcab19a34696f410690411b9b",
+    "published_at": "2026-05-23 03:35:00+00:00"
+  },
+  {
+    "headline": "Markets Rally As IPO Momentum Builds",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=94a125e96c560734a994a805c252369b5957caa2e764bf9d47d07850277b319e",
+    "published_at": "2026-05-23 02:45:00+00:00"
+  },
+  {
+    "headline": "Semis Won The First AI Trade. Software May Win The Next One",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=1acf9cb040f51b33e2f434443f0600cd499147b61b87176d3a58eeb97813eab9",
+    "published_at": "2026-05-23 01:28:39+00:00"
+  },
+  {
+    "headline": "This Week's Market Wrap: Nvidia, War Headlines, And FOMC Minutes",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=bb027e7b2c243e8bfc55c3f3806ed1013db802853f578315e1aaeae0fd9353a8",
+    "published_at": "2026-05-22 23:55:00+00:00"
+  },
+  {
+    "headline": "Stocks Are At Record Highs — Yet Only 40% Of Voters Approve Of Trump's Economy",
+    "source": "Benzinga",
+    "url": "https://finnhub.io/api/news?id=326e99286b6e80b8c241ca98c06a10cfbb88666f4887a18a779c8644ea0ad45f",
+    "published_at": "2026-05-22 16:34:31+00:00"
+  },
+  {
+    "headline": "Dow Jones, Nasdaq And S&P 500 Intraday Levels - Stock Markets Dance Towards New Records Ahead Of A Long Weekend",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=c7a4a1d51616d175398e05f0f0e5349f3c69cb6a5f3000d3e40ccca77a87a2ec",
+    "published_at": "2026-05-22 15:02:00+00:00"
+  },
+  {
+    "headline": "A Look At The Balance Sheet New Fed Chair Warsh Will Inherit",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=6622ee067154a4a58278b322ecf7aeeeb1df3c34911e25e223864911f9b8e08c",
+    "published_at": "2026-05-22 14:05:16+00:00"
+  },
+  {
+    "headline": "Iran Optimism Drives Semi Mania, Potential Short Squeeze Ahead",
+    "source": "Benzinga",
+    "url": "https://finnhub.io/api/news?id=f3cb85d50258305e8177ddff52445942a4958158ab53d95497690a68708d3c80",
+    "published_at": "2026-05-22 13:52:50+00:00"
+  },
+  {
+    "headline": "Are Equity Markets Underpricing The Oil Risk?",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=14e0a280c29056070a26b5499612cad31b7f2b6489a1067abf85e7e7077ce831",
+    "published_at": "2026-05-22 13:05:00+00:00"
+  },
+  {
+    "headline": "Breadth Improves Again, But Leadership Still Looks Narrow",
+    "source": "ChartMill",
+    "url": "https://finnhub.io/api/news?id=3aab106d59b0553ca1a985a303ad86b190a644bd1eea9d54af11ac226feff8e9",
+    "published_at": "2026-05-22 12:14:23+00:00"
+  },
+  {
+    "headline": "Housing Bubble Cracks Emerge: Foreclosures Hit 6-Year Highs As Mortgage Rates, Inventory And Days On Market Surges",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=1f762728d53c83ea7ebe5531d264eae07850dc8129c798ea8b4357d524c2d54b",
+    "published_at": "2026-05-22 11:35:20+00:00"
+  },
+  {
+    "headline": "Dow Jones Hits Record Highs, DELL Jumps 15%: Stock Market Today",
+    "source": "Benzinga",
+    "url": "https://finnhub.io/api/news?id=d6c84006cba1cff192f517576b8adb8d0010a91de81ffe0b3401f1610fa9e95b",
+    "published_at": "2026-05-22 11:27:33+00:00"
+  },
+  {
+    "headline": "Stagflation Is Intensifying: It's (Almost) Time To Panic",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=6dda02ed393fb68a8a5ab202ec579f637117a69087a72f6d470b624842ada918",
+    "published_at": "2026-05-22 10:35:24+00:00"
+  },
+  {
+    "headline": "First-Quarter Earnings Driving Stocks To Record Highs",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=bb15deffc704b5826e538e9f83760cb99d924dfec2f27a79131adfc984995b57",
+    "published_at": "2026-05-22 10:05:00+00:00"
+  },
+  {
+    "headline": "How To Build A $1 Million Conservative Retirement Portfolio",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=74bc1dc99b5abfd2955f19388a13e2ecb79b970b7931d478eb02c2b0d2045cf3",
+    "published_at": "2026-05-22 09:30:33+00:00"
+  },
+  {
+    "headline": "Headline Inflation Surges, But Core Measures Keep The Fed On Hold",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=0fc286545cff7b9dd3c61c260b8e58d8e0b0e9a2105760b9738b568ae2997bcc",
+    "published_at": "2026-05-22 09:15:00+00:00"
+  },
+  {
+    "headline": "I'm In My 30s And This Is Why I Invest In Old Economy For Income",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=e8b9f5c353ad82f91758799d0279235df942b576f8a1a99d955744ba46b901e1",
+    "published_at": "2026-05-22 09:15:00+00:00"
+  },
+  {
+    "headline": "Rising Global Bond Yields: The Test For Risk Assets",
+    "source": "SeekingAlpha",
+    "url": "https://finnhub.io/api/news?id=3b99f21cb003a3d9f672706988647860f32ae9ef870b774dff63388cbbe9fa14",
+    "published_at": "2026-05-22 09:12:00+00:00"
+  },
+  {
+    "headline": "The Most Valuable Asset in SpaceX IPO Is a Gift That Most Investors Will Ignore",
+    "source": "Investing.com",
+    "url": "https://www.investing.com/analysis/the-most-valuable-asset-in-spacex-ipo-is-a-gift-that-most-investors-will-ignore-200680886",
+    "published_at": "2026-05-25 12:06:00+00:00"
+  },
+  {
+    "headline": "Mohamed El-Erian Warns Investors Can No Longer Count On Central Banks To Rescue Markets During Selloffs",
+    "source": "Benzinga",
+    "url": "https://www.benzinga.com/markets/market-summary/26/05/52766095/mohamed-el-erian-warns-investors-can-no-longer-count-on-central-banks-to-rescue-markets-du?utm_source=benzinga_taxonomy&utm_medium=rss_feed_free&utm_content=taxonomy_rss&utm_campaign=channel",
+    "published_at": "2026-05-25 11:58:37+00:00"
+  },
+  {
+    "headline": "Stock Market Today: Dow, S&P 500, Nasdaq Futures Rise As Investors Eye U.S.-Iran Peace Talks— Estee Lauder, Workday, Zoom In Focus  (UPDATED)",
+    "source": "Benzinga",
+    "url": "https://www.benzinga.com/markets/equities/26/05/52738958/stock-market-today-dow-jones-sp-500-futures-gain-as-investors-eye-us-iran-peace-talks-estee-laud?utm_source=benzinga_taxonomy&utm_medium=rss_feed_free&utm_content=taxonomy_rss&utm_campaign=channel",
+    "published_at": "2026-05-22 12:27:43+00:00"
+  },
+  {
+    "headline": "Exclusive: Treasury Yields Near 5%—Is This 'Sustainable Regime' Shift Or Will Bonds 'Cool Off' Soon?",
+    "source": "Benzinga",
+    "url": "https://www.benzinga.com/markets/bonds/26/05/52709382/treasury-yields-near-5-is-this-a-sustainable-regime-shift-or-will-bonds-cool-off-soon?utm_source=benzinga_taxonomy&utm_medium=rss_feed_free&utm_content=taxonomy_rss&utm_campaign=channel",
+    "published_at": "2026-05-21 07:00:32+00:00"
+  },
+  {
+    "headline": "Fed Minutes Flip The Script: Officials Open Door To Rate Hike",
+    "source": "Benzinga",
+    "url": "https://www.benzinga.com/news/politics/26/05/52705469/fed-minutes-april-2026-rate-hike-odds-inflation?utm_source=benzinga_taxonomy&utm_medium=rss_feed_free&utm_content=taxonomy_rss&utm_campaign=channel",
+    "published_at": "2026-05-20 20:35:47+00:00"
+  },
+  {
+    "headline": "Nvidia Earnings Preview: The AI Bellwether Faces Its Moment of Truth",
+    "source": "Investing.com",
+    "url": "https://www.investing.com/analysis/nvidia-earnings-preview-the-ai-bellwether-faces-its-moment-of-truth-200680615",
+    "published_at": "2026-05-20 17:29:00+00:00"
+  },
+  {
+    "headline": "Earnings Become Key as Markets Look Past High Oil and Interest Rates",
+    "source": "Investing.com",
+    "url": "https://www.investing.com/analysis/earnings-become-key-as-markets-look-past-high-oil-and-interest-rates-200680659",
+    "published_at": "2026-05-20 17:27:00+00:00"
+  },
+  {
+    "headline": "Stock Market Today: Do, S&P 500, Nasdaq Futures Gain Ahead Of NVDA's Q1 Report— CAVA, AMC Entertainment, Roblox In Focus (UPDATED)",
+    "source": "Benzinga",
+    "url": "https://www.benzinga.com/markets/equities/26/05/52683795/stock-market-today-sp-500-nasdaq-100-futures-gain-as-street-awaits-nvidias-q1-report-cava-group-?utm_source=benzinga_taxonomy&utm_medium=rss_feed_free&utm_content=taxonomy_rss&utm_campaign=channel",
+    "published_at": "2026-05-20 12:32:08+00:00"
+  }
+]

@@ -1,0 +1,28 @@
+================================================================================
+PIPELINE AUDIT — EXECUTIVE SUMMARY
+Ticker : QQQ
+Run ID : ed8d8c5c-fa13-4990-bcbe-993c82504b4d
+Time   : 2026-05-26_18-37-30
+================================================================================
+
+{
+  "decision": "WATCH",
+  "credit_safety_score": 4.11,
+  "outlook": "Sideways",
+  "risk": "Medium",
+  "confidence": "Medium",
+  "plus_move_risk": "Low",
+  "minus_move_risk": "Low",
+  "expected_range": {
+    "low": 719.41,
+    "high": 739.73
+  },
+  "event_risk": "Medium",
+  "iv_quality": "Good",
+  "liquidity": "Fair",
+  "pin_risk": "High",
+  "summary": "Tech-led equity markets are testing record highs driven by strong Q1 earnings and Micron/Nvidia momentum, but the rally faces mounting headwinds from stagflation fears, elevated oil prices tied to US-Iran tensions, and narrow market breadth. The Nasdaq 100 broke above 30,000 for the first time, powered by Micron's 18% rally and broadly strong Q1 earnings that drove QQQ to post positive abnormal…",
+  "summary_version": 1,
+  "derived_at": "2026-05-26T18:38:57.412711+00:00",
+  "council_decision_raw": null
+}

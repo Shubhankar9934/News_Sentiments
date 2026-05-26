@@ -90,6 +90,8 @@ class LiveOpportunity(BaseModel):
     strike_long_wing_b: float | None = None
     expiration: str
     expiry_days: int | None = None
+    # OTM %: (long_wing_a - spot) / spot * 100. Not options Greek Δ.
+    # CALL rows >= 0 (first strike above spot); PUT rows <= 0 (below spot).
     delta_pct: float | None = None
     premium: float
     init_margin: float | None = None

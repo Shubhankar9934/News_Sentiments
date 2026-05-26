@@ -1,0 +1,106 @@
+================================================================================
+PIPELINE AUDIT — OPTIONS INTELLIGENCE
+Ticker : SPY
+Run ID : c9b0f9fc-a1bc-4240-a664-dfc5cc0a1c1b
+Time   : 2026-05-26_17-23-57
+================================================================================
+
+{
+  "price_source": "ibkr_live",
+  "last_close_used": 748.67,
+  "ibkr_live_price": 748.67,
+  "polygon_bar_close": 745.64,
+  "live_iv_pct": null,
+  "iv_source": "realized_vol",
+  "options_block": {
+    "source": "realized_vol",
+    "horizon_days": 3,
+    "last_close": 748.67,
+    "daily_vol_pct": 0.5926,
+    "expected_range": {
+      "low": 740.99,
+      "high": 756.35,
+      "sigma_pct": 1.026,
+      "confidence": 0.68
+    },
+    "move_probabilities": {
+      "p_up_2pct": 0.0269,
+      "p_dn_2pct": 0.0245,
+      "p_up_3pct": 0.002,
+      "p_dn_3pct": 0.0015,
+      "p_in_range_1sigma": 0.6827
+    },
+    "pin_risk": {
+      "score": 0.913,
+      "label": "High",
+      "nearest_round": 750.0,
+      "distance_pct": 0.178
+    },
+    "body_danger": {
+      "short_body_lo": 744.06,
+      "short_body_hi": 753.28,
+      "distance_pct": 0.0,
+      "label": "High"
+    },
+    "event_risk": {
+      "score": 0.675,
+      "label": "High",
+      "drivers": [
+        "Bearish warning that S&P 500 earnings growth ex-AI infrastructure is effectively 0%, raising concentration risk concerns."
+      ]
+    },
+    "credit_safety": {
+      "score": 4.2,
+      "label": "CAUTION",
+      "components": {
+        "prob_block": 0.683,
+        "pin_risk": 0.087,
+        "body_danger": 0.15,
+        "event_risk": 0.325,
+        "vol_regime": 0.85
+      }
+    },
+    "reverse_bwb": {
+      "score": 6.01,
+      "label": "CAUTION",
+      "suggested_wing_width_pct": 1.5,
+      "suggested_dte": 13,
+      "rationale": "Mixed setup: credit safety 4.2/10 with 1.03% expected sigma. Size small and widen wings."
+    },
+    "structure_geometry": {
+      "spot": 748.67,
+      "body_strike": 748.67,
+      "wing_width_pct": 1.5,
+      "wing_width_dollars": 11.23,
+      "credit": 5.05,
+      "max_loss": 6.18,
+      "dte": 13,
+      "distance_to_body_pct": 0.0,
+      "distance_to_body_sigma": 0.0,
+      "body_exposure_pct": 27.442,
+      "wing_protection_ratio": 0.702,
+      "credit_efficiency": 0.4497,
+      "risk_reward": 0.8171,
+      "upper_breakeven": 753.72,
+      "lower_breakeven": 743.62
+    },
+    "position_risk": {
+      "probability_of_profit": 0.3883,
+      "probability_of_touch": 1.0,
+      "probability_of_breakeven": 0.4891,
+      "probability_of_max_loss": 0.1437,
+      "expected_value_usd": -58.78,
+      "method": "lognormal_closed_form",
+      "assumptions": [
+        "Lognormal terminal distribution, sigma_pct=1.03%",
+        "Zero drift over horizon",
+        "DTE=13 days",
+        "PoT uses reflection-principle approximation (upper bound 1.0)",
+        "EV uses 401-point Gaussian quadrature in log-space"
+      ]
+    },
+    "disclaimer": "Probability model from realized volatility; not financial advice.",
+    "_price_source": "ibkr_live",
+    "_iv_source": "realized_vol"
+  }
+}

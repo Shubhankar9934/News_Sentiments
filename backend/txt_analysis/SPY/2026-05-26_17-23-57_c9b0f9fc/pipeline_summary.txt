@@ -1,0 +1,62 @@
+================================================================================
+PIPELINE SUMMARY
+Ticker : SPY
+Run ID : c9b0f9fc-a1bc-4240-a664-dfc5cc0a1c1b
+Time   : 2026-05-26_17-23-57
+================================================================================
+
+[00_raw_articles]
+  count: 70
+
+[01_cleaned]
+  unique: 63
+  dupes_removed: 6
+
+[02_sentiment]
+  positive: 0
+  negative: 0
+  neutral: 0
+
+[03_events]
+  events_found: 47
+
+[04_market_price]
+  source: ibkr_live
+  polygon_close: 745.64
+  ibkr_live: 748.67
+  final_price: 748.67
+
+[05_impact]
+  avg_impact: 0.0956
+
+[06_clusters]
+  count: 15
+
+[07_claude_report]
+  keys: ['data_mode', 'data_quality_note', 'articles_analyzed', 'unique_sources', 'duplicates_removed', 'overall_sentiment_score', 'overall_sentiment_label', 'sentiment_breakdown', 'key_events', 'dominant_narrative', 'what_happened', 'price_movers', 'source_reliability', 'articles']
+  has_key_events: True
+
+[08_options_intelligence]
+  price_source: ibkr_live
+  last_close: 748.67
+  live_iv_pct: None
+  iv_source: realized_vol
+
+[10_analogs]
+  matches: 2
+  aggregates: {'n_setups': 0, 'win_rate': None, 'avg_credit_retained': None, 'max_loss_frequency': None, 'avg_forward_return_pct': None, 'p_touch_body': None}
+
+[11_executive_summary]
+  outlook: None
+  decision_signal: None
+
+[pipeline]
+  run_id: c9b0f9fc-a1bc-4240-a664-dfc5cc0a1c1b
+  elapsed_s: 94.45
+  unique_articles: 63
+  clusters: 15
+  price_source: ibkr_live
+  ibkr_live_price: 748.67
+  polygon_close: 745.64
+  final_last_close: 748.67
+

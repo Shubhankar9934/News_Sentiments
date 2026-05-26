@@ -89,6 +89,8 @@ class OptionQuote:
     open_interest: int | None
     volume: int | None
     implied_vol: float | None = None
+    bid_size: int | None = None   # TickType 0 — executable depth on the bid
+    ask_size: int | None = None   # TickType 3 — executable depth on the ask
 
     @property
     def mid(self) -> float | None:
@@ -328,10 +330,18 @@ class MarketDataService:
         dte_min: int,
         dte_max: int,
     ) -> tuple[list[str], list[float]] | None:
-        """Return ``(expirations, strikes)`` for the SMART chain.
+        """Return ``(expirations, strikes)`` for the option chain.
 
-        Filters expirations by DTE range. Returns ``None`` when IBKR is
-        offline or returns an empty result.
+        Strategy:
+            1. Qualify the underlying stock via IBKR (resolves conId).
+            2. Call ``reqSecDefOptParamsAsync`` to get all chain objects.
+            3. Pick the chain with the most strikes — prefers SMART but falls
+               back to any exchange if SMART returns fewer than 20 strikes.
+               Some tickers (e.g. MSFT) return their largest chain under a
+               non-SMART exchange entry, or the SMART entry may be a subset.
+            4. Filter expirations by DTE range.
+
+        Returns ``None`` when IBKR is offline or qualification fails.
         """
         ib = self._connection.ib
         if ib is None:
@@ -341,27 +351,82 @@ class MarketDataService:
 
         try:
             stock = Stock(ticker.upper(), "SMART", "USD")
-            await ib.qualifyContractsAsync(stock)
+            qualified = await ib.qualifyContractsAsync(stock)
+            con_id = stock.conId if qualified else 0
             chains = await ib.reqSecDefOptParamsAsync(
                 stock.symbol,
                 "",
                 stock.secType,
-                stock.conId,
+                con_id,
             )
         except Exception as exc:
             log.warning("market_data.snapshot_chain.failed", ticker=ticker, error=str(exc))
             return None
 
+        if not chains:
+            log.warning(
+                "market_data.snapshot_chain.no_chains",
+                ticker=ticker,
+                con_id=con_id,
+            )
+            return None
+
+        # Log every chain object so we can diagnose per-ticker anomalies.
+        for c in chains:
+            log.debug(
+                "market_data.snapshot_chain.raw",
+                ticker=ticker,
+                exchange=c.exchange,
+                trading_class=getattr(c, "tradingClass", "?"),
+                n_expirations=len(getattr(c, "expirations", [])),
+                n_strikes=len(getattr(c, "strikes", [])),
+                sample_strikes=sorted(float(s) for s in getattr(c, "strikes", []))[:5],
+            )
+
+        # Pick the best chain: SMART if it has ≥20 strikes, otherwise use
+        # whichever exchange entry has the most strikes (handles MSFT, SPY
+        # edge cases where the SMART entry is a subset of the full chain).
         smart = next((c for c in chains if c.exchange == "SMART"), None)
-        if smart is None:
+        best_chain = smart
+        if smart is None or len(getattr(smart, "strikes", [])) < 20:
+            # Fall back to the chain with the largest strike set.
+            all_with_strikes = [
+                c for c in chains if len(getattr(c, "strikes", [])) > 0
+            ]
+            if all_with_strikes:
+                largest = max(all_with_strikes, key=lambda c: len(getattr(c, "strikes", [])))
+                if smart is None or len(largest.strikes) > len(getattr(smart, "strikes", [])):
+                    best_chain = largest
+                    log.info(
+                        "market_data.snapshot_chain.fallback_exchange",
+                        ticker=ticker,
+                        smart_strikes=len(getattr(smart, "strikes", [])) if smart else 0,
+                        fallback_exchange=largest.exchange,
+                        fallback_strikes=len(largest.strikes),
+                    )
+
+        if best_chain is None:
+            log.warning("market_data.snapshot_chain.no_valid_chain", ticker=ticker)
             return None
 
         expirations = self._filter_expirations(
-            smart.expirations,
+            best_chain.expirations,
             dte_min=dte_min,
             dte_max=dte_max,
         )
-        strikes = sorted(float(s) for s in smart.strikes)
+        strikes = sorted(float(s) for s in best_chain.strikes)
+
+        log.info(
+            "market_data.snapshot_chain.ok",
+            ticker=ticker,
+            con_id=con_id,
+            exchange_used=best_chain.exchange,
+            total_expirations=len(getattr(best_chain, "expirations", [])),
+            filtered_expirations=len(expirations),
+            total_strikes=len(strikes),
+            strike_range=(min(strikes), max(strikes)) if strikes else (0, 0),
+        )
+
         return expirations, strikes
 
     @staticmethod
@@ -464,6 +529,8 @@ class MarketDataService:
                 )
                 if getattr(ticker_obj, "modelGreeks", None) is not None
                 else None,
+                bid_size=self._safe_int(getattr(ticker_obj, "bidSize", None)),
+                ask_size=self._safe_int(getattr(ticker_obj, "askSize", None)),
             )
             out[key] = quote
 

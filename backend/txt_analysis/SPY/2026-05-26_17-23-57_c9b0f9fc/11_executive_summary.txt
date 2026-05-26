@@ -1,0 +1,28 @@
+================================================================================
+PIPELINE AUDIT — EXECUTIVE SUMMARY
+Ticker : SPY
+Run ID : c9b0f9fc-a1bc-4240-a664-dfc5cc0a1c1b
+Time   : 2026-05-26_17-23-57
+================================================================================
+
+{
+  "decision": "WATCH",
+  "credit_safety_score": 4.2,
+  "outlook": "Sideways",
+  "risk": "Medium",
+  "confidence": "Medium",
+  "plus_move_risk": "Low",
+  "minus_move_risk": "Low",
+  "expected_range": {
+    "low": 740.99,
+    "high": 756.35
+  },
+  "event_risk": "High",
+  "iv_quality": "Good",
+  "liquidity": "Fair",
+  "pin_risk": "High",
+  "summary": "Markets are caught between optimism over a potential US-Iran deal and Hormuz reopening versus deep structural concerns about AI earnings concentration, extreme valuations, and macro deterioration. Equity futures and ETFs rallied pre-market on May 26 as Trump teased a 'great deal' with Iran, raising hopes of Hormuz reopening and easing geopolitical risk premiums embedded since the Iran conflict…",
+  "summary_version": 1,
+  "derived_at": "2026-05-26T17:25:33.252701+00:00",
+  "council_decision_raw": null
+}

@@ -1,0 +1,108 @@
+================================================================================
+PIPELINE AUDIT — OPTIONS INTELLIGENCE
+Ticker : QQQ
+Run ID : ed8d8c5c-fa13-4990-bcbe-993c82504b4d
+Time   : 2026-05-26_18-37-30
+================================================================================
+
+{
+  "price_source": "ibkr_live",
+  "last_close_used": 729.57,
+  "ibkr_live_price": 729.57,
+  "polygon_bar_close": 717.54,
+  "live_iv_pct": null,
+  "iv_source": "realized_vol",
+  "options_block": {
+    "source": "realized_vol",
+    "horizon_days": 3,
+    "last_close": 729.57,
+    "daily_vol_pct": 0.8044,
+    "expected_range": {
+      "low": 719.41,
+      "high": 739.73,
+      "sigma_pct": 1.393,
+      "confidence": 0.68
+    },
+    "move_probabilities": {
+      "p_up_2pct": 0.0776,
+      "p_dn_2pct": 0.0735,
+      "p_up_3pct": 0.0169,
+      "p_dn_3pct": 0.0144,
+      "p_in_range_1sigma": 0.6827
+    },
+    "pin_risk": {
+      "score": 0.979,
+      "label": "High",
+      "nearest_round": 730.0,
+      "distance_pct": 0.059
+    },
+    "body_danger": {
+      "short_body_lo": 723.47,
+      "short_body_hi": 735.67,
+      "distance_pct": 0.0,
+      "label": "High"
+    },
+    "event_risk": {
+      "score": 0.648,
+      "label": "Medium",
+      "drivers": [
+        "Stagflation fears are intensifying with headline inflation surging while core measures keep the Fed on hold, creating a challenging macro backdrop.",
+        "Strong Q1 earnings results drove stocks toward record highs, with QQQ posting a +0.42% abnormal return on May 22.",
+        "Markets looked past high oil and interest rates with earnings becoming the primary price driver, coinciding with a +1.66% abnormal return on May 20."
+      ]
+    },
+    "credit_safety": {
+      "score": 4.11,
+      "label": "CAUTION",
+      "components": {
+        "prob_block": 0.683,
+        "pin_risk": 0.021,
+        "body_danger": 0.15,
+        "event_risk": 0.352,
+        "vol_regime": 0.85
+      }
+    },
+    "reverse_bwb": {
+      "score": 5.77,
+      "label": "CAUTION",
+      "suggested_wing_width_pct": 1.5,
+      "suggested_dte": 13,
+      "rationale": "Mixed setup: credit safety 4.1/10 with 1.39% expected sigma. Size small and widen wings."
+    },
+    "structure_geometry": {
+      "spot": 729.57,
+      "body_strike": 729.57,
+      "wing_width_pct": 1.5,
+      "wing_width_dollars": 10.9436,
+      "credit": 4.92,
+      "max_loss": 6.0236,
+      "dte": 13,
+      "distance_to_body_pct": 0.0,
+      "distance_to_body_sigma": 0.0,
+      "body_exposure_pct": 20.4055,
+      "wing_protection_ratio": 0.5172,
+      "credit_efficiency": 0.4496,
+      "risk_reward": 0.8168,
+      "upper_breakeven": 734.49,
+      "lower_breakeven": 724.65
+    },
+    "position_risk": {
+      "probability_of_profit": 0.4674,
+      "probability_of_touch": 1.0,
+      "probability_of_breakeven": 0.3717,
+      "probability_of_max_loss": 0.2815,
+      "expected_value_usd": -172.84,
+      "method": "lognormal_closed_form",
+      "assumptions": [
+        "Lognormal terminal distribution, sigma_pct=1.39%",
+        "Zero drift over horizon",
+        "DTE=13 days",
+        "PoT uses reflection-principle approximation (upper bound 1.0)",
+        "EV uses 401-point Gaussian quadrature in log-space"
+      ]
+    },
+    "disclaimer": "Probability model from realized volatility; not financial advice.",
+    "_price_source": "ibkr_live",
+    "_iv_source": "realized_vol"
+  }
+}

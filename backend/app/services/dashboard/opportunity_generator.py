@@ -1,11 +1,20 @@
-"""Placeholder Reverse-BWB option opportunity generator.
+"""Reverse-BWB option opportunity generator.
 
-V1: deterministic strikes synthesised from the existing
-``options_intelligence`` block. No live chain access, no IO.
+Two implementations:
 
-V2: an ``IbkrOpportunitySource`` implementation will satisfy the same
-``OpportunitySource`` protocol and slot in via the
-``WatchlistBatchService`` constructor without any route changes.
+V1 — ``PlaceholderOpportunitySource``:
+    Deterministic strikes synthesised from the existing
+    ``options_intelligence`` block. No live chain access, no IO.
+    Used as fallback when IBKR is offline.
+
+V2 — ``IbkrOpportunitySource``:
+    Calls ``OptionsOpportunityService.generate()`` which hits the IBKR
+    Gateway for real chain quotes, IV, OI and WhatIf margins.
+    Used whenever IBKR is connected.
+
+Both satisfy the async ``OpportunitySource`` protocol so the
+``WatchlistBatchService`` can switch between them at runtime without
+any route changes.
 
 Combo notation follows the Reverse Broken-Wing Butterfly convention
 ``short_inner / long_short / long_outer`` (3 strikes per side).
@@ -14,7 +23,7 @@ Combo notation follows the Reverse Broken-Wing Butterfly convention
 from __future__ import annotations
 
 import math
-from typing import Any, Protocol
+from typing import TYPE_CHECKING, Any, Protocol
 
 import structlog
 
@@ -25,17 +34,22 @@ from app.services.dashboard.schemas import (
 )
 from app.services.dashboard.watchlist import WATCHLIST_TIER_KEY_BY_SYMBOL
 
+if TYPE_CHECKING:
+    from app.services.market_data.options_opportunity_service import (
+        OptionsOpportunityService,
+    )
+
 log = structlog.get_logger(__name__)
 
 
 class OpportunitySource(Protocol):
-    """Pluggable interface so the IBKR swap is a single new class.
+    """Pluggable async interface so the IBKR swap is a single new class.
 
     Implementations MUST return at least an empty
     ``OptionOpportunities(calls=[], puts=[])`` instance — never raise.
     """
 
-    def generate(self, ticker: str, report: dict[str, Any]) -> OptionOpportunities:
+    async def generate(self, ticker: str, report: dict[str, Any]) -> OptionOpportunities:
         ...
 
 
@@ -117,8 +131,9 @@ def _build_side(
         premium_pct = 0.006 - 0.0015 * idx
         premium = round(max(0.05 * last_close * 0.01, last_close * premium_pct), 2)
 
-        # Margin ~ wing width * 100 (1 standard contract), padded for spread.
-        margin = round(wing_width * 100 * 1.05, 0)
+        # Geometry: wing A is wing_width from body; wing B is 2×wing_width.
+        # BWB margin = (WiderWing - NarrowerWing - Credit) × 100.
+        margin = round(max(wing_width - premium, 0.0) * 100.0, 2)
 
         expiry = _expiry_label(dte_short if idx == 0 else dte_long)
 
@@ -136,9 +151,12 @@ def _build_side(
 
 
 class PlaceholderOpportunitySource:
-    """V1 implementation — no IO, deterministic from existing report data."""
+    """V1 implementation — no IO, deterministic from existing report data.
 
-    def generate(self, ticker: str, report: dict[str, Any]) -> OptionOpportunities:
+    Used as fallback when IBKR is offline or unavailable.
+    """
+
+    async def generate(self, ticker: str, report: dict[str, Any]) -> OptionOpportunities:
         options = report.get("options_intelligence") or {}
         if not options:
             log.info("opportunities.skip", ticker=ticker, reason="no_options_intelligence")
@@ -192,7 +210,128 @@ class PlaceholderOpportunitySource:
         return OptionOpportunities(calls=calls, puts=puts)
 
 
-def default_opportunity_source() -> OpportunitySource:
-    """Factory for the current default source (V1: placeholder)."""
+def _numeric_liquidity_to_label(liquidity: int | None) -> LiquidityLabel:
+    """Convert numeric open-interest liquidity to a categorical label.
+
+    Thresholds are conservative — a trader needs at least decent OI on
+    every leg to fill a 3-leg BWB without excessive slippage.
+    """
+    if liquidity is None or liquidity <= 0:
+        return "Poor"
+    if liquidity >= 500:
+        return "Good"
+    if liquidity >= 50:
+        return "Average"
+    return "Poor"
+
+
+class IbkrOpportunitySource:
+    """V2 implementation — calls the live IBKR chain via OptionsOpportunityService.
+
+    Falls back to ``PlaceholderOpportunitySource`` automatically when:
+      - IBKR is not connected
+      - The chain snapshot returns no priced candidates
+      - Any unexpected exception is raised
+
+    The ``last_price`` passed to ``OptionsOpportunityService.generate()``
+    is taken from ``report["_pipeline_meta"]["price_snapshot"]["last_close"]``
+    which at this point already contains the IBKR-overridden price (from
+    the pipeline's quote-cache injection step).
+    """
+
+    def __init__(self, opp_service: "OptionsOpportunityService") -> None:
+        self._opp_service = opp_service
+        self._fallback = PlaceholderOpportunitySource()
+
+    async def generate(self, ticker: str, report: dict[str, Any]) -> OptionOpportunities:
+        try:
+            # Prefer the IBKR-overridden last_close already in the pipeline meta.
+            meta = report.get("_pipeline_meta") or {}
+            snap = meta.get("price_snapshot") or {}
+            last_price: float | None = snap.get("last_close")
+
+            # Also try options_intelligence block as a secondary source.
+            if last_price is None or last_price <= 0:
+                opts = report.get("options_intelligence") or {}
+                last_price = opts.get("last_close")
+
+            if last_price is None or last_price <= 0:
+                log.info(
+                    "ibkr_opportunity_source.no_price",
+                    ticker=ticker,
+                    fallback="placeholder",
+                )
+                return await self._fallback.generate(ticker, report)
+
+            result = await self._opp_service.generate(
+                ticker=ticker.upper(),
+                last_price=float(last_price),
+            )
+
+            if result.skipped_reason:
+                log.info(
+                    "ibkr_opportunity_source.skipped",
+                    ticker=ticker,
+                    reason=result.skipped_reason,
+                    fallback="placeholder",
+                )
+                return await self._fallback.generate(ticker, report)
+
+            calls: list[OptionOpportunity] = []
+            puts: list[OptionOpportunity] = []
+
+            for live_opp in result.calls:
+                calls.append(
+                    OptionOpportunity(
+                        combo=live_opp.combo,
+                        expiry=live_opp.expiration,
+                        # premium field requires ge=0.0; credit is negative per-share
+                        # so abs()*100 gives per-contract dollar credit received.
+                        premium=round(abs(live_opp.premium) * 100.0, 2),
+                        margin=round(live_opp.init_margin, 2),
+                        liquidity=_numeric_liquidity_to_label(live_opp.liquidity),
+                    )
+                )
+
+            for live_opp in result.puts:
+                puts.append(
+                    OptionOpportunity(
+                        combo=live_opp.combo,
+                        expiry=live_opp.expiration,
+                        premium=round(abs(live_opp.premium) * 100.0, 2),
+                        margin=round(live_opp.init_margin, 2),
+                        liquidity=_numeric_liquidity_to_label(live_opp.liquidity),
+                    )
+                )
+
+            if not calls and not puts:
+                log.info(
+                    "ibkr_opportunity_source.empty_result",
+                    ticker=ticker,
+                    fallback="placeholder",
+                )
+                return await self._fallback.generate(ticker, report)
+
+            log.info(
+                "ibkr_opportunity_source.success",
+                ticker=ticker,
+                calls=len(calls),
+                puts=len(puts),
+                underlying_price=result.underlying_price,
+            )
+            return OptionOpportunities(calls=calls, puts=puts)
+
+        except Exception as exc:
+            log.warning(
+                "ibkr_opportunity_source.error",
+                ticker=ticker,
+                error=str(exc),
+                fallback="placeholder",
+            )
+            return await self._fallback.generate(ticker, report)
+
+
+def default_opportunity_source() -> PlaceholderOpportunitySource:
+    """Factory for the fallback source (used when IBKR is offline)."""
 
     return PlaceholderOpportunitySource()

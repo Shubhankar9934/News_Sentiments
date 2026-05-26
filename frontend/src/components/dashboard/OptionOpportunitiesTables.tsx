@@ -2,16 +2,24 @@
  * Section 3 of the Reverse BWB Trading Workstation ticker card —
  * two stacked virtualized opportunity tables (CALL + PUT).
  *
- * Columns (per spec):
- *   Combo | Exp | Delta % | Premium | Margin | Liquidity | Cred Eff | Score
+ * Columns:
+ *   Combo | Exp | OTM % | Premium | Margin | Liquidity
  *
- * Liquidity is rendered as a raw integer (the min open-interest across
- * the three legs), never "Good"/"Excellent"/etc. Premium is sign-coloured:
- * negative => credit (green), positive => debit (red).
+ * OTM % is the percentage distance of the first (lowest) combo strike from
+ * the current spot price — not the options-Greek delta. CALL rows are
+ * positive (first strike above spot); PUT rows are negative.
  *
- * Each section is fixed-height with `position: sticky` header and uses
- * `@tanstack/react-virtual` so a ticker that produces thousands of
- * opportunities still scrolls smoothly. Click any column header to sort.
+ * Liquidity is rendered as "NNN L" (lots): MIN(BidSize_leg / abs(Ratio_leg))
+ * across all three legs — the number of complete butterfly units that can be
+ * executed immediately at current market bid depth.
+ * Premium is sign-coloured: negative => credit (green), positive => debit (red).
+ *
+ * Each section is fixed-height and uses `@tanstack/react-virtual` so a
+ * ticker that produces thousands of opportunities still scrolls smoothly.
+ * Click any column header to sort.
+ *
+ * Rows are sorted by ranking score (desc) by default even though the score
+ * column is not displayed — best opportunities surface first.
  */
 
 import { useMemo, useRef, useState } from "react";
@@ -35,7 +43,6 @@ type Props = {
 
 type SortKey =
   | "ranking_score"
-  | "credit_efficiency"
   | "premium"
   | "init_margin"
   | "liquidity"
@@ -51,11 +58,12 @@ type DisplayRow = {
   expiryDays: number | null;
   deltaPct: number | null;
   premiumDollars: number; // sign-preserved, x100 for contract value
-  premiumPerShare: number;
   margin: number | null;
   marginSource: "deterministic" | "whatif";
   liquidity: number;
-  creditEfficiency: number | null;
+  /** True when liquidity is daily volume (OI unavailable in snapshot mode). */
+  liquidityIsVolProxy: boolean;
+  /** Retained for default ranking sort even though Score column is hidden. */
   score: number | null;
 };
 
@@ -70,15 +78,13 @@ function liveToRow(r: LiveOpportunity, idx: number): DisplayRow {
     expiryDays: r.expiry_days ?? null,
     deltaPct: r.delta_pct ?? null,
     premiumDollars: Number((r.premium * 100).toFixed(2)),
-    premiumPerShare: r.premium,
     margin: r.init_margin ?? r.maint_margin ?? null,
     marginSource: r.init_margin_source ?? "deterministic",
     liquidity: r.liquidity ?? 0,
-    creditEfficiency: r.credit_efficiency ?? null,
+    liquidityIsVolProxy: (r.minimum_open_interest ?? 0) === 0 && (r.liquidity ?? 0) > 0,
     score: r.ranking_score ?? null,
   };
 }
-
 
 function formatMoney(value: number | null, signed = false): string {
   if (value == null || !Number.isFinite(value)) return "—";
@@ -88,18 +94,23 @@ function formatMoney(value: number | null, signed = false): string {
   return `${sign}$${abs.toFixed(2)}`;
 }
 
-function formatPct(value: number | null, fractionDigits = 2): string {
+function formatDelta(value: number | null, fractionDigits = 2): string {
   if (value == null || !Number.isFinite(value)) return "—";
   const sign = value > 0 ? "+" : "";
-  return `${sign}${value.toFixed(fractionDigits)}%`;
+  return `${sign}${value.toFixed(fractionDigits)}`;
 }
 
-function formatLiquidity(value: number): string {
+function formatLiquidity(value: number, _isVolProxy = false): string {
   if (!Number.isFinite(value) || value <= 0) return "—";
   return Math.round(value).toLocaleString();
 }
 
-function compareRows(a: DisplayRow, b: DisplayRow, key: SortKey, order: SortOrder) {
+function compareRows(
+  a: DisplayRow,
+  b: DisplayRow,
+  key: SortKey,
+  order: SortOrder,
+) {
   const av = readSortValue(a, key);
   const bv = readSortValue(b, key);
   if (av === null && bv === null) return 0;
@@ -112,8 +123,6 @@ function readSortValue(row: DisplayRow, key: SortKey): number | null {
   switch (key) {
     case "ranking_score":
       return row.score;
-    case "credit_efficiency":
-      return row.creditEfficiency;
     case "premium":
       return row.premiumDollars;
     case "init_margin":
@@ -130,19 +139,32 @@ function readSortValue(row: DisplayRow, key: SortKey): number | null {
 type Column = {
   key: SortKey;
   label: string;
+  /** Shown in the column header title attribute for extra context. */
+  tooltip?: string;
   className: string;
   textAlign: "left" | "right";
 };
 
+// Widths sum to 100%: 28 + 10 + 12 + 20 + 15 + 15
 const COLUMNS: Column[] = [
-  { key: "ranking_score", label: "Combo", className: "w-[20%]", textAlign: "left" },
-  { key: "expiry_days", label: "Exp", className: "w-[8%]", textAlign: "right" },
-  { key: "delta_pct", label: "Δ %", className: "w-[10%]", textAlign: "right" },
-  { key: "premium", label: "Premium", className: "w-[13%]", textAlign: "right" },
-  { key: "init_margin", label: "Margin", className: "w-[12%]", textAlign: "right" },
-  { key: "liquidity", label: "Liquidity", className: "w-[12%]", textAlign: "right" },
-  { key: "credit_efficiency", label: "Cred Eff", className: "w-[12%]", textAlign: "right" },
-  { key: "ranking_score", label: "Score", className: "w-[13%]", textAlign: "right" },
+  { key: "ranking_score", label: "Combo",     className: "w-[28%]", textAlign: "left" },
+  { key: "expiry_days",   label: "Exp",       className: "w-[10%]", textAlign: "right" },
+  {
+    key: "delta_pct",
+    label: "Delta",
+    tooltip: "Distance of first combo strike from spot price (not options Δ). CALL rows: positive. PUT rows: negative.",
+    className: "w-[12%]",
+    textAlign: "right",
+  },
+  { key: "premium",   label: "Premium",   className: "w-[20%]", textAlign: "right" },
+  { key: "init_margin", label: "Margin",  className: "w-[15%]", textAlign: "right" },
+  {
+    key: "liquidity",
+    label: "Liquidity",
+    tooltip: "Tradable butterfly lots — MIN(BidSize / ratio) across all legs at current bid depth.",
+    className: "w-[15%]",
+    textAlign: "right",
+  },
 ];
 
 function VirtualizedTable({
@@ -189,6 +211,7 @@ function VirtualizedTable({
           {sortedRows.length.toLocaleString()} rows
         </span>
       </div>
+
       {sortedRows.length === 0 ? (
         <div className="rounded-md border border-dashed border-[hsl(var(--terminal-border))] px-2 py-2 text-center font-mono text-[10px] text-[hsl(var(--terminal-text-tertiary))]">
           {emptyMessage}
@@ -208,16 +231,22 @@ function VirtualizedTable({
                     "select-none px-1 py-1 font-semibold transition-colors hover:text-[hsl(var(--terminal-text-primary))]",
                     col.textAlign === "right" ? "text-right" : "text-left",
                     col.className,
-                    sortKey === col.key && "text-[hsl(var(--terminal-text-primary))]",
+                    sortKey === col.key &&
+                      "text-[hsl(var(--terminal-text-primary))]",
                   )}
-                  title={`Sort by ${col.label}`}
+                  title={col.tooltip ?? `Sort by ${col.label}`}
                 >
                   {col.label}
-                  {sortKey === col.key ? (sortOrder === "asc" ? " ↑" : " ↓") : ""}
+                  {sortKey === col.key
+                    ? sortOrder === "asc"
+                      ? " ↑"
+                      : " ↓"
+                    : ""}
                 </button>
               ))}
             </div>
           </div>
+
           <div
             ref={parentRef}
             style={{ height: TABLE_HEIGHT_PX, overflowY: "auto" }}
@@ -264,48 +293,50 @@ function RowDisplay({
       : row.premiumDollars > 0
         ? "text-rose-400"
         : "text-[hsl(var(--terminal-text-primary))]";
+
   return (
     <div
-      style={{
-        position: "absolute",
-        top,
-        height,
-        left: 0,
-        right: 0,
-      }}
+      style={{ position: "absolute", top, height, left: 0, right: 0 }}
       className="flex w-full items-center border-b border-[hsl(var(--terminal-border))]/40 last:border-b-0"
     >
-      <div className="w-[20%] truncate px-1 py-1 text-left text-[hsl(var(--terminal-text-primary))]" title={row.combo}>
+      {/* Combo */}
+      <div
+        className="w-[28%] truncate px-1 py-1 text-left text-[hsl(var(--terminal-text-primary))]"
+        title={row.combo}
+      >
         {row.combo}
       </div>
-      <div className="w-[8%] px-1 py-1 text-right text-[hsl(var(--terminal-text-primary))]">
+
+      {/* Exp */}
+      <div className="w-[10%] px-1 py-1 text-right text-[hsl(var(--terminal-text-primary))]">
         {row.expiry}
       </div>
-      <div className="w-[10%] px-1 py-1 text-right text-[hsl(var(--terminal-text-primary))]">
-        {formatPct(row.deltaPct)}
+
+      {/* Delta */}
+      <div className="w-[12%] px-1 py-1 text-right text-[hsl(var(--terminal-text-primary))]">
+        {formatDelta(row.deltaPct)}
       </div>
-      <div className={cn("w-[13%] px-1 py-1 text-right", premiumClass)}>
+
+      {/* Premium */}
+      <div className={cn("w-[20%] px-1 py-1 text-right", premiumClass)}>
         {formatMoney(row.premiumDollars, true)}
       </div>
+
+      {/* Margin */}
       <div
-        className="w-[12%] px-1 py-1 text-right text-[hsl(var(--terminal-text-primary))]"
-        title={row.marginSource === "whatif" ? "IBKR WhatIf" : "Deterministic estimate"}
+        className="w-[15%] px-1 py-1 text-right text-[hsl(var(--terminal-text-primary))]"
+        title={
+          row.marginSource === "whatif"
+            ? "IBKR WhatIf"
+            : "Deterministic estimate"
+        }
       >
         {formatMoney(row.margin)}
-        {row.marginSource === "deterministic" ? (
-          <span className="ml-0.5 text-[8px] text-[hsl(var(--terminal-text-tertiary))]">est</span>
-        ) : null}
       </div>
-      <div className="w-[12%] px-1 py-1 text-right tabular-nums text-[hsl(var(--terminal-text-primary))]">
-        {formatLiquidity(row.liquidity)}
-      </div>
-      <div className="w-[12%] px-1 py-1 text-right text-[hsl(var(--terminal-text-primary))]">
-        {row.creditEfficiency != null
-          ? `${row.creditEfficiency.toFixed(1)}%`
-          : "—"}
-      </div>
-      <div className="w-[13%] px-1 py-1 text-right tabular-nums text-[hsl(var(--terminal-text-primary))]">
-        {row.score != null ? row.score.toFixed(3) : "—"}
+
+      {/* Liquidity */}
+      <div className="w-[15%] px-1 py-1 text-right tabular-nums text-[hsl(var(--terminal-text-primary))]">
+        {formatLiquidity(row.liquidity, row.liquidityIsVolProxy)}
       </div>
     </div>
   );
@@ -321,7 +352,8 @@ export function OptionOpportunitiesTables({ live, feedStatus }: Props) {
     [live],
   );
 
-  const isOffline = feedStatus === "disconnected" || feedStatus === "unavailable";
+  const isOffline =
+    feedStatus === "disconnected" || feedStatus === "unavailable";
   const emptyMessage = isOffline
     ? "Live data unavailable — check IBKR connection"
     : "Awaiting live opportunity data";
@@ -329,8 +361,16 @@ export function OptionOpportunitiesTables({ live, feedStatus }: Props) {
   return (
     <section className="flex flex-col gap-2" aria-label="Options Opportunities">
       <SectionTitle>Options Opportunities</SectionTitle>
-      <VirtualizedTable label="CALL side" rows={calls} emptyMessage={emptyMessage} />
-      <VirtualizedTable label="PUT side" rows={puts} emptyMessage={emptyMessage} />
+      <VirtualizedTable
+        label="CALL side"
+        rows={calls}
+        emptyMessage={emptyMessage}
+      />
+      <VirtualizedTable
+        label="PUT side"
+        rows={puts}
+        emptyMessage={emptyMessage}
+      />
     </section>
   );
 }

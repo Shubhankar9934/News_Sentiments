@@ -1,0 +1,61 @@
+================================================================================
+PIPELINE AUDIT — NARRATIVE CLUSTERS (input to Claude)
+Ticker : QQQ
+Run ID : ed8d8c5c-fa13-4990-bcbe-993c82504b4d
+Time   : 2026-05-26_18-37-30
+================================================================================
+
+[
+  {
+    "cluster_idx": 0,
+    "summary": "{'event_type': 'Macro', 'sentiment': 'Bearish', 'sentiment_score': -0.79, 'article_count': 3, 'impact_score': 0.2446, 'top_headline': 'Business Conditions Monthly March 2026', 'top_source': 'SeekingAlpha', 'published_at': '2026-05-25T11:23:00+00:00', 'reliability': 60, 'abnormal_return': None, 'headlines': ['Business Conditions Monthly March 2026', \"Stagflation Is Intensifying: It's (Almost) Time To Panic\", 'Headline Inflation Surges, But Core Measures Keep The Fed On Hold']}"
+  },
+  {
+    "cluster_idx": 1,
+    "summary": "{'event_type': 'Partnership', 'sentiment': 'Bearish', 'sentiment_score': -0.781, 'article_count': 3, 'impact_score': 0.2307, 'top_headline': 'Dow Jones, Nasdaq And S&P 500 Intraday Levels: Markets Are Sending Mixed Feelings On The Peace Deal', 'top_source': 'SeekingAlpha', 'published_at': '2026-05-26T13:25:00+00:00', 'reliability': 60, 'abnormal_return': None, 'headlines': ['Dow Jones, Nasdaq And S&P 500 Intraday Levels: Markets Are Sending Mixed Feelings On The Peace Deal', 'The US-Iran War: De"
+  },
+  {
+    "cluster_idx": 2,
+    "summary": "{'event_type': 'Analyst', 'sentiment': 'Bullish', 'sentiment_score': 0.867, 'article_count': 3, 'impact_score': 0.2035, 'top_headline': \"Nasdaq 100 Hits Record Above 30,000 On Micron's 18% Rally: Stock Market Today\", 'top_source': 'Benzinga', 'published_at': '2026-05-26T13:57:30+00:00', 'reliability': 60, 'abnormal_return': None, 'headlines': [\"Nasdaq 100 Hits Record Above 30,000 On Micron's 18% Rally: Stock Market Today\", 'SpaceX IPO: Should I Buy It, Or Wait?', 'Breadth Improves Again, But Lea"
+  },
+  {
+    "cluster_idx": 3,
+    "summary": "{'event_type': None, 'sentiment': 'Bullish', 'sentiment_score': 0.822, 'article_count': 4, 'impact_score': 0.1918, 'top_headline': \"Stock Market Today: S&P 500, Dow, Nasdaq Futures Up Amid US 'Defensive Strikes' On Iran— Elbit Systems, Intuitive Machines, Zscaler In Focus (UPDATED)\", 'top_source': 'Benzinga', 'published_at': '2026-05-26T08:47:44+00:00', 'reliability': 60, 'abnormal_return': None, 'headlines': [\"Stock Market Today: S&P 500, Dow, Nasdaq Futures Up Amid US 'Defensive Strikes' On Ir"
+  },
+  {
+    "cluster_idx": 4,
+    "summary": "{'event_type': 'Macro', 'sentiment': 'Bullish', 'sentiment_score': 0.762, 'article_count': 1, 'impact_score': 0.1906, 'top_headline': 'CIO Weekly: Interest Rates Come Back Into Focus', 'top_source': 'SeekingAlpha', 'published_at': '2026-05-25T04:49:00+00:00', 'reliability': 60, 'abnormal_return': None, 'headlines': ['CIO Weekly: Interest Rates Come Back Into Focus']}"
+  },
+  {
+    "cluster_idx": 5,
+    "summary": "{'event_type': None, 'sentiment': 'Bearish', 'sentiment_score': -0.756, 'article_count': 3, 'impact_score': 0.1663, 'top_headline': \"S&P 500: 20% Moves Up And Down During Next 6-12 Months Very Likely. Here's Why\", 'top_source': 'SeekingAlpha', 'published_at': '2026-05-26T09:00:00+00:00', 'reliability': 60, 'abnormal_return': None, 'headlines': [\"S&P 500: 20% Moves Up And Down During Next 6-12 Months Very Likely. Here's Why\", 'Equities In Bubble Territory: 6 Hard-To-Ignore Signs', 'How To Build A"
+  },
+  {
+    "cluster_idx": 6,
+    "summary": "{'event_type': 'Earnings', 'sentiment': 'Bullish', 'sentiment_score': 0.871, 'article_count': 3, 'impact_score': 0.1551, 'top_headline': 'First-Quarter Earnings Driving Stocks To Record Highs', 'top_source': 'SeekingAlpha', 'published_at': '2026-05-22T10:05:00+00:00', 'reliability': 60, 'abnormal_return': 0.4241, 'headlines': ['First-Quarter Earnings Driving Stocks To Record Highs', 'Dow Jones, Nasdaq And S&P 500 Intraday Levels - Stock Markets Dance Towards New Records Ahead Of A Long Weekend',"
+  },
+  {
+    "cluster_idx": 7,
+    "summary": "{'event_type': 'Earnings', 'sentiment': 'Bearish', 'sentiment_score': -0.75, 'article_count': 1, 'impact_score': 0.0834, 'top_headline': 'Earnings Become Key as Markets Look Past High Oil and Interest Rates', 'top_source': 'Investing.com', 'published_at': '2026-05-20T17:27:00+00:00', 'reliability': 60, 'abnormal_return': 1.6564, 'headlines': ['Earnings Become Key as Markets Look Past High Oil and Interest Rates']}"
+  },
+  {
+    "cluster_idx": 8,
+    "summary": "{'event_type': 'Partnership', 'sentiment': 'Bullish', 'sentiment_score': 0.562, 'article_count': 1, 'impact_score': 0.0739, 'top_headline': \"This Week's Market Wrap: Nvidia, War Headlines, And FOMC Minutes\", 'top_source': 'SeekingAlpha', 'published_at': '2026-05-22T23:55:00+00:00', 'reliability': 60, 'abnormal_return': 0.4241, 'headlines': [\"This Week's Market Wrap: Nvidia, War Headlines, And FOMC Minutes\"]}"
+  },
+  {
+    "cluster_idx": 9,
+    "summary": "{'event_type': 'Earnings', 'sentiment': 'Neutral', 'sentiment_score': 0.0, 'article_count': 3, 'impact_score': 0.0, 'top_headline': 'Forget Yields, This Is The Real Black Swan', 'top_source': 'SeekingAlpha', 'published_at': '2026-05-25T10:30:44+00:00', 'reliability': 60, 'abnormal_return': None, 'headlines': ['Forget Yields, This Is The Real Black Swan', 'Top 3 Catalysts For Nasdaq 100 And Dow Jones Indices This Week', \"Trump Wants Cuts, The Long End Needs Relief, And I'm Still Buying The Pullba"
+  },
+  {
+    "cluster_idx": 10,
+    "summary": "{'event_type': 'Macro', 'sentiment': 'Neutral', 'sentiment_score': 0.0, 'article_count': 5, 'impact_score': 0.0, 'top_headline': 'Since 1930, This Is The Average Return Of The S&P 500 After A New Fed Chair Is Elected', 'top_source': 'SeekingAlpha', 'published_at': '2026-05-26T09:00:00+00:00', 'reliability': 60, 'abnormal_return': None, 'headlines': ['Since 1930, This Is The Average Return Of The S&P 500 After A New Fed Chair Is Elected', 'Inflation Troubles, Now And Ahead', 'Above The Noise: Sol"
+  },
+  {
+    "cluster_idx": 11,
+    "summary": "{'event_type': 'Regulation', 'sentiment': 'Neutral', 'sentiment_score': 0.0, 'article_count': 1, 'impact_score': 0.0, 'top_headline': 'The 1-Minute Market Report, May 24, 2026', 'top_source': 'SeekingAlpha', 'published_at': '2026-05-23T22:41:52+00:00', 'reliability': 60, 'abnormal_return': None, 'headlines': ['The 1-Minute Market Report, May 24, 2026']}"
+  },
+  {
+    "cluster_idx": 12,
+    "summary": "{'event_type': None, 'sentiment': 'Neutral', 'sentiment_score': 0.0, 'article_count': 1, 'impact_score': 0.0, 'top_headline': 'A Final Path To Peace? Markets Weekly Outlook', 'top_source': 'SeekingAlpha', 'published_at': '2026-05-24T11:35:00+00:00', 'reliability': 60, 'abnormal_return': None, 'headlines': ['A Final Path To Peace? Markets Weekly Outlook']}"
+  }
+]

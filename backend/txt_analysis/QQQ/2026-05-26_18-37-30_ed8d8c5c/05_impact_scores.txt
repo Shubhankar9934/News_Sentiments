@@ -1,0 +1,189 @@
+================================================================================
+PIPELINE AUDIT — IMPACT SCORES
+Ticker : QQQ
+Run ID : ed8d8c5c-fa13-4990-bcbe-993c82504b4d
+Time   : 2026-05-26_18-37-30
+================================================================================
+
+[
+  {
+    "headline": "The Divorce Between Wall Street And Main Street",
+    "impact_score": 0.3537,
+    "event_type": "Earnings",
+    "abnormal_return": null
+  },
+  {
+    "headline": "Business Conditions Monthly March 2026",
+    "impact_score": 0.2446,
+    "event_type": "Macro",
+    "abnormal_return": null
+  },
+  {
+    "headline": "Dow Jones, Nasdaq And S&P 500 Intraday Levels: Markets Are Sending Mixed Feelings On The Peace Deal",
+    "impact_score": 0.2307,
+    "event_type": "Partnership",
+    "abnormal_return": null
+  },
+  {
+    "headline": "Nasdaq 100 Hits Record Above 30,000 On Micron's 18% Rally: Stock Market Today",
+    "impact_score": 0.2035,
+    "event_type": "Analyst",
+    "abnormal_return": null
+  },
+  {
+    "headline": "Small Caps Add Breadth Support, but Confirmation Is Still Incomplete",
+    "impact_score": 0.2029,
+    "event_type": "Analyst",
+    "abnormal_return": null
+  },
+  {
+    "headline": "Stock Market Today: S&P 500, Dow, Nasdaq Futures Up Amid US 'Defensive Strikes' On Iran— Elbit Systems, Intuitive Machines, Zscaler In Focus (UPDATED)",
+    "impact_score": 0.1918,
+    "event_type": null,
+    "abnormal_return": null
+  },
+  {
+    "headline": "CIO Weekly: Interest Rates Come Back Into Focus",
+    "impact_score": 0.1906,
+    "event_type": "Macro",
+    "abnormal_return": null
+  },
+  {
+    "headline": "GARP: The Numbers Don't Lie, This Large-Cap Growth ETF Is A Winner (Upgrade)",
+    "impact_score": 0.1899,
+    "event_type": "Analyst",
+    "abnormal_return": null
+  },
+  {
+    "headline": "Markets Rally As IPO Momentum Builds",
+    "impact_score": 0.1838,
+    "event_type": "Earnings",
+    "abnormal_return": null
+  },
+  {
+    "headline": "3 Reasons To Stick With Growth Stocks In Rotating Markets",
+    "impact_score": 0.1774,
+    "event_type": "Analyst",
+    "abnormal_return": null
+  },
+  {
+    "headline": "S&P 500: 20% Moves Up And Down During Next 6-12 Months Very Likely. Here's Why",
+    "impact_score": 0.1663,
+    "event_type": null,
+    "abnormal_return": null
+  },
+  {
+    "headline": "The US-Iran War: Deal Unlikely, Brace For Inflationary Shock",
+    "impact_score": 0.1568,
+    "event_type": "Partnership",
+    "abnormal_return": null
+  },
+  {
+    "headline": "First-Quarter Earnings Driving Stocks To Record Highs",
+    "impact_score": 0.1551,
+    "event_type": "Earnings",
+    "abnormal_return": 0.4241
+  },
+  {
+    "headline": "Vanguard's VOO ETF Inflows Top $59 Billion As Investors Flee SPY",
+    "impact_score": 0.1487,
+    "event_type": "Partnership",
+    "abnormal_return": null
+  },
+  {
+    "headline": "Here Come The Bankruptcies",
+    "impact_score": 0.1322,
+    "event_type": "Regulation",
+    "abnormal_return": null
+  },
+  {
+    "headline": "Dow Jones, Nasdaq And S&P 500 Intraday Levels - Stock Markets Dance Towards New Records Ahead Of A Long Weekend",
+    "impact_score": 0.1278,
+    "event_type": "Earnings",
+    "abnormal_return": 0.4241
+  },
+  {
+    "headline": "Stock Market Today: Dow, S&P 500, Nasdaq Futures Rise As Investors Eye U.S.-Iran Peace Talks— Estee Lauder, Workday, Zoom In Focus  (UPDATED)",
+    "impact_score": 0.1257,
+    "event_type": "Macro",
+    "abnormal_return": 0.4241
+  },
+  {
+    "headline": "Stagflation Is Intensifying: It's (Almost) Time To Panic",
+    "impact_score": 0.1186,
+    "event_type": "Macro",
+    "abnormal_return": 0.4241
+  },
+  {
+    "headline": "Dow Jones, Nasdaq And S&P 500 Intraday Levels - Markets Are Closed, But Futures Are Exploding",
+    "impact_score": 0.1086,
+    "event_type": null,
+    "abnormal_return": null
+  },
+  {
+    "headline": "Are Equity Markets Underpricing The Oil Risk?",
+    "impact_score": 0.1029,
+    "event_type": "Partnership",
+    "abnormal_return": 0.4241
+  },
+  {
+    "headline": "Stock Market Today: Do, S&P 500, Nasdaq Futures Gain Ahead Of NVDA's Q1 Report— CAVA, AMC Entertainment, Roblox In Focus (UPDATED)",
+    "impact_score": 0.0987,
+    "event_type": "Earnings",
+    "abnormal_return": 1.6564
+  },
+  {
+    "headline": "RDVI: Targeting A Positive Income Outcome With Capital Appreciation",
+    "impact_score": 0.0986,
+    "event_type": null,
+    "abnormal_return": null
+  },
+  {
+    "headline": "Flash PMIs Signal Stagflation Among The Major Developed Economies As Growth Falters Amid Price Hikes",
+    "impact_score": 0.0945,
+    "event_type": null,
+    "abnormal_return": null
+  },
+  {
+    "headline": "Weekly Indicators: Consumers Continue To Power Through Gas Price Increases",
+    "impact_score": 0.094,
+    "event_type": null,
+    "abnormal_return": null
+  },
+  {
+    "headline": "SpaceX IPO: Should I Buy It, Or Wait?",
+    "impact_score": 0.0913,
+    "event_type": "Analyst",
+    "abnormal_return": null
+  },
+  {
+    "headline": "Stocks Are At Record Highs — Yet Only 40% Of Voters Approve Of Trump's Economy",
+    "impact_score": 0.0846,
+    "event_type": null,
+    "abnormal_return": 0.4241
+  },
+  {
+    "headline": "Earnings Become Key as Markets Look Past High Oil and Interest Rates",
+    "impact_score": 0.0834,
+    "event_type": "Earnings",
+    "abnormal_return": 1.6564
+  },
+  {
+    "headline": "Equities In Bubble Territory: 6 Hard-To-Ignore Signs",
+    "impact_score": 0.0809,
+    "event_type": null,
+    "abnormal_return": null
+  },
+  {
+    "headline": "Breadth Improves Again, But Leadership Still Looks Narrow",
+    "impact_score": 0.0788,
+    "event_type": "Analyst",
+    "abnormal_return": 0.4241
+  },
+  {
+    "headline": "This Week's Market Wrap: Nvidia, War Headlines, And FOMC Minutes",
+    "impact_score": 0.0739,
+    "event_type": "Partnership",
+    "abnormal_return": 0.4241
+  }
+]

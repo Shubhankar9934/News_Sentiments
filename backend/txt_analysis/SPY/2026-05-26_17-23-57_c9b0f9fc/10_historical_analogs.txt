@@ -1,0 +1,47 @@
+================================================================================
+PIPELINE AUDIT — HISTORICAL ANALOGS
+Ticker : SPY
+Run ID : c9b0f9fc-a1bc-4240-a664-dfc5cc0a1c1b
+Time   : 2026-05-26_17-23-57
+================================================================================
+
+{
+  "matches": [
+    {
+      "headline": "Business Conditions Monthly March 2026",
+      "published_at": "2026-05-25 11:23:00+00:00",
+      "sentiment_score": -0.918,
+      "impact_score": 0.2575,
+      "close": null,
+      "volume": null,
+      "match_reason": "exact_event_type",
+      "match_score": 0.4,
+      "setup_outcome_stats": null
+    },
+    {
+      "headline": "Eight Weeks Up, And Even A Hawkish Fed Can't Stop It: This Week On Wall Street",
+      "published_at": "2026-05-22 15:00:52+00:00",
+      "sentiment_score": -0.932,
+      "impact_score": 0.2542,
+      "close": 745.64,
+      "volume": 41762006,
+      "match_reason": "exact_event_type",
+      "match_score": 0.4,
+      "setup_outcome_stats": {
+        "valid": false,
+        "body_touched": null,
+        "wing_touched": null,
+        "credit_retained": null,
+        "forward_return_pct": null
+      }
+    }
+  ],
+  "aggregates": {
+    "n_setups": 0,
+    "win_rate": null,
+    "avg_credit_retained": null,
+    "max_loss_frequency": null,
+    "avg_forward_return_pct": null,
+    "p_touch_body": null
+  }
+}

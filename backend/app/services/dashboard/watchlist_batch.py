@@ -32,6 +32,7 @@ from app.db.repositories.dashboard_repository import DashboardRepository
 from app.db.session import SessionLocal
 from app.services.cache.redis_cache import RedisCache
 from app.services.dashboard.opportunity_generator import (
+    IbkrOpportunitySource,
     OpportunitySource,
     PlaceholderOpportunitySource,
     default_opportunity_source,
@@ -81,11 +82,18 @@ class WatchlistBatchService:
         qdrant: Any | None = None,
         summarizer: ReverseBwbSummarizer | None = None,
         opportunity_source: OpportunitySource | None = None,
+        ibkr_connection: Any | None = None,
+        ibkr_opp_service: Any | None = None,
+        quote_cache: Any | None = None,
     ) -> None:
         self._settings = settings
         self._qdrant = qdrant
         self._summarizer = summarizer or ReverseBwbSummarizer(settings)
         self._opportunity_source = opportunity_source or default_opportunity_source()
+        # IBKR live data references — used to dynamically pick source at refresh time
+        self._ibkr_connection = ibkr_connection
+        self._ibkr_opp_service = ibkr_opp_service
+        self._quote_cache = quote_cache
         self._state = WatchlistBatchStatus(total=len(ALL_WATCHLIST_TICKERS))
         self._queue: list[str] = []
         self._queue_lock = asyncio.Lock()
@@ -103,11 +111,21 @@ class WatchlistBatchService:
         existing = getattr(app.state, "watchlist_batch", None)
         if isinstance(existing, cls):
             return existing
+
+        # Wire in IBKR live-data references so _refresh_ticker can dynamically
+        # pick between IbkrOpportunitySource and PlaceholderOpportunitySource.
+        ibkr_connection = getattr(app.state, "ibkr", None)
+        ibkr_opp_service = getattr(app.state, "opp_service", None)
+        quote_cache = getattr(app.state, "quote_cache", None)
+
         instance = cls(
             settings=settings,
             qdrant=getattr(app.state, "qdrant", None),
             summarizer=ReverseBwbSummarizer(settings),
-            opportunity_source=PlaceholderOpportunitySource(),
+            opportunity_source=PlaceholderOpportunitySource(),  # default fallback
+            ibkr_connection=ibkr_connection,
+            ibkr_opp_service=ibkr_opp_service,
+            quote_cache=quote_cache,
         )
         app.state.watchlist_batch = instance
         return instance
@@ -264,6 +282,7 @@ class WatchlistBatchService:
                         settings=self._settings,
                         qdrant=self._qdrant,
                         cache=redis_cache,
+                        quote_cache=self._quote_cache,  # IBKR live price injection
                     )
                     report = await pipeline.run(
                         ticker,
@@ -317,7 +336,79 @@ class WatchlistBatchService:
                                 error=str(exc),
                             )
 
-                    opportunities = self._opportunity_source.generate(ticker, report)
+                    # Dynamically select the opportunity source at refresh time.
+                    # IbkrOpportunitySource is used when IBKR is connected and an
+                    # OptionsOpportunityService is available; PlaceholderOpportunitySource
+                    # is the safe fallback for disconnected/unavailable states.
+                    _ibkr_live = (
+                        self._ibkr_connection is not None
+                        and getattr(self._ibkr_connection, "is_connected", False)
+                        and self._ibkr_opp_service is not None
+                    )
+                    if _ibkr_live:
+                        _source: OpportunitySource = IbkrOpportunitySource(
+                            self._ibkr_opp_service
+                        )
+                        log.info(
+                            "watchlist.opportunity_source",
+                            ticker=ticker,
+                            source="ibkr_live",
+                        )
+                    else:
+                        _source = self._opportunity_source  # PlaceholderOpportunitySource
+                        log.info(
+                            "watchlist.opportunity_source",
+                            ticker=ticker,
+                            source="placeholder",
+                            ibkr_connected=self._ibkr_connection is not None
+                            and getattr(self._ibkr_connection, "is_connected", False),
+                        )
+                    opportunities = await _source.generate(ticker, report)
+
+                    # Write opportunity audit to the pipeline's txt folder
+                    _audit_folder = (report.get("_pipeline_meta") or {}).get("audit_folder")
+                    if _audit_folder:
+                        try:
+                            import json
+                            import os
+                            _opp_data = {
+                                "source": "ibkr_live" if _ibkr_live else "placeholder",
+                                "ibkr_connected": _ibkr_live,
+                                "calls_count": len(opportunities.calls),
+                                "puts_count": len(opportunities.puts),
+                                "calls": [
+                                    {
+                                        "combo": o.combo,
+                                        "expiry": o.expiry,
+                                        "premium": o.premium,
+                                        "margin": o.margin,
+                                        "liquidity": o.liquidity,
+                                    }
+                                    for o in opportunities.calls
+                                ],
+                                "puts": [
+                                    {
+                                        "combo": o.combo,
+                                        "expiry": o.expiry,
+                                        "premium": o.premium,
+                                        "margin": o.margin,
+                                        "liquidity": o.liquidity,
+                                    }
+                                    for o in opportunities.puts
+                                ],
+                            }
+                            _opp_path = os.path.join(_audit_folder, "09_opportunities.txt")
+                            with open(_opp_path, "w", encoding="utf-8") as _f:
+                                _f.write(
+                                    f"{'=' * 80}\n"
+                                    f"PIPELINE AUDIT — OPPORTUNITIES\n"
+                                    f"Ticker : {ticker}\n"
+                                    f"{'=' * 80}\n\n"
+                                )
+                                _f.write(json.dumps(_opp_data, indent=2, default=str))
+                        except Exception as _ae:
+                            log.debug("watchlist.audit_opp_write_failed", error=str(_ae))
+
                     research_report_id = self._extract_research_report_id(report)
                     if research_report_id is not None:
                         try:

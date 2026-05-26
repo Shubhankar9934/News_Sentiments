@@ -1,0 +1,62 @@
+================================================================================
+PIPELINE SUMMARY
+Ticker : QQQ
+Run ID : ed8d8c5c-fa13-4990-bcbe-993c82504b4d
+Time   : 2026-05-26_18-37-30
+================================================================================
+
+[00_raw_articles]
+  count: 68
+
+[01_cleaned]
+  unique: 61
+  dupes_removed: 6
+
+[02_sentiment]
+  positive: 0
+  negative: 0
+  neutral: 0
+
+[03_events]
+  events_found: 46
+
+[04_market_price]
+  source: ibkr_live
+  polygon_close: 717.54
+  ibkr_live: 729.57
+  final_price: 729.57
+
+[05_impact]
+  avg_impact: 0.0722
+
+[06_clusters]
+  count: 13
+
+[07_claude_report]
+  keys: ['data_mode', 'data_quality_note', 'articles_analyzed', 'unique_sources', 'duplicates_removed', 'overall_sentiment_score', 'overall_sentiment_label', 'sentiment_breakdown', 'key_events', 'dominant_narrative', 'what_happened', 'price_movers', 'source_reliability', 'articles']
+  has_key_events: True
+
+[08_options_intelligence]
+  price_source: ibkr_live
+  last_close: 729.57
+  live_iv_pct: None
+  iv_source: realized_vol
+
+[10_analogs]
+  matches: 8
+  aggregates: {'n_setups': 3, 'win_rate': 0.0, 'avg_credit_retained': 0.0, 'max_loss_frequency': 1.0, 'avg_forward_return_pct': 0.424, 'p_touch_body': 1.0}
+
+[11_executive_summary]
+  outlook: None
+  decision_signal: None
+
+[pipeline]
+  run_id: ed8d8c5c-fa13-4990-bcbe-993c82504b4d
+  elapsed_s: 85.51
+  unique_articles: 61
+  clusters: 13
+  price_source: ibkr_live
+  ibkr_live_price: 729.57
+  polygon_close: 717.54
+  final_last_close: 729.57
+

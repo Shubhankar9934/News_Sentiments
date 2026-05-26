@@ -5,7 +5,7 @@ from __future__ import annotations
 import time
 from collections.abc import Awaitable, Callable
 from datetime import UTC, datetime
-from typing import Any
+from typing import TYPE_CHECKING, Any
 from uuid import uuid4
 
 import structlog
@@ -27,10 +27,14 @@ from app.services.llm.claude_report import ClaudeReportService
 from app.services.market.options_chain import OptionsChainService
 from app.services.market.polygon import MarketDataService
 from app.services.options import OptionsIntelligenceService
+from app.services.orchestration.pipeline_audit import make_audit_writer
 from app.services.qdrant.store import QdrantStoreService
 from app.services.relevance import classify_article
 from app.services.sentiment.finbert import SentimentService
 from app.services.summary import extract_executive_summary
+
+if TYPE_CHECKING:
+    from app.services.market_data.quote_cache import QuoteCache
 
 log = structlog.get_logger(__name__)
 
@@ -46,11 +50,13 @@ class ResearchPipelineService:
         settings: Settings,
         qdrant: QdrantStoreService | None,
         cache: RedisCache | None = None,
+        quote_cache: "QuoteCache | None" = None,
     ) -> None:
         self._session = session
         self._settings = settings
         self._qdrant = qdrant
         self._cache = cache
+        self._quote_cache = quote_cache
         self._persist = PersistenceRepository(session)
         self._history = HistoryRepository(session)
         self._analogs = AnalogService(session, settings, qdrant)
@@ -69,6 +75,15 @@ class ResearchPipelineService:
         t = ticker.upper()
         log.info("pipeline.start", run_id=run_id, ticker=t, days=days)
 
+        # --- Audit writer (writes each stage snapshot to txt_analysis/) -----
+        audit = make_audit_writer(
+            settings_audit_enabled=self._settings.pipeline_audit_enabled,
+            settings_audit_path=self._settings.pipeline_audit_path,
+            ticker=t,
+            run_id=run_id,
+        )
+        audit_summary: dict[str, Any] = {}
+
         async def prog(stage: str, message: str) -> None:
             if on_progress:
                 await on_progress(stage, message)
@@ -79,28 +94,96 @@ class ResearchPipelineService:
         if persist:
             await self._persist.persist_raw_articles(raw)
 
+        # Audit: raw articles
+        audit.write(
+            "00_raw_articles.txt",
+            "RAW ARTICLES (from news collectors)",
+            [
+                {
+                    "headline": a.headline,
+                    "source": a.source,
+                    "url": getattr(a, "url", ""),
+                    "published_at": str(getattr(a, "published_at", "")),
+                }
+                for a in raw
+            ],
+        )
+        audit_summary["00_raw_articles"] = {"count": len(raw)}
+
         await prog("clean", "Embedding + deduplication")
         cleaner = NewsCleanerService(self._settings, self._qdrant)
         cleaned = cleaner.clean(raw)
+        unique_cleaned = [a for a in cleaned if not getattr(a, "is_duplicate", False)]
+        dupes_cleaned = [a for a in cleaned if getattr(a, "is_duplicate", False)]
+        audit.write(
+            "01_cleaned_articles.txt",
+            "CLEANED ARTICLES (after deduplication)",
+            {
+                "total_input": len(cleaned),
+                "unique": len(unique_cleaned),
+                "duplicates_removed": len(dupes_cleaned),
+                "articles": [
+                    {"headline": a.headline, "source": a.source, "is_duplicate": getattr(a, "is_duplicate", False)}
+                    for a in cleaned
+                ],
+            },
+        )
+        audit_summary["01_cleaned"] = {"unique": len(unique_cleaned), "dupes_removed": len(dupes_cleaned)}
 
         await prog("sentiment", "FinBERT scoring")
         sentiment = SentimentService(self._settings)
         with_sent = sentiment.analyze(cleaned)
+        audit.write(
+            "02_sentiment.txt",
+            "SENTIMENT SCORES (FinBERT)",
+            [
+                {
+                    "headline": a.headline,
+                    "sentiment_label": getattr(a, "sentiment_label", None),
+                    "sentiment_score": round(getattr(a, "sentiment_score", 0), 4),
+                }
+                for a in with_sent
+            ],
+        )
+        audit_summary["02_sentiment"] = {
+            "positive": sum(1 for a in with_sent if getattr(a, "sentiment_label", "") == "positive"),
+            "negative": sum(1 for a in with_sent if getattr(a, "sentiment_label", "") == "negative"),
+            "neutral": sum(1 for a in with_sent if getattr(a, "sentiment_label", "") == "neutral"),
+        }
 
         await prog("events", "Rule-based event extraction")
         events = EventExtractionService()
         with_events = events.extract(with_sent)
+        audit.write(
+            "03_events.txt",
+            "EXTRACTED EVENTS (rule-based)",
+            [
+                {
+                    "headline": a.headline,
+                    "event_type": getattr(a, "event_type", None),
+                }
+                for a in with_events
+                if getattr(a, "event_type", None)
+            ],
+        )
+        audit_summary["03_events"] = {
+            "events_found": sum(1 for a in with_events if getattr(a, "event_type", None))
+        }
 
         await prog("market", "OHLCV + returns")
         market = MarketDataService(self._settings, t)
         bars: list[Any] = []
+        polygon_last_close: float | None = None
+        ibkr_live_price: float | None = None
+        price_source: str = "polygon_ohlcv"
         try:
             bars = await market.fetch_ohlcv(days + 5)
             returns = market.compute_daily_returns(bars)
             vol_map = market.compute_intraday_volatility(bars)
             with_events = market.join_price_to_articles(with_events, returns, vol_map)
             vol_regime = market.get_volatility_regime(bars)
-            last_close = market.get_current_price(bars)
+            polygon_last_close = market.get_current_price(bars)
+            last_close = polygon_last_close
             if persist:
                 await self._persist.persist_ohlcv(bars)
             price_ctx = {
@@ -114,13 +197,99 @@ class ResearchPipelineService:
         except Exception as e:
             log.warning("market_data.failed", error=str(e))
             vol_regime = "medium"
+            polygon_last_close = None
+            last_close = None
             price_ctx = {"last_close": None, "volatility_regime": vol_regime, "error": str(e)}
+
+        # ── IBKR live price injection ────────────────────────────────────────
+        # Query the QuoteCache (populated by MarketDataWorker in real-time).
+        # If a fresh IBKR quote is available, override Polygon's stale close so
+        # all downstream options calculations use the current market price.
+        if self._quote_cache is not None:
+            try:
+                ibkr_quote = await self._quote_cache.get(t)
+                if (
+                    ibkr_quote is not None
+                    and ibkr_quote.last_price is not None
+                    and ibkr_quote.last_price > 0
+                ):
+                    ibkr_live_price = ibkr_quote.last_price
+                    last_close = ibkr_live_price
+                    price_ctx["last_close"] = last_close
+                    price_ctx["ibkr_live_price"] = ibkr_live_price
+                    price_source = "ibkr_live"
+                    log.info(
+                        "pipeline.ibkr_price_override",
+                        ticker=t,
+                        polygon_close=polygon_last_close,
+                        ibkr_live=ibkr_live_price,
+                    )
+                else:
+                    log.info(
+                        "pipeline.ibkr_price_unavailable",
+                        ticker=t,
+                        reason="no_quote_in_cache",
+                        fallback=polygon_last_close,
+                    )
+            except Exception as qc_exc:
+                log.warning("pipeline.ibkr_quote_lookup_failed", ticker=t, error=str(qc_exc))
+        else:
+            log.info("pipeline.ibkr_price_skipped", ticker=t, reason="no_quote_cache_attached")
+
+        price_ctx["price_source"] = price_source
+
+        # Audit: market price stage
+        audit.write(
+            "04_market_price.txt",
+            "MARKET PRICE DATA",
+            {
+                "ticker": t,
+                "price_source_used": price_source,
+                "polygon_last_close": polygon_last_close,
+                "ibkr_live_price": ibkr_live_price,
+                "final_last_close": last_close,
+                "volatility_regime": vol_regime,
+                "bars_fetched": len(bars),
+                "note": (
+                    "IBKR live price used — Polygon close overridden"
+                    if price_source == "ibkr_live"
+                    else "Polygon OHLCV used (IBKR not connected or no live quote available)"
+                ),
+            },
+        )
+        audit_summary["04_market_price"] = {
+            "source": price_source,
+            "polygon_close": polygon_last_close,
+            "ibkr_live": ibkr_live_price,
+            "final_price": last_close,
+        }
 
         await prog("impact", "Impact scoring")
         scorer = EventImpactScoringService()
         with_impact = scorer.score(with_events, volatility_regime=vol_regime)
         if persist:
             await self._persist.persist_processed_articles(with_impact)
+        audit.write(
+            "05_impact_scores.txt",
+            "IMPACT SCORES",
+            sorted(
+                [
+                    {
+                        "headline": a.headline,
+                        "impact_score": round(getattr(a, "impact_score", 0), 4),
+                        "event_type": getattr(a, "event_type", None),
+                        "abnormal_return": getattr(a, "abnormal_return", None),
+                    }
+                    for a in with_impact
+                ],
+                key=lambda x: -x["impact_score"],
+            )[:30],
+        )
+        audit_summary["05_impact"] = {
+            "avg_impact": round(
+                sum(getattr(a, "impact_score", 0) for a in with_impact) / max(len(with_impact), 1), 4
+            )
+        }
 
         await prog("compress", "Narrative compression")
         compressor = NarrativeCompressionService(self._settings)
@@ -142,6 +311,18 @@ class ResearchPipelineService:
         else:
             narrative_input = with_impact
         clusters = compressor.compress(narrative_input)
+        audit.write(
+            "06_narrative_clusters.txt",
+            "NARRATIVE CLUSTERS (input to Claude)",
+            [
+                {
+                    "cluster_idx": i,
+                    "summary": getattr(c, "summary", str(c))[:500] if not isinstance(c, dict) else str(c)[:500],
+                }
+                for i, c in enumerate(clusters)
+            ],
+        )
+        audit_summary["06_clusters"] = {"count": len(clusters)}
 
         await prog("vectors", "Qdrant upsert")
         if self._qdrant:
@@ -150,6 +331,13 @@ class ResearchPipelineService:
         await prog("report", "Claude synthesis")
         reporter = ClaudeReportService(self._settings)
         report = await reporter.generate(t, clusters, price_ctx)
+        # Audit Claude report (exclude heavy nested arrays to keep file readable)
+        _report_for_audit = {k: v for k, v in report.items() if k not in ("_pipeline_meta",)}
+        audit.write("07_claude_report.txt", "CLAUDE LLM REPORT", _report_for_audit)
+        audit_summary["07_claude_report"] = {
+            "keys": list(_report_for_audit.keys()),
+            "has_key_events": bool(report.get("key_events")),
+        }
 
         unique = [a for a in with_impact if not a.is_duplicate]
         dupes = [a for a in with_impact if a.is_duplicate]
@@ -165,12 +353,24 @@ class ResearchPipelineService:
                 pct_change = round((last_bar.close - prev_bar.close) / prev_bar.close * 100, 2)
             vol_ratio = round(last_bar.volume / avg_vol, 2) if avg_vol > 0 else None
             price_snapshot = {
-                "last_close": last_bar.close,
+                # If IBKR live price is available use it as last_close;
+                # the bar's close is kept as polygon_bar_close for reference.
+                "last_close": last_close if last_close is not None else last_bar.close,
+                "polygon_bar_close": last_bar.close,
                 "prior_close": prev_bar.close,
                 "last_session_change_pct": pct_change,
                 "last_volume": last_bar.volume,
                 "avg_volume_20d": int(round(avg_vol)),
                 "volume_vs_avg": vol_ratio,
+                "price_source": price_source,
+                "ibkr_live_price": ibkr_live_price,
+            }
+        elif last_close is not None:
+            # Bars unavailable but we at least have an IBKR live price.
+            price_snapshot = {
+                "last_close": last_close,
+                "price_source": price_source,
+                "ibkr_live_price": ibkr_live_price,
             }
 
         ohlcv_series = [
@@ -239,18 +439,39 @@ class ResearchPipelineService:
         if self._settings.options_enabled:
             try:
                 live_iv_pct: float | None = None
+                iv_source: str = "none"
+
+                # ── IBKR live IV: query the quote cache for IV if available ─
+                # The IBKR worker populates implied_vol via generic tick type 24
+                # when the option snapshot runs. If present, prefer it over the
+                # Polygon/Tradier ATM IV fetched below.
+                if self._quote_cache is not None:
+                    try:
+                        ibkr_quote_for_iv = await self._quote_cache.get(t)
+                        # LiveQuote does not carry IV directly — that lives on
+                        # option leg quotes. We still prefer Polygon/Tradier IV
+                        # below but log that we checked.
+                        _ = ibkr_quote_for_iv  # reserved for future IV field
+                    except Exception:
+                        pass
+
                 if self._settings.options_use_live_iv:
                     try:
                         chain = OptionsChainService(self._settings)
                         live_iv_pct = await chain.fetch_atm_iv_pct(
                             t, target_dte=self._settings.options_default_horizon_days
                         )
+                        if live_iv_pct is not None:
+                            iv_source = f"options_chain_provider:{self._settings.options_chain_provider}"
                     except Exception as iv_exc:  # pragma: no cover - defensive
                         log.warning("options_intelligence.live_iv_failed", error=str(iv_exc))
                         live_iv_pct = None
+
+                # Use the IBKR-overridden last_close for all options math
+                options_last_close = price_snapshot.get("last_close") if price_snapshot else None
                 options_service = OptionsIntelligenceService(self._settings)
                 options_block = options_service.compute(
-                    last_close=price_snapshot.get("last_close") if price_snapshot else None,
+                    last_close=options_last_close,
                     bars=bars,
                     volatility_regime=vol_regime,
                     key_events=report.get("key_events") or [],
@@ -260,7 +481,30 @@ class ResearchPipelineService:
                     live_iv_pct=live_iv_pct,
                 )
                 if options_block is not None:
-                    report["options_intelligence"] = options_block.model_dump()
+                    opts_dict = options_block.model_dump()
+                    # Tag the block so downstream consumers know which price/IV source was used
+                    opts_dict["_price_source"] = price_source
+                    opts_dict["_iv_source"] = iv_source if live_iv_pct is not None else "realized_vol"
+                    report["options_intelligence"] = opts_dict
+                    audit.write(
+                        "08_options_intelligence.txt",
+                        "OPTIONS INTELLIGENCE",
+                        {
+                            "price_source": price_source,
+                            "last_close_used": options_last_close,
+                            "ibkr_live_price": ibkr_live_price,
+                            "polygon_bar_close": polygon_last_close,
+                            "live_iv_pct": live_iv_pct,
+                            "iv_source": iv_source if live_iv_pct is not None else "realized_vol",
+                            "options_block": opts_dict,
+                        },
+                    )
+                    audit_summary["08_options_intelligence"] = {
+                        "price_source": price_source,
+                        "last_close": options_last_close,
+                        "live_iv_pct": live_iv_pct,
+                        "iv_source": iv_source if live_iv_pct is not None else "realized_vol",
+                    }
             except Exception as exc:  # pragma: no cover - never break the pipeline
                 log.warning("options_intelligence.failed", error=str(exc))
 
@@ -303,6 +547,15 @@ class ResearchPipelineService:
                     report["_pipeline_meta"]["historical_analog_aggregates"] = (
                         simulated["aggregates"]
                     )
+                    audit.write(
+                        "10_historical_analogs.txt",
+                        "HISTORICAL ANALOGS",
+                        simulated,
+                    )
+                    audit_summary["10_analogs"] = {
+                        "matches": len(simulated.get("matches", [])),
+                        "aggregates": simulated.get("aggregates", {}),
+                    }
         except Exception as exc:  # pragma: no cover - never break the pipeline
             log.warning("analogs.simulation_failed", error=str(exc))
 
@@ -312,6 +565,15 @@ class ResearchPipelineService:
         # round-trip from the client. Failures must never break the pipeline.
         try:
             report["executive_summary"] = extract_executive_summary(report).model_dump()
+            audit.write(
+                "11_executive_summary.txt",
+                "EXECUTIVE SUMMARY",
+                report.get("executive_summary", {}),
+            )
+            audit_summary["11_executive_summary"] = {
+                "outlook": (report.get("executive_summary") or {}).get("today_outlook"),
+                "decision_signal": (report.get("executive_summary") or {}).get("decision_signal"),
+            }
         except Exception as exc:  # pragma: no cover - defensive
             log.warning("executive_summary.extract_failed", error=str(exc))
 
@@ -352,6 +614,23 @@ class ResearchPipelineService:
             unique_articles=len(unique),
             clusters=len(clusters),
         )
+
+        # Write audit summary and log folder location
+        audit_summary["pipeline"] = {
+            "run_id": run_id,
+            "elapsed_s": report["_pipeline_meta"]["elapsed_s"],
+            "unique_articles": len(unique),
+            "clusters": len(clusters),
+            "price_source": price_source,
+            "ibkr_live_price": ibkr_live_price,
+            "polygon_close": polygon_last_close,
+            "final_last_close": last_close,
+        }
+        audit.write_summary(audit_summary)
+        if audit.folder:
+            log.info("pipeline.audit_written", folder=audit.folder)
+            report["_pipeline_meta"]["audit_folder"] = audit.folder
+
         await prog("done", "Complete")
         return report
 

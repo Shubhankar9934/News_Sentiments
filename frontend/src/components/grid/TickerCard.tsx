@@ -67,15 +67,15 @@ function LiveOpportunitiesPreview({
             <col style={{ width: "28%" }} />
             <col style={{ width: "8%" }} />
             <col style={{ width: "10%" }} />
-            <col style={{ width: "16%" }} />
-            <col style={{ width: "17%" }} />
-            <col style={{ width: "21%" }} />
+            <col style={{ width: "18%" }} />
+            <col style={{ width: "18%" }} />
+            <col style={{ width: "18%" }} />
           </colgroup>
           <thead>
             <tr className="bg-[hsl(var(--terminal-card-elevated))]/40 text-[9px] font-semibold uppercase tracking-wider text-[hsl(var(--terminal-text-tertiary))]">
               <th className="px-2 py-1 text-left">Combo</th>
               <th className="px-2 py-1 text-left">Exp</th>
-              <th className="px-2 py-1 text-right">Delta</th>
+              <th className="px-2 py-1 text-right" title="Distance of first combo strike from spot price (not options Δ)">Delta</th>
               <th className="px-2 py-1 text-right">Premium</th>
               <th className="px-2 py-1 text-right">Margin</th>
               <th className="px-2 py-1 text-right">Liquidity</th>
@@ -94,10 +94,14 @@ function LiveOpportunitiesPreview({
                 const premiumClass = premiumDollars < 0 ? "text-emerald-300" : "text-rose-300";
                 const premiumStr = `${premiumDollars < 0 ? "-" : "+"}$${Math.abs(premiumDollars).toFixed(0)}`;
                 const marginStr = r.init_margin != null ? `$${r.init_margin.toFixed(0)}` : "—";
-                const deltaStr = r.delta_pct != null ? `${r.delta_pct.toFixed(1)}%` : "—";
-                const liqStr = r.liquidity != null && r.liquidity > 0
+                const deltaStr = r.delta_pct != null ? `${r.delta_pct > 0 ? "+" : ""}${r.delta_pct.toFixed(1)}` : "—";
+                // minimum_open_interest=0 means OI was unavailable (snapshot mode);
+                // in that case liquidity holds the volume proxy instead.
+                const isVolProxy = (r.minimum_open_interest ?? 0) === 0 && r.liquidity > 0;
+                const liqNum = r.liquidity > 0
                   ? r.liquidity >= 1000 ? `${(r.liquidity / 1000).toFixed(0)}k` : String(r.liquidity)
-                  : "—";
+                  : null;
+                const liqStr = liqNum ? `${liqNum}${isVolProxy ? "v" : "L"}` : "—";
                 return (
                   <tr key={`${r.combo}-${r.expiration}-${idx}`} className="border-t border-[hsl(var(--terminal-border))]/60">
                     <td className="truncate px-2 py-1 text-left font-mono text-[11px] tabular-nums text-slate-100" title={r.combo}>{r.combo}</td>
